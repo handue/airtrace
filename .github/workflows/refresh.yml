@@ -42,6 +42,7 @@ jobs:
       - name: Build live forecast data
         id: live
         continue-on-error: true
+        timeout-minutes: 15
         run: python scripts/08_build_site_data.py
 
       - name: Report build status

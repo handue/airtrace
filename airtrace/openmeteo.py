@@ -41,7 +41,9 @@ def _throttle(weight: float) -> None:
         time.sleep(2.0)
 
 
-def _get(url: str, params: dict, weight: float, cache: Path | None) -> dict:
+def _get(url: str, params: dict, weight: float, cache: Path | None, max_wait: float | None = None) -> dict:
+    """GET with disk cache and quota-aware retries. ``max_wait`` caps how long a 429 may stall
+    the caller (live builds fail fast instead of sleeping until the next hour)."""
     if cache is not None and cache.exists():
         try:
             return json.loads(cache.read_text())
@@ -57,6 +59,8 @@ def _get(url: str, params: dict, weight: float, cache: Path | None) -> dict:
         if r.status_code == 429:
             reason = r.text.lower()
             wait = 3700 - (time.time() % 3600) if "hour" in reason else (65 if "minute" in reason else 30)
+            if max_wait is not None and wait > max_wait:
+                raise RuntimeError(f"Open-Meteo quota exceeded ({r.text[:80]})")
             print(f"[open-meteo] 429 ({r.text[:80]}), sleeping {wait:.0f}s", flush=True)
             time.sleep(wait)
             continue
@@ -100,14 +104,15 @@ def cams_forecast(lat: float, lon: float, past_days: int = 1, forecast_days: int
     """Live hourly CAMS forecast (not cached)."""
     params = {"latitude": lat, "longitude": lon, "hourly": ",".join(CAMS_VARS), "domains": "cams_global",
               "past_days": past_days, "forecast_days": forecast_days, "timezone": "auto"}
-    return _get(AQ_ARCHIVE_URL, params, call_weight(len(CAMS_VARS), past_days + forecast_days), None)
+    return _get(AQ_ARCHIVE_URL, params, call_weight(len(CAMS_VARS), past_days + forecast_days), None, max_wait=90)
 
 
 def weather_forecast(lat: float, lon: float, past_days: int = 1, forecast_days: int = 5) -> dict:
     """Live hourly weather forecast (not cached)."""
     params = {"latitude": lat, "longitude": lon, "hourly": ",".join(WEATHER_VARS),
               "past_days": past_days, "forecast_days": forecast_days, "timezone": "auto"}
-    return _get(WEATHER_FORECAST_URL, params, call_weight(len(WEATHER_VARS), past_days + forecast_days), None)
+    return _get(WEATHER_FORECAST_URL, params, call_weight(len(WEATHER_VARS), past_days + forecast_days), None,
+                max_wait=90)
 
 
 def era5_blh_patch(lat: float, lon: float, start: str = "2024-03-01", end: str = "2024-06-30",

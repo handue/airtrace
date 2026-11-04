@@ -42,7 +42,7 @@ import pandas as pd
 from . import openmeteo
 from .airnow_live import EMBASSY_NETWORK, STATIC_DIR, AirNowLive
 from .aqi import category, pm25_to_aqi
-from .config import CAMS_VARS, CONFIG, SITE_DATA, WEATHER_VARS
+from .config import CAMS_VARS, CONFIG, PROCESSED, SITE_DATA, WEATHER_VARS
 from .features import FEATURE_GROUPS, cams_frame, daily_features, weather_frame
 from .fires import fires_near, load_fires, mean_wind_from
 
@@ -55,6 +55,11 @@ MAX_FAIL_FRACTION = 0.30          # exit non-zero only when more cities than thi
 BREAKER_FAILURES = 8              # stop calling Open-Meteo after this many failures in a row
 
 CITIES_CSV = CONFIG / "showcase_cities.csv"
+TRAINING_SITES_CSV = CONFIG / "training_sites.csv"
+DATASET_PARQUET = PROCESSED / "dataset.parquet"
+LOCAL_KM = 25.0                   # a training monitor this close counts as "this city's own"
+REGIONAL_KM = 1000.0              # beyond this distance to any training monitor: extrapolation
+MIN_CHECK_DAYS = 3                # live_check ignores cities with fewer observed days
 HISTORY_PATH = STATIC_DIR / "city_history.json"
 CITY_DIR = SITE_DATA / "city"
 CITIES_JSON = SITE_DATA / "cities.json"
@@ -178,6 +183,9 @@ class LiveContext:
     fires: pd.DataFrame | None = None
     airnow: AirNowLive | None = None
     history: dict = field(default_factory=dict)
+    training_sites: pd.DataFrame | None = None
+    metrics: dict = field(default_factory=dict)
+    cams_max: dict = field(default_factory=dict)   # highest training CAMS PM2.5 per region (+ "_all")
 
     @property
     def generated_at(self) -> str:
@@ -227,12 +235,14 @@ def hourly_block(cams: pd.DataFrame, wx: pd.DataFrame, start: pd.Timestamp,
     }
 
 
-def sources_block(source_model: Any, daily: pd.DataFrame, city_id: str = "") -> dict | None:
-    """Source shares over the window's days; ``None`` (with a warning) if attribution fails."""
+def sources_block(source_model: Any, daily: pd.DataFrame, city_id: str = "",
+                  pm25: pd.Series | None = None) -> dict | None:
+    """Source shares over the window's days, each day's contributions scaled to the AirTrace
+    PM2.5 of that day; ``None`` (with a warning) if attribution fails."""
     if source_model is None:
         return None
     try:
-        res = source_model.shares(daily)
+        res = source_model.shares(daily, pm25=pm25)
     except Exception as exc:                                       # noqa: BLE001
         print(f"  warn {city_id}: source attribution unavailable ({type(exc).__name__}: {exc})", flush=True)
         return None
@@ -240,7 +250,8 @@ def sources_block(source_model: Any, daily: pd.DataFrame, city_id: str = "") -> 
     complete = daily[cols].notna().all(axis=1) if cols else pd.Series(True, index=daily.index)
     used = daily.index[complete] if complete.any() else daily.index
     return {"window": f"{used.min():%Y-%m-%d} to {used.max():%Y-%m-%d}",
-            "shares": res["shares"], "background_share": res["background_share"]}
+            "shares": res["shares"], "background_share": res["background_share"],
+            "pm25": res.get("pm25")}
 
 
 def monitor_block(ctx: LiveContext, city: City, previous: dict | None) -> dict:
@@ -254,6 +265,74 @@ def monitor_block(ctx: LiveContext, city: City, previous: dict | None) -> dict:
                 "last_seen": None, "distance_km": 0.0, "recent_obs": {}}
     return {"status": "none", "network": None, "name": None, "last_seen": None,
             "distance_km": None, "recent_obs": {}}
+
+
+def haversine_km(lat1: float, lon1: float, lat2: np.ndarray, lon2: np.ndarray) -> np.ndarray:
+    p = math.pi / 180
+    a = (np.sin((lat2 - lat1) * p / 2) ** 2
+         + math.cos(lat1 * p) * np.cos(lat2 * p) * np.sin((lon2 - lon1) * p / 2) ** 2)
+    return 12742.0 * np.arcsin(np.sqrt(np.clip(a, 0.0, 1.0)))
+
+
+def load_training_context() -> tuple[pd.DataFrame, dict, dict]:
+    """Training monitors, validation metrics and the CAMS PM2.5 range seen in training."""
+    sites = pd.read_csv(TRAINING_SITES_CSV, dtype={"site_id": str})
+    metrics = read_json(SITE_DATA / "metrics.json") or {}
+    cams_max: dict = {}
+    if DATASET_PARQUET.exists():
+        d = pd.read_parquet(DATASET_PARQUET, columns=["region", "cams_pm2_5_mean"])
+        cams_max = {k: float(v) for k, v in d.groupby("region")["cams_pm2_5_mean"].max().items()}
+        cams_max["_all"] = float(d["cams_pm2_5_mean"].max())
+    return sites, metrics, cams_max
+
+
+def confidence_block(city: City, ctx: LiveContext) -> dict | None:
+    """How much to trust this city's forecast, from where AirTrace was trained and validated:
+    'local' (learned from this city's own monitor), 'regional' (a training monitor within
+    REGIONAL_KM) or 'extrapolation'. The quoted errors come from metrics.json."""
+    sites = ctx.training_sites
+    if sites is None or sites.empty:
+        return None
+    dist = haversine_km(city.lat, city.lon, sites["lat"].to_numpy(float), sites["lon"].to_numpy(float))
+    i = int(np.argmin(dist))
+    near, d_km = sites.iloc[i], float(dist[i])
+    models = {m["key"]: m for m in ctx.metrics.get("models", [])}
+    same = ctx.metrics.get("temporal_same_sites", {})
+    own = bool(city.embassy_site_id) and city.embassy_site_id in set(sites["site_id"])
+    if own or d_km <= LOCAL_KM:
+        tier, label = "local", "Trained on this city's own monitor"
+        detail = (f"AirTrace learned this location's bias from {int(near['n_days'])} days of reference data "
+                  f"at {near['city']} (Mar 2024 to Feb 2025).")
+        if same:
+            detail += (f" At monitors it had learned, error on later months fell from "
+                       f"{same['cams_raw']['mae']:.1f} (CAMS) to {same['airtrace']['mae']:.1f} µg/m³.")
+    elif d_km <= REGIONAL_KM:
+        tier, label = "regional", "Region covered by training monitors"
+        detail = f"Nearest training monitor: {near['city']} ({d_km:,.0f} km)."
+        if "airtrace" in models:
+            detail += (f" At locations the model never saw, cross-validated error fell from "
+                       f"{models['cams_raw']['mae']:.1f} (CAMS) to {models['airtrace']['mae']:.1f} µg/m³.")
+    else:
+        tier, label = "extrapolation", "Outside training coverage"
+        detail = (f"No training monitor within {REGIONAL_KM:,.0f} km (nearest: {near['city']}, {d_km:,.0f} km). "
+                  f"When whole world regions were held out, the ML correction did not beat CAMS, "
+                  f"so treat this forecast as indicative.")
+    return {"tier": tier, "label": label, "detail": detail,
+            "nearest_training_monitor": str(near["city"]), "distance_km": r1(d_km)}
+
+
+def flag_out_of_range(entry: dict, cams_max: float | None) -> dict:
+    """Days whose CAMS PM2.5 exceeds anything seen in training for the region are extrapolations:
+    flag them and widen the upper bound to at least the raw CAMS value (never falsely reassure)."""
+    cams = entry.get("cams_pm25")
+    if cams_max is None or cams is None or cams <= cams_max:
+        entry["out_of_range"] = False
+        return entry
+    entry["out_of_range"] = True
+    entry["pm25_high"] = r1(max(entry.get("pm25_high") or 0.0, cams))
+    entry["note"] = (f"CAMS forecasts {cams:.0f} µg/m³, above the highest value in our training data for this "
+                     f"region ({cams_max:.0f} µg/m³); the ML correction is extrapolated here.")
+    return entry
 
 
 def build_city(city: City, cams_resp: dict, wx_resp: dict, ctx: LiveContext,
@@ -280,12 +359,15 @@ def build_city(city: City, cams_resp: dict, wx_resp: dict, ctx: LiveContext,
     fc_days = [d for d in daily.index if d >= today][:FORECAST_DAYS]
     if not fc_days:
         raise ValueError(f"no forecast day >= {today:%Y-%m-%d} with >= 18 h of data")
-    daily_out = [day_entry(d, pred.at[d, "pm25"], pred.at[d, "pm25_low"], pred.at[d, "pm25_high"],
-                           daily.at[d, "cams_pm2_5_mean"], contrib.loc[d]) for d in fc_days]
+    cams_max = ctx.cams_max.get(city.region, ctx.cams_max.get("_all"))
+    daily_out = [flag_out_of_range(day_entry(d, pred.at[d, "pm25"], pred.at[d, "pm25_low"],
+                                             pred.at[d, "pm25_high"], daily.at[d, "cams_pm2_5_mean"],
+                                             contrib.loc[d]), cams_max) for d in fc_days]
     first = daily_out[0]
     cat = category(first["pm25"])
     today_out = {"date": first["date"], "pm25": first["pm25"], "aqi": first["aqi"],
-                 "category": cat["category"], "color": cat["color"], "message": cat["message"]}
+                 "category": cat["category"], "color": cat["color"], "message": cat["message"],
+                 "out_of_range": first["out_of_range"]}
 
     cams_daily = daily["cams_pm2_5_mean"]
     ratio = (pred["pm25"] / cams_daily).where(cams_daily > 0.05)
@@ -314,10 +396,11 @@ def build_city(city: City, cams_resp: dict, wx_resp: dict, ctx: LiveContext,
         "lat": city.lat, "lon": city.lon, "timezone": wx_resp.get("timezone") or "GMT",
         "generated_at": ctx.generated_at,
         "monitor": {k: mon.get(k) for k in ("status", "network", "name", "last_seen", "distance_km")},
+        "confidence": confidence_block(city, ctx),
         "today": today_out,
         "daily": daily_out,
         "hourly": hourly,
-        "sources": sources_block(ctx.source_model, daily, city.id),
+        "sources": sources_block(ctx.source_model, daily, city.id, pred["pm25"]),
         "fires": fires,
         "recent": recent,
         "history": ctx.history.get(city.id),
@@ -338,7 +421,7 @@ def summarize(doc: dict) -> dict:
             "today_pm25": today["pm25"], "today_aqi": today["aqi"], "today_category": today["category"],
             "today_color": today["color"], "peak_aqi_5d": peak["aqi"],
             "peak_category_5d": peak_cat["category"], "peak_color_5d": peak_cat["color"],
-            "top_source": top}
+            "top_source": top, "confidence": (doc.get("confidence") or {}).get("tier")}
 
 
 # ----------------------------------------------------------------------------- whole run
@@ -360,16 +443,18 @@ def _load_source_model():
 
 
 def live_check(docs: list[dict | None]) -> dict | None:
-    """Out-of-sample check on brand-new data: the last days' AirTrace and CAMS daily estimates
-    against AirNow observations at every city whose monitor still reports (the model was trained
-    on Mar 2024 - Feb 2025, so all of these days are unseen). Pooled over city-days."""
+    """Hindcast check on brand-new data: the last days' AirTrace and CAMS daily estimates (built
+    from the same short-lead CAMS fields and analysed weather the site uses for "today") against
+    AirNow observations at every city whose monitor still reports at least MIN_CHECK_DAYS days.
+    The model was trained on Mar 2024 - Feb 2025, so all of these days are unseen. Pooled over
+    city-days."""
     rows, cities = [], []
     for doc in docs:
         if not doc or (doc.get("monitor") or {}).get("status") != "active":
             continue
         rec = [r for r in doc.get("recent") or []
                if all(isinstance(r.get(k), (int, float)) for k in ("observed", "cams", "airtrace"))]
-        if not rec:
+        if len(rec) < MIN_CHECK_DAYS:
             continue
         obs = np.array([r["observed"] for r in rec], float)
         cams = np.array([r["cams"] for r in rec], float)
@@ -408,6 +493,9 @@ def run(only: list[str] | None = None, workers: int = WORKERS, replay_dir: Path 
     ctx.fires = _optional("NASA FIRMS fires", load_fires)
     ctx.airnow = _optional("AirNow observations", lambda: AirNowLive(today_utc=now_utc.date()))
     ctx.history = _optional("city history", lambda: json.loads(HISTORY_PATH.read_text())) or {}
+    training = _optional("training coverage", load_training_context)
+    if training is not None:
+        ctx.training_sites, ctx.metrics, ctx.cams_max = training
     if ctx.airnow is not None:
         print(f"    AirNow files {ctx.airnow.dates[-1]}..{ctx.airnow.dates[0]}, "
               f"{len(ctx.airnow.last_obs)} PM2.5 sites reporting", flush=True)
