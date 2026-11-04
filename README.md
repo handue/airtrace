@@ -13,6 +13,8 @@ Live site: https://handue.github.io/airtrace/
 
 ![AirTrace demo](docs/assets/screenshots/demo.gif)
 
+Full demo video (70 s, 1080p): [docs/assets/demo.mp4](docs/assets/demo.mp4)
+
 ## Why I built this
 
 A lot of cities in Africa and Asia have no public reference-grade PM2.5 monitor. For many of them the only
@@ -251,13 +253,31 @@ make all        # everything from the raw downloads
 
 ## Screenshots
 
-| Map | City page |
-|---|---|
-| ![Map](docs/assets/screenshots/map.png) | ![City](docs/assets/screenshots/city.png) |
+Map of today's forecast for all 90 cities:
 
-| Methods page | Mobile |
-|---|---|
-| ![Methods](docs/assets/screenshots/methods.png) | ![Mobile](docs/assets/screenshots/mobile.png) |
+![Map](docs/assets/screenshots/map.png)
+
+City page with the confidence level and 5-day forecast:
+
+![City forecast](docs/assets/screenshots/city-forecast.png)
+
+Hourly curve against the raw global model:
+
+![Hourly](docs/assets/screenshots/hourly.png)
+
+Source shares and what drives the forecast:
+
+![Sources and drivers](docs/assets/screenshots/sources-drivers.png)
+
+Warning when CAMS goes beyond the training range (Riyadh dust):
+
+![Riyadh](docs/assets/screenshots/riyadh-warning.png)
+
+How far the correction travels, from the methods page:
+
+![Generalisation](docs/assets/screenshots/methods-generalization.png)
+
+<img src="docs/assets/screenshots/mobile.png" alt="Mobile" width="320">
 
 ## Project layout
 
