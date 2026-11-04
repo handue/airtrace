@@ -1,8 +1,10 @@
 """Fit the receptor-model source attribution and validate it against ground truth (SOURCES role).
 
-NMF on eight daily CAMS tracers -> factor profiles named by matching to reference chemical
-signatures -> NNLS apportionment of *observed* PM2.5 at the training monitors -> validation
-checks. Writes
+v2, chemical mass balance: eight daily CAMS tracers -> NNLS activations of six fixed reference
+source profiles -> PM2.5 mass yields in two stages (within-site NNLS on CAMS PM2.5, then an NNLS
+calibration ``obs = alpha * model + beta`` against *observed* PM2.5 at the training monitors; beta is
+the regional background) -> location-grouped CV and validation checks. See ``airtrace/sources.py``
+for why v1's unconstrained NMF was replaced. Writes
 
 * ``models/sources_nmf.json``      everything ``airtrace.sources.load_source_model()`` needs;
 * ``docs/data/sources_global.json`` the website's global source-attribution summary (SPEC.md).
@@ -23,8 +25,6 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from sklearn.decomposition import NMF
-from sklearn.exceptions import ConvergenceWarning
 from sklearn.model_selection import GroupKFold
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -34,22 +34,17 @@ from airtrace.config import (CAMS_VARS, CONFIG, MODELS, PROCESSED, RAW_OPENMETEO
 from airtrace.features import FEATURE_LABELS, cams_frame, daily_features  # noqa: E402
 from airtrace.sources import (BACKGROUND_KEY, FACTOR_KEYS, MODEL_FILE, SOURCE_KEYS, SOURCES,  # noqa: E402
                               TRACER_COLS, TRACER_SHORT, SourceModel, complete_rows, fit_pm_regression,
-                              label_factors, load_source_model, max_normalise, nnls_activations,
-                              r2_score, robust_scale, round_shares, tracer_matrix)
+                              fit_two_stage_yields, load_source_model, nnls_activations, r2_score,
+                              reference_profiles, robust_scale, round_shares, tracer_matrix)
 
 # ---- model settings ------------------------------------------------------------------------
 # NO, HCHO and sea salt exist in the CAMS archive only from 2024-09-26 12:00 UTC, so the first
 # *full* local day with all eight tracers is 2024-09-27 at every training site.
 FIT_START = "2024-09-27"
-N_FACTORS = 6
+N_FACTORS = len(FACTOR_KEYS)
 SCALE_QUANTILE = 90.0
-# Kullback-Leibler (Poisson) loss: residuals are weighted as if their variance grows with the
-# concentration -- the same idea as EPA PMF's concentration-proportional uncertainties -- so a
-# handful of extreme hot-spot days cannot monopolise a factor the way they do under squared error.
-BETA_LOSS = "kullback-leibler"
-SEED = 0
-MAX_ITER = 5000
-TOL = 1e-6
+# Sources whose profile is a single mass tracer: their yield converts to ug/m3 PM2.5 per ug/m3 of it.
+DIRECT_TRACER = {"dust": "dust", "marine": "sea_salt"}
 MIN_SITE_DAYS = 30          # complete days a site needs to enter per-site shares and checks
 R2_EXPECTED = 0.3           # stated before fitting: tracers should explain >30% of PM2.5 variance
 CV_FOLDS = 5
@@ -85,9 +80,15 @@ CROP_BURNING = {"DS1010001": "New Delhi", "586PK3010003": "Lahore"}
 # Local weekends by FIPS country code (everything else: Saturday + Sunday).
 FRI_SAT_WEEKEND = {"EG", "IZ", "KU", "SA", "QA", "BA", "AG", "BG"}
 SAT_ONLY_WEEKEND = {"NP"}
-DEMO = {"148CHD010001": "N'Djamena (Sahel)", "150030010": "Honolulu (coastal)",
-        "DS1010001": "New Delhi (South Asian megacity)"}
-DEMO_DAYS = 12
+# (name, site_id, first day, last day): contrasting windows printed and written to the summary.
+DEMO = [
+    ("New Delhi, Oct-Nov (crop-burning season)", "DS1010001", "2024-10-01", "2024-11-30"),
+    ("New Delhi, Dec-Feb (winter)", "DS1010001", "2024-12-01", "2025-02-28"),
+    ("Beijing, Dec-Feb (winter)", "BJ1010001", "2024-12-01", "2025-02-28"),
+    ("N'Djamena, Oct-Feb (Sahel dry season)", "148CHD010001", "2024-10-01", "2025-02-28"),
+    ("Dakar, Oct-Feb (coastal Sahel; CAMS tracers only)", "686SEN010001", "2024-10-01", "2025-02-28"),
+    ("Los Angeles, Oct-Feb", "060371103", "2024-10-01", "2025-02-28"),
+]
 
 
 # ---- data ----------------------------------------------------------------------------------
@@ -177,31 +178,31 @@ def load_tracer_table(sites: pd.DataFrame) -> tuple[pd.DataFrame, str]:
 
 
 # ---- fitting -------------------------------------------------------------------------------
-def fit_factors(Xs: np.ndarray) -> tuple[np.ndarray, list[str], np.ndarray, NMF]:
-    """NMF on scaled tracers; returns max-normalised profiles in FACTOR_KEYS order, their keys,
-    the factor x signature cosine matrix and the fitted estimator."""
-    nmf = NMF(n_components=N_FACTORS, init="nndsvda", beta_loss=BETA_LOSS, solver="mu",
-              max_iter=MAX_ITER, tol=TOL, random_state=SEED)
-    with warnings.catch_warnings():
-        warnings.simplefilter("error", category=ConvergenceWarning)   # never ship an unconverged fit
-        nmf.fit(Xs)
-    H = max_normalise(nmf.components_)
-    keys, cos = label_factors(H)
-    order = sorted(range(len(keys)), key=lambda j: (FACTOR_KEYS.index(keys[j]), j))
-    return H[order], [keys[j] for j in order], cos[order], nmf
-
-
 def location_groups(rows: pd.DataFrame) -> np.ndarray:
     """Leakage-free CV groups: sites pooled by rounded 1-degree latitude/longitude (SPEC.md)."""
     return (rows["lat"].round().astype(int).astype(str) + "_" + rows["lon"].round().astype(int).astype(str)).to_numpy()
 
 
-def grouped_cv_r2(W: np.ndarray, y: np.ndarray, groups: np.ndarray) -> float:
-    """Out-of-fold R2 of the NNLS PM2.5 regression with GroupKFold over location groups."""
+def grouped_cv_r2(rows: pd.DataFrame, W: np.ndarray, has_obs: np.ndarray, groups: np.ndarray,
+                  direct: bool = False) -> float:
+    """Out-of-fold R2 against observed PM2.5 with GroupKFold over location groups (``groups`` is
+    aligned with the observed rows). Both stages -- or, with ``direct``, the single NNLS of observed
+    PM2.5 on the activations -- are refitted on the training locations only. The profiles are fixed
+    and the tracer scale uses no PM2.5, so nothing else can leak."""
+    obs_idx = np.flatnonzero(has_obs)
+    y = rows["pm25_obs"].to_numpy(float)[obs_idx]
+    cams = rows["cams_pm2_5_mean"].to_numpy(float)
+    site = rows["site_id"].to_numpy()
+    row_group = location_groups(rows)                     # same 1-degree groups for rows without obs
     pred = np.empty_like(y)
-    for train, test in GroupKFold(n_splits=CV_FOLDS).split(W, y, groups):
-        coef, intercept = fit_pm_regression(W[train], y[train])
-        pred[test] = W[test] @ coef + intercept
+    for train, test in GroupKFold(n_splits=CV_FOLDS).split(obs_idx, y, groups):
+        if direct:
+            coef, intercept = fit_pm_regression(W[obs_idx[train]], y[train])
+        else:
+            fit_rows = ~np.isin(row_group, np.unique(groups[test]))     # all rows of the training locations
+            fit = fit_two_stage_yields(W[fit_rows], cams[fit_rows], site[fit_rows], W[obs_idx[train]], y[train])
+            coef, intercept = fit["coef"], fit["intercept"]
+        pred[test] = W[obs_idx[test]] @ coef + intercept
     return r2_score(y, pred)
 
 
@@ -289,70 +290,105 @@ def run_checks(rows: pd.DataFrame, act: pd.DataFrame, site_shares: pd.DataFrame,
     ref = f"; raw CAMS PM2.5 alone reaches R2 {reg['r2_cams_raw']:.3f} on the same rows" if reg.get("r2_cams_raw") is not None else ""
     checks.append(check(
         "Factor activations explain observed PM2.5", reg["r2"], f"> {R2_EXPECTED}", reg["r2"] > R2_EXPECTED,
-        f"In-sample R2 of the NNLS regression of observed daily PM2.5 on the {N_FACTORS} activations + intercept "
-        f"over {reg['n_rows']} site-days at {reg['n_sites']} monitors; out-of-fold R2 with location-grouped "
-        f"{CV_FOLDS}-fold CV {reg['r2_cv_location']:.3f}{ref}."))
+        f"In-sample R2 of the attributed PM2.5 (sum of the {N_FACTORS} source contributions + background) "
+        f"against observed daily PM2.5 over {reg['n_rows']} site-days at {reg['n_sites']} monitors; out-of-fold R2 "
+        f"with location-grouped {CV_FOLDS}-fold CV (both stages refitted) {reg['r2_cv_location']:.3f}{ref}. "
+        f"Gas tracers on a ~40 km grid carry less information than CAMS's own PM2.5 field."))
     return checks
 
 
 # ---- main ----------------------------------------------------------------------------------
+def demo_frames(rows: pd.DataFrame, sites: pd.DataFrame) -> list[tuple[str, pd.DataFrame]]:
+    """Training-period windows for contrasting cities. Dakar's monitor stopped before the late
+    tracers exist, so its window is built from its cached CAMS file (tracers only, no network)."""
+    out = []
+    for name, sid, start, end in DEMO:
+        g = rows[(rows["site_id"] == sid) & (rows["date"] >= start) & (rows["date"] <= end)]
+        if g.empty:
+            site = sites[sites["site_id"] == sid]
+            if site.empty:
+                continue
+            cached = tracers_from_cache(site)
+            g = cached[(cached["date"] >= start) & (cached["date"] <= end)]
+            g = g[complete_rows(tracer_matrix(g))]
+        if not g.empty:
+            out.append((name, g))
+    return out
+
+
 def main() -> None:
     sites = load_sites()
     table, data_source = load_tracer_table(sites)
     rows = table[table["date"] >= FIT_START]
-    rows = rows[complete_rows(tracer_matrix(rows))].reset_index(drop=True)
+    rows = rows[complete_rows(tracer_matrix(rows)) & rows["cams_pm2_5_mean"].notna()].reset_index(drop=True)
     print(f"[sources] {len(rows)} complete site-days at {rows['site_id'].nunique()} sites "
           f"({rows['date'].min():%Y-%m-%d} to {rows['date'].max():%Y-%m-%d}) from {data_source}")
 
-    # 1-2. robust scaling + NMF
+    # 1-2. robust scaling + fixed CMB profiles -> activations
     X = np.clip(tracer_matrix(rows), 0.0, None)
     scale = robust_scale(X, SCALE_QUANTILE)
     Xs = X / scale
-    H, keys, cos, nmf = fit_factors(Xs)
-    assert sorted(keys) == sorted(FACTOR_KEYS), f"factor naming is not one-to-one: {keys}"
-    print(f"[sources] NMF k={N_FACTORS} ({BETA_LOSS}) converged in {nmf.n_iter_} iterations")
-    print("          " + " ".join(f"{s:>8s}" for s in TRACER_SHORT) + "   match")
-    for j, k in enumerate(keys):
-        print(f"{k:>9s} " + " ".join(f"{v:8.2f}" for v in H[j]) + f"   {cos[j, FACTOR_KEYS.index(k)]:.2f}")
-
-    # 3. apportion observed PM2.5
+    H, keys = reference_profiles(FACTOR_KEYS), list(FACTOR_KEYS)
     W = nnls_activations(Xs, H)
+    print("          " + " ".join(f"{s:>8s}" for s in TRACER_SHORT))
+    for j, k in enumerate(keys):
+        print(f"{k:>9s} " + " ".join(f"{v:8.2f}" for v in H[j]))
+
+    # 3. two-stage mass yields: within-site NNLS on CAMS PM2.5, then NNLS calibration to observations
     has_obs = rows["pm25_obs"].notna().to_numpy()
-    y = rows.loc[has_obs, "pm25_obs"].to_numpy(float)
-    coef, intercept = fit_pm_regression(W[has_obs], y)
-    pred = W[has_obs] @ coef + intercept
     obs_rows = rows[has_obs]
+    y = obs_rows["pm25_obs"].to_numpy(float)
+    cams = rows["cams_pm2_5_mean"].to_numpy(float)
+    site = rows["site_id"].to_numpy()
+    fit = fit_two_stage_yields(W, cams, site, W[has_obs], y)
+    coef, intercept = fit["coef"], fit["intercept"]
+    pred = W[has_obs] @ coef + intercept
+    groups = location_groups(obs_rows)
+    direct_coef, direct_icpt = fit_pm_regression(W[has_obs], y)
     reg = {
         "r2": r2_score(y, pred), "n_rows": int(has_obs.sum()), "n_sites": int(obs_rows["site_id"].nunique()),
         "intercept": intercept, "coef": dict(zip(keys, coef)),
-        "r2_cv_location": grouped_cv_r2(W[has_obs], y, location_groups(obs_rows)),
-        "r2_cams_raw": (r2_score(y, obs_rows["cams_pm2_5_mean"].to_numpy(float))
-                        if "cams_pm2_5_mean" in rows and obs_rows["cams_pm2_5_mean"].notna().all() else None),
+        "r2_cv_location": grouped_cv_r2(rows, W, has_obs, groups),
+        "r2_cams_raw": r2_score(y, obs_rows["cams_pm2_5_mean"].to_numpy(float)),
+        "stage1": {"target": "CAMS PM2.5 (within-site anomalies)", "r2_vs_cams": fit["stage1_r2_cams"],
+                   "intercept": fit["stage1_intercept"], "coef": dict(zip(keys, fit["stage1_coef"]))},
+        "calibration": {"alpha": fit["alpha"], "beta": fit["beta"]},
+        "direct_obs_nnls": {"r2": r2_score(y, W[has_obs] @ direct_coef + direct_icpt),
+                            "r2_cv_location": grouped_cv_r2(rows, W, has_obs, groups, direct=True),
+                            "intercept": direct_icpt, "coef": dict(zip(keys, direct_coef))},
         "mean_contribution": {**dict(zip(keys, (W[has_obs] * coef).mean(axis=0))), BACKGROUND_KEY: intercept},
         "mean_observed": float(y.mean()),
     }
-    print(f"[sources] PM2.5 NNLS: R2={reg['r2']:.3f} (location-CV {reg['r2_cv_location']:.3f}) n={reg['n_rows']}"
-          f" sites={reg['n_sites']} intercept={intercept:.2f}; coef "
-          + ", ".join(f"{k}={v:.2f}" for k, v in reg["coef"].items()))
+    print(f"[sources] stage 1 (CAMS PM2.5, within-site): R2 {fit['stage1_r2_cams']:.3f}; calibration "
+          f"obs = {fit['alpha']:.3f} * model + {fit['beta']:.2f}")
+    print(f"[sources] PM2.5 vs obs: R2={reg['r2']:.3f} (location-CV {reg['r2_cv_location']:.3f}; raw CAMS "
+          f"{reg['r2_cams_raw']:.3f}; direct obs-NNLS {reg['direct_obs_nnls']['r2']:.3f} / CV "
+          f"{reg['direct_obs_nnls']['r2_cv_location']:.3f}) n={reg['n_rows']} sites={reg['n_sites']} "
+          f"background={intercept:.2f}; coef " + ", ".join(f"{k}={v:.2f}" for k, v in reg["coef"].items()))
 
     # 4. serving model (round-tripped through JSON so everything below uses the shipped artefact)
     trained_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     explained = (W.mean(axis=0)[:, None] * H)
-    explained = explained / explained.sum(axis=0, keepdims=True)
+    explained = explained / np.where(explained.sum(axis=0, keepdims=True) > 0, explained.sum(axis=0, keepdims=True), 1)
+    yields_per_ugm3 = {k: float(coef[j] / scale[TRACER_SHORT.index(DIRECT_TRACER[k])]) for j, k in enumerate(keys)
+                       if k in DIRECT_TRACER}
     model = SourceModel(
         tracer_columns=TRACER_COLS, scale=scale, components=H, factor_keys=keys, coef=coef, intercept=intercept,
         sources=SOURCES,
-        meta={"version": f"sources-nmf-{trained_at[:10]}", "trained_at": trained_at,
-              "method": {"model": "sklearn NMF", "n_components": N_FACTORS, "beta_loss": BETA_LOSS,
-                         "solver": "mu", "init": "nndsvda", "random_state": SEED,
-                         "n_iter": int(nmf.n_iter_), "scale": f"p{SCALE_QUANTILE:g} of each tracer",
-                         "activation_transform": "row-wise NNLS onto fixed max-normalised profiles",
-                         "pm_regression": "NNLS of observed PM2.5 on activations + intercept"},
+        meta={"version": f"sources-cmb-{trained_at[:10]}", "trained_at": trained_at,
+              "method": {"model": "chemical mass balance with fixed reference profiles (v2)",
+                         "profiles": "airtrace.sources.REFERENCE_SIGNATURES, max-normalised, not fitted",
+                         "scale": f"p{SCALE_QUANTILE:g} of each tracer",
+                         "activation_transform": "row-wise NNLS onto the fixed profiles",
+                         "stage1": "NNLS of CAMS PM2.5 on activations, within-site anomalies (site fixed effects)",
+                         "stage2": "NNLS of observed PM2.5 on [stage-1 PM2.5, 1]: obs = alpha*model + beta",
+                         "background": "alpha * stage-1 intercept + beta"},
               "train_period": [FIT_START, TRAIN_END], "n_rows": int(len(rows)),
               "n_sites": int(rows["site_id"].nunique()), "data_source": data_source,
-              "match_cosine": {k: round(float(cos[j, FACTOR_KEYS.index(k)]), 3) for j, k in enumerate(keys)},
               "pm_regression": {"r2": round(reg["r2"], 4), "r2_cv_location": round(reg["r2_cv_location"], 4),
-                                "n_rows": reg["n_rows"], "n_sites": reg["n_sites"]}})
+                                "n_rows": reg["n_rows"], "n_sites": reg["n_sites"],
+                                "stage1_r2_vs_cams": round(fit["stage1_r2_cams"], 4),
+                                "alpha": round(fit["alpha"], 4), "beta": round(fit["beta"], 3)}})
     model_path = MODELS / MODEL_FILE
     model.save(model_path)
     model = load_source_model(model_path)
@@ -370,7 +406,17 @@ def main() -> None:
     for c in checks:
         print(f"[check] {'PASS' if c['passed'] else 'FAIL'} {c['name']}: {c['value']} (expected {c['expected']})")
 
-    # 6. website summary
+    # 6. demo windows (also written to the summary)
+    examples = []
+    for name, g in demo_frames(rows, sites):
+        res = model.shares(g)
+        shares = {s["key"]: s["share"] for s in res["shares"]}
+        examples.append({"name": name, "window": f"{g['date'].min():%Y-%m-%d} to {g['date'].max():%Y-%m-%d}",
+                         "n_days": int(len(g)), "shares": shares})
+        print(f"[demo] {name} ({examples[-1]['window']}, {len(g)} d): "
+              + ", ".join(f"{s['key']} {s['share']:.3f}" for s in res["shares"]))
+
+    # 7. website summary
     region = rows.drop_duplicates("site_id").set_index("site_id")["region"]
     by_region = []
     for name, g in site_shares.groupby(region.reindex(site_shares.index)):
@@ -378,15 +424,23 @@ def main() -> None:
         by_region.append({"region": name, "n_sites": int(len(g)),
                           "shares": round_shares((mean / mean.sum()).to_dict())})
     by_region.sort(key=lambda r: r["region"])
+    n_pass = sum(c["passed"] for c in checks)
     summary = {
         "generated_at": trained_at,
-        "method": (f"Receptor-model source attribution: non-negative matrix factorisation (the factor model "
-                   f"behind EPA PMF; {N_FACTORS} factors, Kullback-Leibler loss) of {len(TRACER_COLS)} daily "
-                   f"Copernicus CAMS tracers scaled by their {SCALE_QUANTILE:g}th percentiles, over "
-                   f"{len(rows)} site-days at {rows['site_id'].nunique()} reference sites ({FIT_START} to "
-                   f"{TRAIN_END}). Factors are named by optimal (Hungarian) matching of their profiles to "
-                   f"reference chemical signatures, and observed PM2.5 is apportioned by non-negative least "
-                   f"squares on the factor activations plus an intercept (regional background & other)."),
+        "version": model.meta["version"],
+        "method": (f"Receptor-model source attribution by chemical mass balance (CMB): {len(TRACER_COLS)} daily "
+                   f"Copernicus CAMS tracers, scaled by their {SCALE_QUANTILE:g}th percentiles, are split by "
+                   f"non-negative least squares into {N_FACTORS} fixed reference source profiles written from "
+                   f"emission chemistry (traffic NO2+NO+CO, industry/coal SO2+NO2+CO, burning CO+HCHO, "
+                   f"secondary O3+HCHO, dust, sea salt). PM2.5 mass yields come in two stages: a non-negative "
+                   f"regression of CAMS PM2.5 on the source activations using within-site day-to-day variation "
+                   f"(R2 {fit['stage1_r2_cams']:.2f}), then a calibration to observed PM2.5 at "
+                   f"{reg['n_sites']} reference monitors (observed = {fit['alpha']:.2f} x modelled + "
+                   f"{fit['beta']:.1f} ug/m3); the constant is the regional background & other. Fitted on "
+                   f"{len(rows)} site-days ({FIT_START} to {TRAIN_END}). It explains {reg['r2']:.0%} of the "
+                   f"variance of observed daily PM2.5 ({reg['r2_cv_location']:.0%} for unseen locations); "
+                   f"{n_pass} of {len(checks)} pre-stated plausibility checks pass. Shares are indicative: "
+                   f"the CAMS tracers are ~40 km grid averages with emission inventories behind them."),
         "period": [FIT_START, TRAIN_END],
         "n_sites": int(rows["site_id"].nunique()),
         "tracers": [FEATURE_LABELS[c] for c in TRACER_COLS],
@@ -394,17 +448,31 @@ def main() -> None:
                      "description": SOURCES[k]["description"],
                      "profile": [round(float(v), 3) for v in H[j]],
                      "tracer_share": [round(float(v), 3) for v in explained[j]],
-                     "match": round(float(cos[j, FACTOR_KEYS.index(k)]), 3)}
+                     "yield": round(float(coef[j]), 3),
+                     **({"yield_per_ugm3": round(yields_per_ugm3[k], 4)} if k in yields_per_ugm3 else {})}
                     for j, k in enumerate(keys)],
-        "pm_regression": {"r2": round(reg["r2"], 3), "n_rows": reg["n_rows"], "n_sites": reg["n_sites"],
+        "pm_regression": {"r2": round(reg["r2"], 3), "r2_cv_location": round(reg["r2_cv_location"], 3),
+                          "cv_scheme": f"GroupKFold({CV_FOLDS}) by 1-degree location; both stages refitted per fold",
+                          "n_rows": reg["n_rows"], "n_sites": reg["n_sites"],
                           "intercept": round(intercept, 2),
                           "coef": {k: round(float(v), 3) for k, v in reg["coef"].items()},
-                          "r2_cv_location": round(reg["r2_cv_location"], 3),
-                          "r2_cams_raw": None if reg["r2_cams_raw"] is None else round(reg["r2_cams_raw"], 3),
+                          "stage1": {"target": reg["stage1"]["target"],
+                                     "r2_vs_cams": round(reg["stage1"]["r2_vs_cams"], 3),
+                                     "intercept": round(reg["stage1"]["intercept"], 2),
+                                     "coef": {k: round(float(v), 3) for k, v in reg["stage1"]["coef"].items()}},
+                          "calibration": {"alpha": round(fit["alpha"], 3), "beta": round(fit["beta"], 2)},
+                          "r2_cams_raw": round(reg["r2_cams_raw"], 3),
+                          "direct_obs_nnls": {"note": "alternative: one NNLS of observed PM2.5 on the same activations",
+                                              "r2": round(reg["direct_obs_nnls"]["r2"], 3),
+                                              "r2_cv_location": round(reg["direct_obs_nnls"]["r2_cv_location"], 3),
+                                              "intercept": round(reg["direct_obs_nnls"]["intercept"], 2),
+                                              "coef": {k: round(float(v), 3)
+                                                       for k, v in reg["direct_obs_nnls"]["coef"].items()}},
                           "mean_observed": round(reg["mean_observed"], 1),
                           "mean_contribution": {k: round(float(v), 1) for k, v in reg["mean_contribution"].items()}},
         "checks": checks,
         "by_region": by_region,
+        "examples": examples,
     }
     SITE_DATA.mkdir(parents=True, exist_ok=True)
     out = SITE_DATA / "sources_global.json"
@@ -412,15 +480,6 @@ def main() -> None:
     tmp.write_text(json.dumps(summary, indent=1))
     tmp.replace(out)
     print(f"[sources] wrote {model_path.relative_to(MODELS.parent)} and {out.relative_to(MODELS.parent)}")
-
-    # 7. demo: shares over the last days of training data for contrasting cities
-    for sid, name in DEMO.items():
-        g = rows[rows["site_id"] == sid].tail(DEMO_DAYS)
-        if g.empty:
-            continue
-        res = model.shares(g)
-        print(f"[demo] {name} {g['date'].min():%Y-%m-%d}..{g['date'].max():%Y-%m-%d}: "
-              + ", ".join(f"{s['key']} {s['share']:.3f}" for s in res["shares"]))
 
 
 if __name__ == "__main__":

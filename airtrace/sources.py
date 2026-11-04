@@ -1,24 +1,32 @@
 """Receptor-model source attribution of PM2.5 ("where does the pollution come from").
 
-Method (fitted offline by ``scripts/06_fit_sources.py``, applied live by :meth:`SourceModel.shares`):
+Method (v2, fitted offline by ``scripts/06_fit_sources.py``, applied live by :meth:`SourceModel.shares`)
+-- a chemical-mass-balance (CMB) receptor model with fixed source profiles:
 
 1. **Tracers.** Eight daily-mean CAMS species -- NO2, NO, CO, SO2, O3, formaldehyde (HCHO),
    desert dust and sea salt -- are divided by a robust global scale (their 90th percentile over
    the training rows) so every species counts on a comparable footing.
-2. **Factorisation.** Non-negative matrix factorisation, the bilinear factor model behind
-   EPA PMF (``X ~= W @ H`` with ``W, H >= 0``), splits the scaled tracer matrix into ``k`` factor
-   profiles ``H`` (one row per factor, in scaled tracer units) and daily factor activations ``W``.
-3. **Naming.** Every factor is named by optimal one-to-one matching (Hungarian algorithm on cosine
-   similarity) of its max-normalised profile to reference chemical signatures, e.g.
-   traffic = NO2 + NO + some CO, industry = SO2 + some NO2/CO (:data:`REFERENCE_SIGNATURES`).
-4. **Apportionment.** Observed PM2.5 at reference monitors is regressed on the activations plus
-   an intercept by non-negative least squares. ``coef_j * W_ij`` is the PM2.5 (ug/m3) attributed
-   to factor ``j`` on day ``i``; the intercept is "regional background & other", i.e. everything
-   the tracers do not explain.
+2. **Fixed source profiles.** Each source has a fixed reference tracer signature
+   (:data:`REFERENCE_SIGNATURES`, written from emission chemistry and never tuned to the data):
+   traffic = NO2 + NO + some CO, industry/coal = SO2 + some NO2/CO, burning = CO + HCHO with little
+   NO2, secondary = O3 + some HCHO, dust = dust, marine = sea salt. A day's activations are the
+   non-negative least-squares (NNLS) solution of ``x ~= w @ H`` for its scaled tracers ``x``.
+   (v1 learnt the profiles by unconstrained NMF; that let one "industry" factor absorb NO2, CO and
+   SO2 together, leaving traffic near zero even in New Delhi.)
+3. **Mass yields, stage 1.** CAMS PM2.5 is regressed on the activations by NNLS on within-site
+   anomalies (site fixed effects). CAMS computes its PM2.5 from the same emissions that drive its
+   tracer fields, so this identifies how much PM2.5 (ug/m3) each unit of each signature carries;
+   using day-to-day variation inside each site removes between-site confounding (e.g. clean,
+   salty coastal air), which otherwise forces the sea-salt yield to zero.
+4. **Calibration to observations, stage 2.** Observed PM2.5 at the reference monitors is
+   regressed by NNLS on ``[stage-1 modelled PM2.5, 1]``: ``obs ~= alpha * model + beta``. The final
+   yields are ``alpha * stage-1 yields`` and ``beta`` (plus ``alpha * stage-1 intercept``) is the
+   "regional background & other" -- PM2.5 that none of the tracer signatures explains.
 
-At serving time the activations of new days are the NNLS projection of their scaled tracers onto
-the fixed profiles -- the same transform used to build the regression design matrix -- so training
-and serving cannot drift apart.
+``coef_j * W_ij`` is then the PM2.5 (ug/m3) attributed to source ``j`` on day ``i``. Training and
+serving use the same NNLS transform onto the same fixed profiles, so they cannot drift apart. When a
+better total PM2.5 is known (the AirTrace forecast), :meth:`SourceModel.shares` can rescale the
+modelled contributions to it with the ``pm25`` argument.
 
 Typical use::
 
@@ -67,20 +75,19 @@ SOURCE_KEYS = FACTOR_KEYS + [BACKGROUND_KEY]
 SOURCES: dict[str, dict[str, str]] = {
     "traffic": {
         "label": "Traffic & urban combustion", "color": "#3b82f6",
-        "description": "Freshly emitted nitric oxide (NO) with some NO2 from vehicle exhaust and other "
-                       "street-level combustion, strongest in calm winter air over big cities.",
+        "description": "Nitrogen oxides (NO2 and freshly emitted NO) with some carbon monoxide: the "
+                       "signature of vehicle exhaust and other street-level fuel burning, including the "
+                       "secondary nitrate that forms from it.",
     },
     "industry": {
         "label": "Industry, coal & power", "color": "#64748b",
-        "description": "Sulphur dioxide rising together with carbon monoxide and nitrogen dioxide, the "
-                       "signature of coal, power plants and industry; in this model it also carries much "
-                       "of a city's other fuel burning.",
+        "description": "Sulphur dioxide with some NO2 and carbon monoxide: the signature of coal, oil, "
+                       "power plants and industry, including the secondary sulphate that forms from it.",
     },
     "burning": {
         "label": "Fires & biomass burning", "color": "#f97316",
-        "description": "Formaldehyde-rich air from crop, forest and savanna fires and household biomass "
-                       "burning, although formaldehyde also forms from plant and urban emissions in hot "
-                       "or stagnant air.",
+        "description": "Carbon monoxide and formaldehyde with little NO2: smoke from crop, forest and "
+                       "savanna fires and household wood and dung burning.",
     },
     "dust": {
         "label": "Desert dust", "color": "#c8a165",
@@ -89,8 +96,9 @@ SOURCES: dict[str, dict[str, str]] = {
     },
     "secondary": {
         "label": "Photochemical & secondary", "color": "#a855f7",
-        "description": "Ozone-rich, chemically aged air in which sunlight turns gases into secondary "
-                       "particles; this regional haze is the baseline of PM2.5 almost everywhere.",
+        "description": "Ozone with some formaldehyde: chemically aged air in which sunlight turns gases "
+                       "into secondary organic and inorganic particles, a regional haze found almost "
+                       "everywhere.",
     },
     "marine": {
         "label": "Sea salt (marine)", "color": "#06b6d4",
@@ -99,13 +107,16 @@ SOURCES: dict[str, dict[str, str]] = {
     },
     BACKGROUND_KEY: {
         "label": "Regional background & other", "color": "#cbd5e1",
-        "description": "PM2.5 that none of the tracer factors explains: long-range background and local "
-                       "sources the global CAMS model does not capture.",
+        "description": "PM2.5 that none of the tracer signatures explains: long-range background, local "
+                       "sources the global CAMS model does not resolve, and the part of the measured "
+                       "level that the tracers cannot account for.",
     },
 }
 
-# Reference chemical signatures (relative weight per tracer, missing = 0). They are used only to
-# *name* the data-driven factors; they never constrain the factorisation itself.
+# Reference chemical signatures (relative weight per scaled tracer, missing = 0). Since v2 they are
+# the *fixed* source profiles of the chemical-mass-balance model (max-normalised by
+# :func:`reference_profiles`). They predate the v2 fit (v1 used them to name its NMF factors) and
+# were not adjusted to the data.
 REFERENCE_SIGNATURES: dict[str, dict[str, float]] = {
     "traffic": {"NO2": 1.0, "NO": 1.0, "CO": 0.5},
     "industry": {"SO2": 1.0, "NO2": 0.4, "CO": 0.4},
@@ -190,11 +201,40 @@ def nnls_activations(Xs: np.ndarray, H: np.ndarray) -> np.ndarray:
     return W
 
 
+def reference_profiles(keys: list[str] = FACTOR_KEYS) -> np.ndarray:
+    """Fixed CMB source profiles: the max-normalised reference signatures, (len(keys), n_tracers)."""
+    return max_normalise(signature_matrix(keys))
+
+
 def fit_pm_regression(W: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, float]:
     """NNLS of PM2.5 on [activations, 1]: returns (ug/m3 per unit activation, intercept ug/m3)."""
     A = np.column_stack([W, np.ones(len(W))])
     sol, _ = nnls(A, y)
     return sol[:-1], float(sol[-1])
+
+
+def fit_within_site_yields(W: np.ndarray, y: np.ndarray, site: np.ndarray) -> tuple[np.ndarray, float]:
+    """NNLS yields from within-site anomalies (site fixed effects), intercept from the grand means.
+
+    ``y - mean_site(y) ~= (W - mean_site(W)) @ coef`` with ``coef >= 0``; the intercept is
+    ``max(mean(y) - mean(W) @ coef, 0)``. Returns (ug/m3 per unit activation, intercept ug/m3).
+    """
+    W_dev = W - pd.DataFrame(W).groupby(site).transform("mean").to_numpy()
+    y_dev = y - pd.Series(y).groupby(site).transform("mean").to_numpy()
+    coef, _ = nnls(W_dev, y_dev)
+    return coef, max(float(np.mean(y) - W.mean(axis=0) @ coef), 0.0)
+
+
+def fit_two_stage_yields(W: np.ndarray, cams_pm25: np.ndarray, site: np.ndarray, W_obs: np.ndarray,
+                         obs_pm25: np.ndarray) -> dict[str, Any]:
+    """Stage 1: within-site NNLS of CAMS PM2.5 on activations; stage 2: NNLS calibration
+    ``obs ~= alpha * stage1 + beta`` on the rows with observations (``W_obs``, ``obs_pm25``).
+    Returns the final ``coef`` and ``intercept`` plus the stage-wise parameters."""
+    c1, i1 = fit_within_site_yields(W, cams_pm25, site)
+    (alpha,), beta = fit_pm_regression((W_obs @ c1 + i1)[:, None], obs_pm25)
+    return {"coef": alpha * c1, "intercept": alpha * i1 + beta, "stage1_coef": c1, "stage1_intercept": i1,
+            "alpha": float(alpha), "beta": float(beta),
+            "stage1_r2_cams": r2_score(cams_pm25, W @ c1 + i1)}
 
 
 def r2_score(y: np.ndarray, pred: np.ndarray) -> float:
@@ -254,12 +294,46 @@ class SourceModel:
         return out
 
     # ---- public API -----------------------------------------------------------------------
-    def shares(self, daily: pd.DataFrame) -> dict[str, Any]:
+    @staticmethod
+    def _rescale(contrib: pd.DataFrame, pm25: pd.Series | float | int | None,
+                 daily: pd.DataFrame) -> tuple[pd.DataFrame, float | None]:
+        """Scale modelled contributions to a known PM2.5 (see :meth:`shares`)."""
+        if pm25 is None:
+            return contrib, None
+        if isinstance(pm25, pd.Series):
+            p = None if pm25.index.has_duplicates else pm25.reindex(contrib.index)
+            if (p is None or p.isna().all()) and len(pm25) == len(daily):   # positional alignment
+                p = pd.Series(pm25.to_numpy(), index=daily.index)[daily.index.isin(contrib.index)]
+            if p is None:
+                return contrib, None
+            p = pd.to_numeric(p, errors="coerce").clip(lower=0.0)
+            total = contrib.sum(axis=1)
+            ok = p.notna().to_numpy() & (total > 0).to_numpy()
+            if not ok.any():
+                return contrib, None
+            contrib, p, total = contrib[ok], p[ok], total[ok]
+            # each day keeps its modelled source mix but is weighted by its known PM2.5
+            scaled = contrib.mul((p.to_numpy() / total.to_numpy()), axis=0)
+            return scaled, float(scaled.sum(axis=1).mean())
+        value = float(pm25)
+        if not math.isfinite(value) or value < 0:
+            raise ValueError(f"pm25 total must be a finite non-negative number, got {pm25!r}")
+        return contrib, value
+
+    def shares(self, daily: pd.DataFrame, pm25: pd.Series | float | None = None) -> dict[str, Any]:
         """Source shares of PM2.5 over the rows of ``daily`` (e.g. the days of a forecast window).
 
         ``daily`` needs the tracer columns of ``features.TRACER_COLUMNS``; rows with any missing
         tracer are ignored. Shares are mean modelled contributions divided by their total, rounded
         to 3 decimals so that they sum to exactly 1.
+
+        ``pm25`` (optional) is a better-known total PM2.5 in ug/m3, e.g. the AirTrace forecast:
+        either a ``pd.Series`` aligned with ``daily`` (by index, or by position if the index does
+        not match) -- every day's modelled contributions, background included, are then scaled to
+        that day's value, so high-PM days weigh more in the window's shares -- or a single number,
+        the window's mean total, which leaves the shares unchanged. Either way each share entry
+        also gets ``"pm25"`` (ug/m3 attributed to that source) and the result gets ``"pm25"`` (the
+        total used).
 
         Returns ``{"shares": [{"key", "label", "share", "color", "description"}, ...],
         "background_share": float}``. The ``shares`` list holds all seven sources -- the six
@@ -271,6 +345,7 @@ class SourceModel:
         contrib = self.contributions(daily)
         if contrib.empty:
             raise ValueError("no day with all source-attribution tracers present")
+        contrib, total_pm = self._rescale(contrib, pm25, daily)
         mean = contrib.mean()
         total = float(mean.sum())
         if total > 0:
@@ -282,7 +357,12 @@ class SourceModel:
         items = [{"key": k, "label": self.sources[k]["label"], "share": rounded[k],
                   "color": self.sources[k]["color"], "description": self.sources[k]["description"]}
                  for k in order]
-        return {"shares": items, "background_share": rounded[BACKGROUND_KEY]}
+        out: dict[str, Any] = {"shares": items, "background_share": rounded[BACKGROUND_KEY]}
+        if total_pm is not None:
+            for item in items:
+                item["pm25"] = round(fractions[item["key"]] * total_pm, 1)
+            out["pm25"] = round(total_pm, 1)
+        return out
 
     # ---- persistence ----------------------------------------------------------------------
     def to_dict(self) -> dict[str, Any]:

@@ -1,11 +1,12 @@
 {
- "generated_at": "2026-11-04T03:56:54Z",
- "method": "Receptor-model source attribution: non-negative matrix factorisation (the factor model behind EPA PMF; 6 factors, Kullback-Leibler loss) of 8 daily Copernicus CAMS tracers scaled by their 90th percentiles, over 11508 site-days at 84 reference sites (2024-09-27 to 2025-02-28). Factors are named by optimal (Hungarian) matching of their profiles to reference chemical signatures, and observed PM2.5 is apportioned by non-negative least squares on the factor activations plus an intercept (regional background & other).",
+ "generated_at": "2026-11-04T06:44:56Z",
+ "version": "sources-cmb-2026-11-04",
+ "method": "Receptor-model source attribution by chemical mass balance (CMB): 8 daily Copernicus CAMS tracers, scaled by their 90th percentiles, are split by non-negative least squares into 6 fixed reference source profiles written from emission chemistry (traffic NO2+NO+CO, industry/coal SO2+NO2+CO, burning CO+HCHO, secondary O3+HCHO, dust, sea salt). PM2.5 mass yields come in two stages: a non-negative regression of CAMS PM2.5 on the source activations using within-site day-to-day variation (R2 0.57), then a calibration to observed PM2.5 at 96 reference monitors (observed = 0.87 x modelled + 7.8 ug/m3); the constant is the regional background & other. Fitted on 13243 site-days (2024-09-27 to 2025-02-28). It explains 17% of the variance of observed daily PM2.5 (11% for unseen locations); 2 of 5 pre-stated plausibility checks pass. Shares are indicative: the CAMS tracers are ~40 km grid averages with emission inventories behind them.",
  "period": [
   "2024-09-27",
   "2025-02-28"
  ],
- "n_sites": 84,
+ "n_sites": 96,
  "tracers": [
   "Nitrogen dioxide",
   "Nitric oxide",
@@ -21,82 +22,82 @@
    "key": "traffic",
    "label": "Traffic & urban combustion",
    "color": "#3b82f6",
-   "description": "Freshly emitted nitric oxide (NO) with some NO2 from vehicle exhaust and other street-level combustion, strongest in calm winter air over big cities.",
+   "description": "Nitrogen oxides (NO2 and freshly emitted NO) with some carbon monoxide: the signature of vehicle exhaust and other street-level fuel burning, including the secondary nitrate that forms from it.",
    "profile": [
-    0.218,
     1.0,
-    0.091,
-    0.156,
+    1.0,
+    0.5,
     0.0,
-    0.007,
+    0.0,
+    0.0,
     0.0,
     0.0
    ],
    "tracer_share": [
-    0.223,
-    0.999,
-    0.078,
-    0.165,
+    0.682,
+    1.0,
+    0.346,
     0.0,
-    0.007,
+    0.0,
+    0.0,
     0.0,
     0.0
    ],
-   "match": 0.81
+   "yield": 13.549
   },
   {
    "key": "industry",
    "label": "Industry, coal & power",
    "color": "#64748b",
-   "description": "Sulphur dioxide rising together with carbon monoxide and nitrogen dioxide, the signature of coal, power plants and industry; in this model it also carries much of a city's other fuel burning.",
+   "description": "Sulphur dioxide with some NO2 and carbon monoxide: the signature of coal, oil, power plants and industry, including the secondary sulphate that forms from it.",
    "profile": [
-    0.826,
+    0.4,
     0.0,
-    0.969,
+    0.4,
     1.0,
-    0.019,
-    0.02,
+    0.0,
+    0.0,
     0.0,
     0.0
    ],
    "tracer_share": [
-    0.659,
+    0.281,
     0.0,
-    0.647,
-    0.823,
-    0.009,
-    0.016,
+    0.285,
+    1.0,
+    0.0,
+    0.0,
     0.0,
     0.0
    ],
-   "match": 0.923
+   "yield": 23.768
   },
   {
    "key": "burning",
    "label": "Fires & biomass burning",
    "color": "#f97316",
-   "description": "Formaldehyde-rich air from crop, forest and savanna fires and household biomass burning, although formaldehyde also forms from plant and urban emissions in hot or stagnant air.",
+   "description": "Carbon monoxide and formaldehyde with little NO2: smoke from crop, forest and savanna fires and household wood and dung burning.",
    "profile": [
-    0.033,
-    0.001,
-    0.088,
+    0.1,
     0.0,
-    0.088,
+    1.0,
+    0.0,
+    0.0,
     1.0,
     0.0,
     0.0
    ],
    "tracer_share": [
-    0.033,
-    0.001,
-    0.073,
+    0.036,
     0.0,
-    0.049,
-    0.972,
+    0.369,
+    0.0,
+    0.0,
+    0.345,
     0.0,
     0.0
    ],
-   "match": 0.764
+   "yield": 7.294
   },
   {
    "key": "dust",
@@ -104,53 +105,54 @@
    "color": "#c8a165",
    "description": "Mineral dust blown from deserts and dry land such as the Sahara, Arabia and the Thar, often carried hundreds of kilometres.",
    "profile": [
-    0.01,
     0.0,
     0.0,
-    0.009,
-    0.026,
-    0.003,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
     1.0,
     0.0
    ],
    "tracer_share": [
-    0.014,
     0.0,
     0.0,
-    0.012,
-    0.02,
-    0.003,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
     1.0,
     0.0
    ],
-   "match": 1.0
+   "yield": 3.1,
+   "yield_per_ugm3": 0.077
   },
   {
    "key": "secondary",
    "label": "Photochemical & secondary",
    "color": "#a855f7",
-   "description": "Ozone-rich, chemically aged air in which sunlight turns gases into secondary particles; this regional haze is the baseline of PM2.5 almost everywhere.",
+   "description": "Ozone with some formaldehyde: chemically aged air in which sunlight turns gases into secondary organic and inorganic particles, a regional haze found almost everywhere.",
    "profile": [
-    0.045,
     0.0,
-    0.154,
+    0.0,
+    0.0,
     0.0,
     1.0,
-    0.0,
+    0.5,
     0.0,
     0.0
    ],
    "tracer_share": [
-    0.07,
     0.0,
-    0.2,
     0.0,
-    0.876,
     0.0,
+    0.0,
+    1.0,
+    0.655,
     0.0,
     0.0
    ],
-   "match": 0.883
+   "yield": 15.304
   },
   {
    "key": "marine",
@@ -158,89 +160,122 @@
    "color": "#06b6d4",
    "description": "Sea-salt spray from breaking ocean waves, carried inland by onshore winds at coastal sites.",
    "profile": [
-    0.001,
     0.0,
-    0.004,
     0.0,
-    0.109,
-    0.003,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
     0.0,
     1.0
    ],
    "tracer_share": [
-    0.001,
     0.0,
-    0.002,
     0.0,
-    0.046,
-    0.002,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
     0.0,
     1.0
    ],
-   "match": 0.994
+   "yield": 1.017,
+   "yield_per_ugm3": 0.0839
   }
  ],
  "pm_regression": {
-  "r2": 0.232,
-  "n_rows": 11508,
-  "n_sites": 84,
-  "intercept": 0.0,
+  "r2": 0.17,
+  "r2_cv_location": 0.111,
+  "cv_scheme": "GroupKFold(5) by 1-degree location; both stages refitted per fold",
+  "n_rows": 13243,
+  "n_sites": 96,
+  "intercept": 7.81,
   "coef": {
-   "traffic": 1.631,
-   "industry": 48.782,
-   "burning": 13.514,
-   "dust": 2.304,
-   "secondary": 26.764,
-   "marine": 0.0
+   "traffic": 13.549,
+   "industry": 23.768,
+   "burning": 7.294,
+   "dust": 3.1,
+   "secondary": 15.304,
+   "marine": 1.017
   },
-  "r2_cv_location": 0.13,
-  "r2_cams_raw": 0.438,
-  "mean_observed": 37.5,
+  "stage1": {
+   "target": "CAMS PM2.5 (within-site anomalies)",
+   "r2_vs_cams": 0.568,
+   "intercept": 0.0,
+   "coef": {
+    "traffic": 15.55,
+    "industry": 27.278,
+    "burning": 8.371,
+    "dust": 3.558,
+    "secondary": 17.564,
+    "marine": 1.167
+   }
+  },
+  "calibration": {
+   "alpha": 0.871,
+   "beta": 7.81
+  },
+  "r2_cams_raw": 0.46,
+  "direct_obs_nnls": {
+   "note": "alternative: one NNLS of observed PM2.5 on the same activations",
+   "r2": 0.214,
+   "r2_cv_location": 0.042,
+   "intercept": 0.0,
+   "coef": {
+    "traffic": 7.692,
+    "industry": 32.26,
+    "burning": 19.813,
+    "dust": 1.232,
+    "secondary": 25.195,
+    "marine": 0.0
+   }
+  },
+  "mean_observed": 33.6,
   "mean_contribution": {
-   "traffic": 0.7,
-   "industry": 15.3,
-   "burning": 5.3,
-   "dust": 1.2,
-   "secondary": 16.3,
-   "marine": 0.0,
-   "background": 0.0
+   "traffic": 4.4,
+   "industry": 8.0,
+   "burning": 1.3,
+   "dust": 1.8,
+   "secondary": 10.1,
+   "marine": 0.3,
+   "background": 7.8
   }
  },
  "checks": [
   {
    "name": "Traffic factor is higher on working days",
-   "value": 0.976,
+   "value": 1.0,
    "expected": "> 1",
    "passed": false,
-   "detail": "Median over 80 sites of mean weekday / mean weekend traffic activation (local weekends: Fri-Sat in the Gulf states, Iraq, Egypt, Algeria and Bangladesh, Sat in Nepal, Sat-Sun elsewhere); 35/80 sites above 1. The raw CAMS NO2 input has a median ratio of 0.990 on the same days, i.e. the global model itself shows almost no weekly cycle."
+   "detail": "Median over 90 sites of mean weekday / mean weekend traffic activation (local weekends: Fri-Sat in the Gulf states, Iraq, Egypt, Algeria and Bangladesh, Sat in Nepal, Sat-Sun elsewhere); 45/90 sites above 1. The raw CAMS NO2 input has a median ratio of 0.990 on the same days, i.e. the global model itself shows almost no weekly cycle."
   },
   {
    "name": "Sea-salt share is higher at coastal than inland sites",
-   "value": 0.0,
-   "expected": "> inland mean (0.000)",
-   "passed": false,
-   "detail": "Mean marine share at 24 clearly coastal sites 0.000 vs 37 clearly inland sites 0.000. The marine factor activation itself is 0.950 at the coast vs 0.019 inland; its PM2.5 coefficient is 0.00 ug/m3 per unit activation."
+   "value": 0.032,
+   "expected": "> inland mean (0.001)",
+   "passed": true,
+   "detail": "Mean marine share at 29 clearly coastal sites 0.032 vs 38 clearly inland sites 0.001. The marine factor activation itself is 0.858 at the coast vs 0.017 inland; its PM2.5 coefficient is 1.02 ug/m3 per unit activation."
   },
   {
    "name": "Desert-dust share is highest in the Middle East, North Africa and Sahel",
-   "value": 0.157,
-   "expected": "> every other region (next: Sub-Saharan Africa 0.041)",
+   "value": 0.211,
+   "expected": "> every other region (next: Sub-Saharan Africa 0.072)",
    "passed": true,
-   "detail": "Mean dust share by region (Sahel = N'Djamena, Dakar): Middle East & North Africa + Sahel 0.157, Sub-Saharan Africa 0.041, Central Asia & Caucasus 0.015, Latin America & Caribbean 0.014, South Asia 0.007, East Asia 0.004, Europe 0.003, North America 0.002, Southeast Asia 0.000. Top sites: Jeddah 0.357, N'Djamena 0.346, Kuwait City 0.317, Abuja 0.230, Doha 0.186."
+   "detail": "Mean dust share by region (Sahel = N'Djamena, Dakar): Middle East & North Africa + Sahel 0.211, Sub-Saharan Africa 0.072, Central Asia & Caucasus 0.025, Latin America & Caribbean 0.024, South Asia 0.015, East Asia 0.005, Europe 0.005, North America 0.003, Southeast Asia 0.000. Top sites: N'Djamena 0.470, Jeddah 0.414, Kuwait City 0.402, Abuja 0.398, Doha 0.277."
   },
   {
    "name": "Burning factor peaks in the Oct-Nov crop-residue season (Delhi, Lahore)",
-   "value": 0.788,
+   "value": 0.717,
    "expected": "> 1 at every site",
    "passed": false,
-   "detail": "Mean burning activation Oct-Nov 2024 / Dec 2024-Feb 2025: New Delhi 1.32, Lahore 0.79 (value = the lower ratio)."
+   "detail": "Mean burning activation Oct-Nov 2024 / Dec 2024-Feb 2025: New Delhi 1.12, Lahore 0.72 (value = the lower ratio)."
   },
   {
    "name": "Factor activations explain observed PM2.5",
-   "value": 0.232,
+   "value": 0.17,
    "expected": "> 0.3",
    "passed": false,
-   "detail": "In-sample R2 of the NNLS regression of observed daily PM2.5 on the 6 activations + intercept over 11508 site-days at 84 monitors; out-of-fold R2 with location-grouped 5-fold CV 0.130; raw CAMS PM2.5 alone reaches R2 0.438 on the same rows."
+   "detail": "In-sample R2 of the attributed PM2.5 (sum of the 6 source contributions + background) against observed daily PM2.5 over 13243 site-days at 96 monitors; out-of-fold R2 with location-grouped 5-fold CV (both stages refitted) 0.111; raw CAMS PM2.5 alone reaches R2 0.460 on the same rows. Gas tracers on a ~40 km grid carry less information than CAMS's own PM2.5 field."
   }
  ],
  "by_region": [
@@ -248,117 +283,203 @@
    "region": "Central Asia & Caucasus",
    "n_sites": 7,
    "shares": {
-    "traffic": 0.019,
-    "industry": 0.474,
-    "burning": 0.018,
-    "dust": 0.015,
-    "secondary": 0.474,
+    "traffic": 0.124,
+    "industry": 0.35,
+    "burning": 0.004,
+    "dust": 0.025,
+    "secondary": 0.251,
     "marine": 0.0,
-    "background": 0.0
+    "background": 0.246
    }
   },
   {
    "region": "East Asia",
    "n_sites": 5,
    "shares": {
-    "traffic": 0.073,
-    "industry": 0.74,
-    "burning": 0.02,
-    "dust": 0.003,
-    "secondary": 0.164,
-    "marine": 0.0,
-    "background": 0.0
+    "traffic": 0.293,
+    "industry": 0.459,
+    "burning": 0.03,
+    "dust": 0.005,
+    "secondary": 0.084,
+    "marine": 0.001,
+    "background": 0.128
    }
   },
   {
    "region": "Europe",
    "n_sites": 3,
    "shares": {
-    "traffic": 0.001,
-    "industry": 0.373,
-    "burning": 0.047,
-    "dust": 0.003,
-    "secondary": 0.576,
-    "marine": 0.0,
-    "background": 0.0
+    "traffic": 0.022,
+    "industry": 0.335,
+    "burning": 0.007,
+    "dust": 0.004,
+    "secondary": 0.324,
+    "marine": 0.001,
+    "background": 0.307
    }
   },
   {
    "region": "Latin America & Caribbean",
    "n_sites": 6,
    "shares": {
-    "traffic": 0.009,
-    "industry": 0.239,
-    "burning": 0.259,
-    "dust": 0.014,
-    "secondary": 0.479,
-    "marine": 0.0,
-    "background": 0.0
+    "traffic": 0.081,
+    "industry": 0.102,
+    "burning": 0.088,
+    "dust": 0.023,
+    "secondary": 0.398,
+    "marine": 0.016,
+    "background": 0.292
    }
   },
   {
    "region": "Middle East & North Africa",
    "n_sites": 9,
    "shares": {
-    "traffic": 0.024,
-    "industry": 0.475,
-    "burning": 0.079,
-    "dust": 0.135,
-    "secondary": 0.287,
-    "marine": 0.0,
-    "background": 0.0
+    "traffic": 0.143,
+    "industry": 0.286,
+    "burning": 0.005,
+    "dust": 0.182,
+    "secondary": 0.208,
+    "marine": 0.017,
+    "background": 0.159
    }
   },
   {
    "region": "North America",
-   "n_sites": 24,
+   "n_sites": 36,
    "shares": {
-    "traffic": 0.013,
-    "industry": 0.171,
-    "burning": 0.048,
-    "dust": 0.002,
-    "secondary": 0.766,
-    "marine": 0.0,
-    "background": 0.0
+    "traffic": 0.094,
+    "industry": 0.09,
+    "burning": 0.002,
+    "dust": 0.003,
+    "secondary": 0.435,
+    "marine": 0.014,
+    "background": 0.362
    }
   },
   {
    "region": "South Asia",
    "n_sites": 12,
    "shares": {
-    "traffic": 0.008,
-    "industry": 0.478,
-    "burning": 0.094,
-    "dust": 0.007,
-    "secondary": 0.413,
-    "marine": 0.0,
-    "background": 0.0
+    "traffic": 0.123,
+    "industry": 0.331,
+    "burning": 0.042,
+    "dust": 0.016,
+    "secondary": 0.291,
+    "marine": 0.008,
+    "background": 0.189
    }
   },
   {
    "region": "Southeast Asia",
    "n_sites": 5,
    "shares": {
-    "traffic": 0.006,
-    "industry": 0.441,
-    "burning": 0.116,
-    "dust": 0.0,
-    "secondary": 0.437,
-    "marine": 0.0,
-    "background": 0.0
+    "traffic": 0.074,
+    "industry": 0.342,
+    "burning": 0.047,
+    "dust": 0.001,
+    "secondary": 0.313,
+    "marine": 0.005,
+    "background": 0.218
    }
   },
   {
    "region": "Sub-Saharan Africa",
    "n_sites": 12,
    "shares": {
+    "traffic": 0.003,
+    "industry": 0.011,
+    "burning": 0.164,
+    "dust": 0.105,
+    "secondary": 0.441,
+    "marine": 0.017,
+    "background": 0.259
+   }
+  }
+ ],
+ "examples": [
+  {
+   "name": "New Delhi, Oct-Nov (crop-burning season)",
+   "window": "2024-10-01 to 2024-11-30",
+   "n_days": 61,
+   "shares": {
+    "industry": 0.405,
+    "secondary": 0.212,
+    "traffic": 0.164,
+    "background": 0.123,
+    "dust": 0.059,
+    "burning": 0.037,
+    "marine": 0.0
+   }
+  },
+  {
+   "name": "New Delhi, Dec-Feb (winter)",
+   "window": "2024-12-01 to 2025-02-28",
+   "n_days": 88,
+   "shares": {
+    "industry": 0.498,
+    "secondary": 0.201,
+    "background": 0.133,
+    "traffic": 0.1,
+    "burning": 0.036,
+    "dust": 0.032,
+    "marine": 0.0
+   }
+  },
+  {
+   "name": "Beijing, Dec-Feb (winter)",
+   "window": "2024-12-01 to 2025-02-28",
+   "n_days": 85,
+   "shares": {
+    "traffic": 0.515,
+    "industry": 0.352,
+    "background": 0.085,
+    "secondary": 0.039,
+    "dust": 0.009,
+    "burning": 0.0,
+    "marine": 0.0
+   }
+  },
+  {
+   "name": "N'Djamena, Oct-Feb (Sahel dry season)",
+   "window": "2024-10-01 to 2025-02-28",
+   "n_days": 137,
+   "shares": {
+    "dust": 0.477,
+    "secondary": 0.27,
+    "background": 0.194,
+    "burning": 0.056,
+    "industry": 0.003,
     "traffic": 0.0,
-    "industry": 0.07,
-    "burning": 0.492,
-    "dust": 0.066,
-    "secondary": 0.372,
-    "marine": 0.0,
-    "background": 0.0
+    "marine": 0.0
+   }
+  },
+  {
+   "name": "Dakar, Oct-Feb (coastal Sahel; CAMS tracers only)",
+   "window": "2024-10-01 to 2025-02-28",
+   "n_days": 151,
+   "shares": {
+    "secondary": 0.358,
+    "dust": 0.295,
+    "background": 0.238,
+    "marine": 0.047,
+    "burning": 0.029,
+    "industry": 0.028,
+    "traffic": 0.005
+   }
+  },
+  {
+   "name": "Los Angeles, Oct-Feb",
+   "window": "2024-10-01 to 2025-02-28",
+   "n_days": 146,
+   "shares": {
+    "traffic": 0.6,
+    "background": 0.175,
+    "secondary": 0.164,
+    "industry": 0.053,
+    "burning": 0.005,
+    "dust": 0.002,
+    "marine": 0.001
    }
   }
  ]
