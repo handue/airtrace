@@ -14,7 +14,8 @@
   "peak_aqi_5d": 120,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "ashgabat",
@@ -31,7 +32,8 @@
   "peak_aqi_5d": 125,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "local"
  },
  {
   "id": "astana",
@@ -48,7 +50,8 @@
   "peak_aqi_5d": 96,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "baku",
@@ -65,7 +68,8 @@
   "peak_aqi_5d": 73,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "bishkek",
@@ -75,14 +79,15 @@
   "lat": 42.8276,
   "lon": 74.5838,
   "monitor_status": "offline",
-  "today_pm25": 18.6,
+  "today_pm25": 18.9,
   "today_aqi": 69,
   "today_category": "Moderate",
   "today_color": "#ffff00",
   "peak_aqi_5d": 69,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "dushanbe",
@@ -92,14 +97,15 @@
   "lat": 38.5577,
   "lon": 68.7759,
   "monitor_status": "active",
-  "today_pm25": 37.1,
+  "today_pm25": 37.0,
   "today_aqi": 105,
   "today_category": "Unhealthy for Sensitive Groups",
   "today_color": "#ff7e00",
-  "peak_aqi_5d": 125,
+  "peak_aqi_5d": 109,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "tashkent",
@@ -116,7 +122,8 @@
   "peak_aqi_5d": 124,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "beijing",
@@ -126,14 +133,15 @@
   "lat": 39.9534,
   "lon": 116.4663,
   "monitor_status": "offline",
-  "today_pm25": 109.9,
+  "today_pm25": 109.7,
   "today_aqi": 189,
   "today_category": "Unhealthy",
   "today_color": "#ff0000",
   "peak_aqi_5d": 189,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Traffic & urban combustion"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "local"
  },
  {
   "id": "chengdu",
@@ -143,14 +151,15 @@
   "lat": 30.5728,
   "lon": 104.0668,
   "monitor_status": "none",
-  "today_pm25": 48.9,
+  "today_pm25": 49.1,
   "today_aqi": 134,
   "today_category": "Unhealthy for Sensitive Groups",
   "today_color": "#ff7e00",
-  "peak_aqi_5d": 169,
+  "peak_aqi_5d": 170,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "extrapolation"
  },
  {
   "id": "guangzhou",
@@ -167,7 +176,8 @@
   "peak_aqi_5d": 101,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "local"
  },
  {
   "id": "seoul",
@@ -177,14 +187,15 @@
   "lat": 37.5665,
   "lon": 126.978,
   "monitor_status": "none",
-  "today_pm25": 33.7,
-  "today_aqi": 97,
+  "today_pm25": 33.1,
+  "today_aqi": 96,
   "today_category": "Moderate",
   "today_color": "#ffff00",
-  "peak_aqi_5d": 97,
+  "peak_aqi_5d": 96,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "regional"
  },
  {
   "id": "shanghai",
@@ -201,7 +212,8 @@
   "peak_aqi_5d": 102,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "local"
  },
  {
   "id": "shenyang",
@@ -218,7 +230,8 @@
   "peak_aqi_5d": 137,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "taipei",
@@ -235,7 +248,8 @@
   "peak_aqi_5d": 91,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Photochemical & secondary",
+  "confidence": "regional"
  },
  {
   "id": "tokyo",
@@ -252,7 +266,8 @@
   "peak_aqi_5d": 71,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "extrapolation"
  },
  {
   "id": "ulaanbaatar",
@@ -269,7 +284,8 @@
   "peak_aqi_5d": 184,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "xi-an",
@@ -286,7 +302,8 @@
   "peak_aqi_5d": 180,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "regional"
  },
  {
   "id": "banja-luka",
@@ -296,14 +313,15 @@
   "lat": 44.7725,
   "lon": 17.1856,
   "monitor_status": "offline",
-  "today_pm25": 34.4,
-  "today_aqi": 98,
+  "today_pm25": 34.9,
+  "today_aqi": 99,
   "today_category": "Moderate",
   "today_color": "#ffff00",
   "peak_aqi_5d": 152,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "berlin",
@@ -313,14 +331,15 @@
   "lat": 52.52,
   "lon": 13.405,
   "monitor_status": "none",
-  "today_pm25": 29.1,
+  "today_pm25": 29.0,
   "today_aqi": 88,
   "today_category": "Moderate",
   "today_color": "#ffff00",
   "peak_aqi_5d": 107,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "regional"
  },
  {
   "id": "istanbul",
@@ -337,7 +356,8 @@
   "peak_aqi_5d": 54,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "regional"
  },
  {
   "id": "london",
@@ -354,7 +374,8 @@
   "peak_aqi_5d": 74,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "extrapolation"
  },
  {
   "id": "madrid",
@@ -371,7 +392,8 @@
   "peak_aqi_5d": 103,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "regional"
  },
  {
   "id": "moscow",
@@ -388,7 +410,8 @@
   "peak_aqi_5d": 63,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "extrapolation"
  },
  {
   "id": "paris",
@@ -398,14 +421,15 @@
   "lat": 48.8566,
   "lon": 2.3522,
   "monitor_status": "none",
-  "today_pm25": 18.4,
-  "today_aqi": 68,
+  "today_pm25": 17.9,
+  "today_aqi": 67,
   "today_category": "Moderate",
   "today_color": "#ffff00",
   "peak_aqi_5d": 140,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "extrapolation"
  },
  {
   "id": "pristina",
@@ -422,7 +446,8 @@
   "peak_aqi_5d": 94,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "rome",
@@ -439,7 +464,8 @@
   "peak_aqi_5d": 148,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "regional"
  },
  {
   "id": "sarajevo",
@@ -456,7 +482,8 @@
   "peak_aqi_5d": 145,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "warsaw",
@@ -473,7 +500,8 @@
   "peak_aqi_5d": 127,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "regional"
  },
  {
   "id": "asuncion",
@@ -490,7 +518,8 @@
   "peak_aqi_5d": 62,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "belmopan",
@@ -507,7 +536,8 @@
   "peak_aqi_5d": 43,
   "peak_category_5d": "Good",
   "peak_color_5d": "#00e400",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "bogota",
@@ -524,7 +554,8 @@
   "peak_aqi_5d": 66,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "local"
  },
  {
   "id": "buenos-aires",
@@ -541,7 +572,8 @@
   "peak_aqi_5d": 60,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "extrapolation"
  },
  {
   "id": "guatemala-city",
@@ -558,7 +590,8 @@
   "peak_aqi_5d": 68,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "lima",
@@ -575,7 +608,8 @@
   "peak_aqi_5d": 59,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "mexico-city",
@@ -592,7 +626,8 @@
   "peak_aqi_5d": 72,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "regional"
  },
  {
   "id": "santiago",
@@ -609,7 +644,8 @@
   "peak_aqi_5d": 90,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Photochemical & secondary",
+  "confidence": "extrapolation"
  },
  {
   "id": "sao-paulo",
@@ -626,7 +662,8 @@
   "peak_aqi_5d": 69,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "willemstad",
@@ -643,7 +680,8 @@
   "peak_aqi_5d": 52,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "abu-dhabi",
@@ -660,7 +698,8 @@
   "peak_aqi_5d": 105,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "algiers",
@@ -677,7 +716,8 @@
   "peak_aqi_5d": 74,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "baghdad",
@@ -694,7 +734,8 @@
   "peak_aqi_5d": 158,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "local"
  },
  {
   "id": "cairo",
@@ -711,7 +752,8 @@
   "peak_aqi_5d": 128,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "doha",
@@ -728,7 +770,8 @@
   "peak_aqi_5d": 104,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "dubai",
@@ -745,7 +788,8 @@
   "peak_aqi_5d": 111,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "jeddah",
@@ -762,7 +806,8 @@
   "peak_aqi_5d": 88,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "kuwait-city",
@@ -779,7 +824,8 @@
   "peak_aqi_5d": 163,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "manama",
@@ -796,7 +842,8 @@
   "peak_aqi_5d": 85,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "riyadh",
@@ -813,7 +860,8 @@
   "peak_aqi_5d": 154,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Desert dust"
+  "top_source": "Desert dust",
+  "confidence": "regional"
  },
  {
   "id": "tehran",
@@ -830,7 +878,8 @@
   "peak_aqi_5d": 162,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "regional"
  },
  {
   "id": "chicago",
@@ -840,14 +889,15 @@
   "lat": 41.8781,
   "lon": -87.6298,
   "monitor_status": "active",
-  "today_pm25": 3.8,
-  "today_aqi": 21,
+  "today_pm25": 3.5,
+  "today_aqi": 19,
   "today_category": "Good",
   "today_color": "#00e400",
-  "peak_aqi_5d": 21,
+  "peak_aqi_5d": 19,
   "peak_category_5d": "Good",
   "peak_color_5d": "#00e400",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "regional"
  },
  {
   "id": "los-angeles",
@@ -864,7 +914,8 @@
   "peak_aqi_5d": 60,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "local"
  },
  {
   "id": "new-york",
@@ -874,14 +925,15 @@
   "lat": 40.7128,
   "lon": -74.006,
   "monitor_status": "active",
-  "today_pm25": 11.4,
+  "today_pm25": 11.1,
   "today_aqi": 55,
   "today_category": "Moderate",
   "today_color": "#ffff00",
   "peak_aqi_5d": 55,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "regional"
  },
  {
   "id": "toronto",
@@ -891,14 +943,15 @@
   "lat": 43.6532,
   "lon": -79.3832,
   "monitor_status": "active",
-  "today_pm25": 12.3,
+  "today_pm25": 12.5,
   "today_aqi": 57,
   "today_category": "Moderate",
   "today_color": "#ffff00",
   "peak_aqi_5d": 57,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "regional"
  },
  {
   "id": "vancouver",
@@ -915,7 +968,8 @@
   "peak_aqi_5d": 79,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "regional"
  },
  {
   "id": "sydney",
@@ -932,7 +986,8 @@
   "peak_aqi_5d": 43,
   "peak_category_5d": "Good",
   "peak_color_5d": "#00e400",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "extrapolation"
  },
  {
   "id": "chennai",
@@ -949,7 +1004,8 @@
   "peak_aqi_5d": 83,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "colombo",
@@ -966,7 +1022,8 @@
   "peak_aqi_5d": 63,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "dhaka",
@@ -983,7 +1040,8 @@
   "peak_aqi_5d": 205,
   "peak_category_5d": "Very Unhealthy",
   "peak_color_5d": "#8f3f97",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "hyderabad",
@@ -1000,7 +1058,8 @@
   "peak_aqi_5d": 134,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "islamabad",
@@ -1017,7 +1076,8 @@
   "peak_aqi_5d": 170,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "local"
  },
  {
   "id": "karachi",
@@ -1034,7 +1094,8 @@
   "peak_aqi_5d": 155,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Industry, coal & power"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "kathmandu",
@@ -1051,7 +1112,8 @@
   "peak_aqi_5d": 153,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "kolkata",
@@ -1068,7 +1130,8 @@
   "peak_aqi_5d": 201,
   "peak_category_5d": "Very Unhealthy",
   "peak_color_5d": "#8f3f97",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "lahore",
@@ -1085,7 +1148,8 @@
   "peak_aqi_5d": 281,
   "peak_category_5d": "Very Unhealthy",
   "peak_color_5d": "#8f3f97",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "mumbai",
@@ -1102,7 +1166,8 @@
   "peak_aqi_5d": 166,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "new-delhi",
@@ -1119,7 +1184,8 @@
   "peak_aqi_5d": 255,
   "peak_category_5d": "Very Unhealthy",
   "peak_color_5d": "#8f3f97",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "peshawar",
@@ -1136,7 +1202,8 @@
   "peak_aqi_5d": 182,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Industry, coal & power"
+  "top_source": "Traffic & urban combustion",
+  "confidence": "local"
  },
  {
   "id": "bangkok",
@@ -1153,7 +1220,8 @@
   "peak_aqi_5d": 90,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "regional"
  },
  {
   "id": "hanoi",
@@ -1170,7 +1238,8 @@
   "peak_aqi_5d": 94,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "ho-chi-minh-city",
@@ -1187,7 +1256,8 @@
   "peak_aqi_5d": 74,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "regional"
  },
  {
   "id": "jakarta",
@@ -1204,7 +1274,8 @@
   "peak_aqi_5d": 100,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "local"
  },
  {
   "id": "manila",
@@ -1221,7 +1292,8 @@
   "peak_aqi_5d": 71,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "rangoon",
@@ -1238,7 +1310,8 @@
   "peak_aqi_5d": 78,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "singapore",
@@ -1255,7 +1328,8 @@
   "peak_aqi_5d": 75,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Industry, coal & power",
+  "confidence": "regional"
  },
  {
   "id": "vientiane",
@@ -1272,7 +1346,8 @@
   "peak_aqi_5d": 91,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "abidjan",
@@ -1289,7 +1364,8 @@
   "peak_aqi_5d": 69,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "abuja",
@@ -1306,7 +1382,8 @@
   "peak_aqi_5d": 132,
   "peak_category_5d": "Unhealthy for Sensitive Groups",
   "peak_color_5d": "#ff7e00",
-  "top_source": "Industry, coal & power"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "accra",
@@ -1323,7 +1400,8 @@
   "peak_aqi_5d": 66,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "addis-ababa",
@@ -1340,7 +1418,8 @@
   "peak_aqi_5d": 90,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "antananarivo",
@@ -1357,7 +1436,8 @@
   "peak_aqi_5d": 83,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "dakar",
@@ -1374,7 +1454,8 @@
   "peak_aqi_5d": 80,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "johannesburg",
@@ -1391,7 +1472,8 @@
   "peak_aqi_5d": 88,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "regional"
  },
  {
   "id": "kampala",
@@ -1408,7 +1490,8 @@
   "peak_aqi_5d": 183,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "kigali",
@@ -1425,7 +1508,8 @@
   "peak_aqi_5d": 86,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "kinshasa",
@@ -1442,7 +1526,8 @@
   "peak_aqi_5d": 152,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "lagos",
@@ -1459,7 +1544,8 @@
   "peak_aqi_5d": 58,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "lome",
@@ -1476,7 +1562,8 @@
   "peak_aqi_5d": 59,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "maputo",
@@ -1493,7 +1580,8 @@
   "peak_aqi_5d": 86,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "n-djamena",
@@ -1510,7 +1598,8 @@
   "peak_aqi_5d": 171,
   "peak_category_5d": "Unhealthy",
   "peak_color_5d": "#ff0000",
-  "top_source": "Photochemical & secondary"
+  "top_source": "Photochemical & secondary",
+  "confidence": "local"
  },
  {
   "id": "nairobi",
@@ -1527,6 +1616,7 @@
   "peak_aqi_5d": 71,
   "peak_category_5d": "Moderate",
   "peak_color_5d": "#ffff00",
-  "top_source": "Fires & biomass burning"
+  "top_source": "Photochemical & secondary",
+  "confidence": "regional"
  }
 ]
