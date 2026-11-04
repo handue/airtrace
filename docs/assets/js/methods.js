@@ -5,7 +5,7 @@
  * Nothing numeric is hard-coded: a missing block shows an "unavailable" note instead.
  */
 import {
-  AQI_LEVELS, REFRESH_HOURS, SOURCE_FACTORS, asPercent, emptyState, fmtDate, fmtInt, fmtNum, fmtPct,
+  AQI_LEVELS, BASEMAP, REFRESH_HOURS, SOURCE_FACTORS, asPercent, emptyState, fmtDate, fmtInt, fmtNum, fmtPct,
   fmtSigned, h, initChrome, initUpdated, inkOn, hexToRgba, loadAll, tableView,
 } from "./common.js";
 import { applyChartDefaults, axis, destroyAll, hasChart, makeChart, onSchemeChange, theme } from "./charts.js";
@@ -50,7 +50,7 @@ async function main() {
 
 function renderAll() {
   destroyAll(state.charts);
-  const steps = [renderHeadline, renderValidation, renderModels, renderScatter, renderRegionMae, renderConfusion,
+  const steps = [renderHeadline, renderValidation, renderGeneralization, renderModels, renderScatter, renderRegionMae, renderConfusion,
     renderSiteMap, renderImportance, renderInterval, renderSources, renderDataset];
   for (const step of steps) {
     try { step(); } catch (err) { console.error(`[AirTrace] ${step.name} failed`, err); }
@@ -93,7 +93,7 @@ function wrapLabel(s, max = 18) {
 }
 
 const isDark = () => window.matchMedia("(prefers-color-scheme: dark)").matches;
-const tileUrl = () => `https://{s}.basemaps.cartocdn.com/${isDark() ? "dark_all" : "light_all"}/{z}/{x}/{y}{r}.png`;
+const tileUrl = () => BASEMAP.url(isDark());
 
 /* ================================================================== headline + validation */
 
@@ -155,6 +155,34 @@ function renderValidation() {
       return h("tr", null, h("th", { scope: "row" }, label),
         h("td", { class: !bWins && a != null && b != null && a !== b ? "best" : "" }, f(a)),
         h("td", { class: bWins ? "best" : "" }, f(b)));
+    })))));
+}
+
+function renderGeneralization() {
+  const M = state.metrics || {};
+  const box = $("general-table");
+  if (!box) return;
+  const cv = Object.fromEntries((M.models || []).map((m) => [m.key, m]));
+  const rows = [];
+  if (cv.cams_raw && cv.airtrace) rows.push(["New locations (150-km clusters held out)", cv.cams_raw.mae, cv.airtrace.mae, cv.cams_raw.r2, cv.airtrace.r2]);
+  const T = M.temporal_holdout;
+  if (T?.cams_raw && T?.airtrace) rows.push(["New locations and future months", T.cams_raw.mae, T.airtrace.mae, T.cams_raw.r2, T.airtrace.r2]);
+  for (const g of M.generalization || []) rows.push([g.scheme, g.mae_cams, g.mae_airtrace, g.r2_cams, g.r2_airtrace, `${g.sites_improved} of ${g.n_sites} monitors improved`]);
+  const S = M.temporal_same_sites;
+  if (S?.cams_raw && S?.airtrace) rows.push(["Known monitors, future months (cities whose monitor went offline)", S.cams_raw.mae, S.airtrace.mae, S.cams_raw.r2, S.airtrace.r2]);
+  if (!rows.length) { box.replaceChildren(emptyState("Generalisation metrics unavailable.")); return; }
+  box.replaceChildren(h("div", { class: "table-scroll" }, h("table", { class: "data" },
+    h("caption", { class: "sr-only" }, "Generalisation tests"),
+    h("thead", null, h("tr", null, h("th", { scope: "col" }, "Test"), h("th", { scope: "col" }, "MAE CAMS"),
+      h("th", { scope: "col" }, "MAE AirTrace"), h("th", { scope: "col" }, "Change"), h("th", { scope: "col" }, "R² CAMS → AirTrace"))),
+    h("tbody", null, rows.map(([label, a, b, r2a, r2b, note]) => {
+      const ch = finite(a) && finite(b) && a ? (b / a - 1) * 100 : null;
+      return h("tr", null,
+        h("th", { scope: "row" }, label, note ? h("div", { class: "small muted" }, note) : null),
+        h("td", null, fmtNum(a, 1)),
+        h("td", { class: finite(ch) && ch < 0 ? "best" : "" }, fmtNum(b, 1)),
+        h("td", null, finite(ch) ? `${ch > 0 ? "+" : "−"}${fmtNum(Math.abs(ch), 1)}%` : "–"),
+        h("td", null, `${fmtNum(r2a, 2)} → ${fmtNum(r2b, 2)}`));
     })))));
 }
 
@@ -420,7 +448,7 @@ function renderConfusion() {
     heatTable(labels, M, `${title}: AQI category confusion matrix, rows observed, columns predicted`));
   box.replaceChildren(
     head("Getting the AQI category right", "Days by observed (rows) and predicted (columns) category. Shading = share of the row; outlined cells are correct."),
-    h("div", { class: "grid", style: { gap: "18px" } }, block("CAMS raw", C.cams, sc), block("AirTrace", C.airtrace, sa)),
+    h("div", { class: "grid", style: { gap: "18px", gridTemplateColumns: "minmax(0, 1fr)" } }, block("CAMS raw", C.cams, sc), block("AirTrace", C.airtrace, sa)),
     h("p", { class: "note" }, "USG = Unhealthy for Sensitive Groups. Counts are cross-validated station-days."));
 }
 
@@ -466,10 +494,7 @@ function renderSiteMap() {
   if (!L) { el.replaceChildren(emptyState("The map could not be loaded; see the table below.")); return; }
   if (!state.siteMap) {
     state.siteMap = L.map(el, { worldCopyJump: true, minZoom: 1, zoomSnap: 0.5, scrollWheelZoom: false, preferCanvas: true });
-    state.siteTiles = L.tileLayer(tileUrl(), {
-      subdomains: "abcd", maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    }).addTo(state.siteMap);
+    state.siteTiles = L.tileLayer(tileUrl(), BASEMAP.options).addTo(state.siteMap);
     state.siteMap.fitBounds(L.latLngBounds(rows.map((r) => [+r.lat, +r.lon])), { padding: [20, 20], maxZoom: 4 });
     state.siteMap.on("click focus", () => state.siteMap.scrollWheelZoom.enable());
     state.siteMap.on("mouseout blur", () => state.siteMap.scrollWheelZoom.disable());
@@ -594,7 +619,7 @@ function renderSources() {
     prof.replaceChildren(
       head("Factor profiles", "How strongly each tracer loads on each source factor (scaled so each factor’s largest loading = 1). These fingerprints are how factors get their names."),
       h("div", { class: "table-scroll" }, h("table", { class: "heat profile-table" },
-        h("caption", { class: "sr-only" }, "NMF factor profiles: loading of each tracer on each factor"),
+        h("caption", { class: "sr-only" }, "Source profiles: weight of each tracer in each source fingerprint"),
         h("thead", null, h("tr", null, h("th", { scope: "col" }, h("span", { class: "sr-only" }, "Factor")),
           tracers.map((tr) => h("th", { class: "colh", scope: "col" }, tr)))),
         h("tbody", null, factors.map((f) => h("tr", null,

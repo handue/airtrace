@@ -9,13 +9,8 @@
 
 /* ------------------------------------------------------------------ configuration */
 
-/**
- * Public source repository - the single place it is configured. Leave the override empty to
- * derive it from the GitHub Pages address (https://<owner>.github.io/<repo>/ ->
- * https://github.com/<owner>/<repo>).
- */
-const REPO_URL_OVERRIDE = "";
-export const REPO_URL = REPO_URL_OVERRIDE || repoFromPagesUrl(window.location) || "https://github.com/";
+/** Public source repository - the single place it is configured. */
+export const REPO_URL = "https://github.com/handue/airtrace";
 
 /** Refresh cadence of the GitHub Actions workflow that rebuilds docs/data (hours). */
 export const REFRESH_HOURS = 6;
@@ -25,13 +20,18 @@ const params = new URLSearchParams(window.location.search);
 export const IS_MOCK = params.get("mock") === "1";
 export const DATA_ROOT = IS_MOCK ? "mock/" : "data/";
 
-function repoFromPagesUrl(loc) {
-  const m = /^([a-z0-9-]+)\.github\.io$/i.exec(loc.hostname);
-  if (!m) return null;
-  const first = loc.pathname.split("/").filter(Boolean)[0];
-  const repo = first && !first.includes(".") ? first : `${m[1]}.github.io`;
-  return `https://github.com/${m[1]}/${repo}`;
-}
+/**
+ * Keyless raster basemap shared by every Leaflet map (Esri light / dark grey canvas, so the AQI
+ * colours stay the loudest thing on the map). CARTO's public basemaps now require an API key.
+ */
+export const BASEMAP = {
+  url: (dark) => `https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_${dark ? "Dark" : "Light"}_Gray_Base/MapServer/tile/{z}/{y}/{x}`,
+  options: {
+    maxNativeZoom: 16,
+    maxZoom: 19,
+    attribution: 'Basemap &copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
+};
 
 /* ------------------------------------------------------------------ data loading */
 

@@ -8,10 +8,10 @@
  * Every number shown comes from those JSON files (or is computed from them).
  */
 import {
-  AQI_LEVELS, HEALTH_MESSAGES, ICONS, IS_MOCK, REFRESH_HOURS, SOURCE_FACTORS, aqiPill, aqiStyle,
+  AQI_LEVELS, BASEMAP, HEALTH_MESSAGES, ICONS, IS_MOCK, REFRESH_HOURS, SOURCE_FACTORS, aqiPill, aqiStyle,
   angleDiff, asPercent, bearingDeg, catChip, compass, emptyState, fmtDate, fmtInt, fmtLocalHour,
   fmtMonth, fmtNum, fmtPct, fmtPm, fmtSigned, fmtWeekday, h, haversineKm, hexToRgba, icon, initChrome,
-  initUpdated, inkOn, levelForPm, loadAll, loadJSON, normalizeShares, prefersReducedMotion,
+  initUpdated, inkOn, levelForPm, loadAll, loadJSON, normalizeShares, parseDay, prefersReducedMotion,
   relativeTime, tableView,
 } from "./common.js";
 import {
@@ -31,8 +31,6 @@ const STATUS = {
   offline: { label: "Monitor offline", icon: "offline" },
   none: { label: "No ground monitor", icon: "none" },
 };
-const TILE_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors '
-  + '&copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 const state = {
   meta: null,
@@ -72,8 +70,9 @@ async function main() {
     const v = state.meta?.[el.dataset.meta];
     if (v != null) el.textContent = String(v);
   });
-  renderKpis();
+  renderKpis(data.cities);
   setupCities(data.cities);
+  renderLiveCheck();
   renderImpact();
 
   onSchemeChange(() => {
@@ -113,19 +112,29 @@ function kpiTile(value, label, foot, alt) {
     foot ? h("div", { class: "kpi-foot" }, foot) : null);
 }
 
-function renderKpis() {
+/** Cross-validated MAE of raw CAMS and of AirTrace from metrics.models (null when missing). */
+function modelMae() {
+  const models = Array.isArray(state.metrics?.models) ? state.metrics.models : [];
+  const cams = models.find((m) => m?.key === "cams_raw");
+  const at = models.find((m) => m?.key === "airtrace");
+  return finite(cams?.mae) && finite(at?.mae) ? { cams: +cams.mae, airtrace: +at.mae } : null;
+}
+
+function renderKpis(cities) {
   const box = $("kpis");
   box.removeAttribute("aria-busy");
   const hl = state.metrics?.headline;
   const ds = state.metrics?.dataset;
   const meta = state.meta;
+  const mae = modelMae();
   const tiles = [];
 
   if (hl && finite(hl.mae_reduction_pct)) {
     const r = +hl.mae_reduction_pct;
     tiles.push(kpiTile(`${r >= 0 ? "−" : "+"}${fmtNum(Math.abs(r), 0)}%`,
-      `${r >= 0 ? "less" : "more"} error than the global CAMS model on cities the model never saw`,
-      "Mean absolute error of daily PM2.5 · leave-location-out cross-validation"));
+      `${r >= 0 ? "less" : "more"} error than the global CAMS model, on cities the model never saw`,
+      mae ? `Daily PM2.5 mean absolute error ${fmtNum(mae.airtrace)} vs. ${fmtNum(mae.cams)} µg/m³ · leave-location-out cross-validation`
+        : "Mean absolute error of daily PM2.5 · leave-location-out cross-validation"));
   } else tiles.push(kpiTile("–", "Accuracy metrics are unavailable right now", null));
 
   if (hl && finite(hl.aqi_acc_airtrace)) {
@@ -135,16 +144,117 @@ function renderKpis() {
   } else tiles.push(kpiTile("–", "AQI category accuracy unavailable", null, true));
 
   if (ds && finite(ds.n_sites)) {
+    const period = Array.isArray(ds.period) ? `, ${fmtMonth(ds.period[0])} – ${fmtMonth(ds.period[1])}` : "";
     tiles.push(kpiTile(fmtInt(ds.n_sites),
-      `reference monitors${finite(ds.n_countries) ? ` · ${fmtInt(ds.n_countries)} countries` : ""}`,
-      finite(ds.n_rows) ? `${fmtInt(ds.n_rows)} monitor-days of training data` : null));
+      `reference monitors${finite(ds.n_countries) ? ` in ${fmtInt(ds.n_countries)} countries` : ""} trained the model`,
+      finite(ds.n_rows) ? `${fmtInt(ds.n_rows)} monitor-days of training data${period}` : null));
   } else tiles.push(kpiTile("–", "Training-data summary unavailable", null));
 
-  const rel = meta?.generated_at ? relativeTime(meta.generated_at) : null;
-  tiles.push(kpiTile(h("span", null, "Every ", REFRESH_HOURS, h("span", { class: "unit" }, " h")),
-    `Refreshed every ${REFRESH_HOURS} hours${finite(meta?.n_cities) ? ` · ${fmtInt(meta.n_cities)} cities` : ""}`,
-    rel ? `Last update ${rel}` : null, true));
+  const list = Array.isArray(cities) ? cities.filter((c) => c && c.id) : [];
+  const nCities = finite(meta?.n_cities) ? +meta.n_cities : list.length;
+  if (nCities) {
+    const offline = list.filter((c) => c.monitor_status === "offline").length;
+    const none = list.filter((c) => c.monitor_status === "none").length;
+    tiles.push(kpiTile(fmtInt(nCities), `cities forecast, refreshed every ${REFRESH_HOURS} hours`,
+      list.length ? `${fmtInt(offline)} whose monitor went offline · ${fmtInt(none)} that never had one` : null, true));
+  } else tiles.push(kpiTile("–", "City forecasts are unavailable right now", null, true));
   box.replaceChildren(...tiles);
+}
+
+/* ------------------------------------------------------------------ live check (meta.live_check) */
+
+/** "YYYY-MM-DD to YYYY-MM-DD" (or [start, end]) -> {a, b, days, text}; null when unparseable. */
+function parseWindow(w) {
+  let a = null;
+  let b = null;
+  if (Array.isArray(w)) [a, b] = w.map(String);
+  else {
+    const m = /^(\d{4}-\d{2}-\d{2})\s*(?:to|–|—|\/|-)\s*(\d{4}-\d{2}-\d{2})$/.exec(String(w ?? "").trim());
+    if (m) [, a, b] = m;
+  }
+  const da = parseDay(a);
+  const db = parseDay(b);
+  if (!da || !db) return null;
+  const sameYear = a.slice(0, 4) === b.slice(0, 4);
+  return {
+    a, b, days: Math.round((db - da) / 864e5) + 1,
+    text: `${fmtDate(a, sameYear ? { day: "numeric", month: "short" } : undefined)} – ${fmtDate(b)}`,
+  };
+}
+
+function windowText(w) {
+  return parseWindow(w)?.text || (w ? String(w) : "");
+}
+
+function liveCheck() {
+  const lc = state.meta?.live_check;
+  return lc && typeof lc === "object" && finite(lc.mae_cams) && finite(lc.mae_airtrace) ? lc : null;
+}
+
+function cityLink(id, children, cls) {
+  const known = state.byId.has(id);
+  if (!known) return h("span", { class: cls }, children);
+  return h("a", {
+    class: cls, href: `#city=${encodeURIComponent(id)}`,
+    onclick: (e) => { e.preventDefault(); selectCity(id, { scrollPanel: true }); },
+  }, children);
+}
+
+/**
+ * Hero card for the out-of-sample check on brand-new data at the cities whose monitor still works.
+ * Hidden unless meta.live_check exists; every number is read from it.
+ */
+function renderLiveCheck() {
+  const box = $("live-check");
+  if (!box) return;
+  const lc = liveCheck();
+  if (!lc) { box.hidden = true; box.replaceChildren(); return; }
+  const at = +lc.mae_airtrace;
+  const cams = +lc.mae_cams;
+  const change = cams > 0 ? (1 - at / cams) * 100 : null; // > 0: AirTrace's error is lower
+  const better = change != null && change >= 0.5;
+  const win = parseWindow(lc.window);
+  const cities = (Array.isArray(lc.cities) ? lc.cities : []).filter((c) => c && (c.name || c.id));
+  const nCities = finite(lc.n_cities) ? +lc.n_cities : cities.length;
+  const span = win ? `last ${win.days} ${win.days === 1 ? "day" : "days"}` : "recent days";
+  const where = nCities ? `${fmtInt(nCities)} ${nCities === 1 ? "city" : "cities"} with a working monitor` : "cities with a working monitor";
+  const trained = state.metrics?.dataset?.period;
+
+  const lead = h("p", { class: "lc-lead" },
+    `Live check, ${span} at ${where}: `,
+    h("strong", null, `AirTrace MAE ${fmtNum(at)} vs. CAMS ${fmtNum(cams)} µg/m³`),
+    change != null ? h("span", { class: `lc-change${better ? " good" : ""}` }, ` (${fmtSigned(-change, 0)}% error)`) : null);
+
+  const facts = [
+    win ? `${win.text}` : (lc.window ? String(lc.window) : null),
+    finite(lc.n_city_days) ? `${fmtInt(lc.n_city_days)} city-days` : null,
+    finite(lc.bias_airtrace) && finite(lc.bias_cams) ? `bias AirTrace ${fmtSigned(lc.bias_airtrace, 1)} vs. CAMS ${fmtSigned(lc.bias_cams, 1)} µg/m³` : null,
+  ].filter(Boolean);
+
+  box.replaceChildren(
+    h("div", { class: "lc-main" },
+      h("span", { class: "lc-eyebrow" }, icon("live"), "Out-of-sample, on brand-new data"),
+      lead,
+      h("p", { class: "lc-sub" },
+        facts.join(" · "),
+        facts.length ? ". " : "",
+        "Daily estimates compared with what each monitor measured",
+        Array.isArray(trained) ? `; the model was trained only on ${fmtMonth(trained[0])} – ${fmtMonth(trained[1])} data` : "",
+        ".")),
+    cities.length ? h("div", { class: "lc-cities" },
+      h("span", { class: "lc-cities-title" }, "Checked at"),
+      h("ul", null, cities.map((c) => {
+        const good = finite(c.mae_airtrace) && finite(c.mae_cams) && +c.mae_airtrace < +c.mae_cams;
+        return h("li", null, cityLink(c.id, [
+          h("span", { class: "lcc-name" }, c.name || c.id),
+          finite(c.mae_airtrace) && finite(c.mae_cams)
+            ? h("span", { class: "lcc-v", title: `Mean absolute error over ${fmtInt(c.n)} days: AirTrace ${fmtNum(c.mae_airtrace)}, CAMS ${fmtNum(c.mae_cams)} µg/m³` },
+              h("b", { class: good ? "good" : null }, fmtNum(c.mae_airtrace)), ` vs ${fmtNum(c.mae_cams)}`)
+            : null,
+        ], "lc-city"));
+      })),
+      h("span", { class: "lc-cities-foot" }, "AirTrace vs. CAMS mean absolute error, µg/m³")) : null);
+  box.hidden = false;
 }
 
 /* ================================================================== cities: map + list */
@@ -241,8 +351,7 @@ function cityButton(c) {
 }
 
 function tileUrl() {
-  const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  return `https://{s}.basemaps.cartocdn.com/${dark ? "dark_all" : "light_all"}/{z}/{x}/{y}{r}.png`;
+  return BASEMAP.url(window.matchMedia("(prefers-color-scheme: dark)").matches);
 }
 
 function initMap() {
@@ -255,7 +364,7 @@ function initMap() {
   }
   const map = L.map(el, { worldCopyJump: true, minZoom: 1, maxZoom: 12, zoomSnap: 0.5, scrollWheelZoom: false, preferCanvas: true });
   state.map = map;
-  state.tiles = L.tileLayer(tileUrl(), { subdomains: "abcd", maxZoom: 19, attribution: TILE_ATTRIBUTION }).addTo(map);
+  state.tiles = L.tileLayer(tileUrl(), BASEMAP.options).addTo(map);
   map.fitBounds(L.latLngBounds(state.cities.map((c) => [c.lat, c.lon])), { padding: [28, 28], maxZoom: 4 });
   // Wheel-zoom only after the user engages with the map, so the page scrolls normally.
   map.on("click focus", () => map.scrollWheelZoom.enable());
@@ -435,11 +544,26 @@ function monitorBadge(mon) {
   const s = mon?.status;
   if (s === "active") return h("span", { class: "badge badge-live" }, icon("live"), "Live monitor");
   if (s === "offline") {
-    const since = mon.last_seen ? ` since ${fmtDate(mon.last_seen)}` : "";
-    const why = isEmbassy(mon.network) ? " — the US embassy network was shut down in 2025" : "";
-    return h("span", { class: "badge badge-offline" }, icon("offline"), `Monitor offline${since}${why}`);
+    const last = mon.last_seen ? ` · last report ${fmtDate(mon.last_seen)}` : "";
+    return h("span", { class: "badge badge-offline" }, icon("offline"), `Monitor offline${last}`);
   }
   return h("span", { class: "badge badge-none" }, icon("none"), "No ground monitor — AirTrace estimate");
+}
+
+const CONFIDENCE_CLASS = { local: "badge-conf-local", regional: "badge-conf-regional", extrapolation: "badge-conf-extra" };
+
+function confidenceBadge(conf) {
+  if (!conf || !conf.tier) return null;
+  return h("span", { class: `badge ${CONFIDENCE_CLASS[conf.tier] || ""}`, title: conf.detail || "" },
+    `Confidence: ${conf.label}`);
+}
+
+function outOfRangeNote(c) {
+  const day = (c.daily || []).find((d) => d && d.out_of_range && d.note);
+  if (!day) return null;
+  return h("p", { class: "oor-warn", role: "note" },
+    h("strong", null, "Outside training range. "), day.note,
+    " Treat the AirTrace number with caution; the upper end of the range is raised to the CAMS value.");
 }
 
 function monitorDetail(c) {
@@ -453,7 +577,7 @@ function monitorDetail(c) {
   }
   if (mon.status === "offline") {
     return h("p", { class: "monitor-detail" },
-      `${mon.network || "The"} monitor${mon.name ? ` “${mon.name}”` : ""} has stopped reporting. `,
+      `${mon.network || "The"} monitor${mon.name ? ` “${mon.name}”` : ""} has stopped reporting${isEmbassy(mon.network) ? ", like most of the US embassy network since early 2025" : ""}. `,
       c.history ? "AirTrace learned from it while it ran and keeps forecasting this city."
         : "AirTrace keeps forecasting this city from the global model and weather.");
   }
@@ -470,8 +594,10 @@ function headerCard(c) {
     h("div", { style: { minWidth: 0 } },
       h("h2", { id: "city-title" }, c.name),
       h("p", { class: "where" }, [c.country, c.region].filter(Boolean).join(" · ")),
-      monitorBadge(c.monitor),
+      h("div", { class: "badge-row" }, monitorBadge(c.monitor), confidenceBadge(c.confidence)),
       monitorDetail(c),
+      c.confidence?.detail ? h("p", { class: "monitor-detail conf-detail" }, c.confidence.detail) : null,
+      outOfRangeNote(c),
       h("div", { class: "meta-line" },
         finite(c.lat) && finite(c.lon) ? h("span", null, `${latText(+c.lat)}, ${lonText(+c.lon)}`) : null,
         c.timezone ? h("span", null, `Local time: ${c.timezone}`) : null,
@@ -517,7 +643,8 @@ function dayButton(d, i) {
   h("span", { class: "d-aqi" }, aqiPill(d.aqi, d.category, d.color, d.pm25)),
   h("span", { class: "d-cat" }, st.name),
   h("span", { class: "d-pm" }, `PM2.5 ${fmtNum(d.pm25)} µg/m³`),
-  range ? h("span", { class: "d-range" }, `80%: ${fmtNum(d.pm25_low, 0)}–${fmtNum(d.pm25_high, 0)}`) : null);
+  range ? h("span", { class: "d-range" }, `80%: ${fmtNum(d.pm25_low, 0)}–${fmtNum(d.pm25_high, 0)}`) : null,
+  d.out_of_range ? h("span", { class: "d-warn", title: d.note || "" }, "Beyond training range") : null);
 }
 
 function selectDay(i) {
@@ -633,18 +760,20 @@ function drawHourly(canvas, c) {
 
 function sourcesCard(c, later) {
   const shares = normalizeShares(c.sources);
-  const window_ = c.sources?.window;
+  const win = windowText(c.sources?.window);
   const head = h("div", { class: "card-head" }, h("div", null,
     h("h3", null, "Where it comes from"),
-    h("p", { class: "card-sub" }, `Estimated share of PM2.5 by source type${window_ ? `, ${window_}` : ""}.`)));
-  if (!shares.length) return h("section", { class: "card" }, head, emptyState("Source attribution is not available for this city right now."));
+    h("p", { class: "card-sub" }, `Estimated share of PM2.5 by source type${win ? `, ${win}` : ""}.`)));
+  const caveat = h("p", { class: "caveat" }, icon("info"),
+    h("span", null, "Estimated from chemical fingerprints in global model data — ", h("a", { href: methodsHref("#sources") }, "see how")));
+  if (!shares.length) return h("section", { class: "card" }, head, emptyState("Source attribution is not available for this city right now."), caveat);
   const top = shares.find((s) => s.key !== "background") || shares[0];
   const canvas = h("canvas", {
     role: "img",
     "aria-label": `Doughnut chart of PM2.5 sources: ${shares.map((s) => `${s.label} ${fmtPct(s.share)}`).join(", ")}.`,
   });
   later.push(() => drawDonut(canvas, shares));
-  return h("section", { class: "card" }, head,
+  return h("section", { class: "card" }, head, caveat,
     h("div", { class: "sources-wrap" },
       h("div", { class: "donut" }, canvas,
         h("div", { class: "donut-center", "aria-hidden": "true" },
@@ -654,9 +783,7 @@ function sourcesCard(c, later) {
         h("span", { class: "sw", style: { background: s.color }, "aria-hidden": "true" }),
         h("span", { class: "name" }, s.label),
         h("span", { class: "share" }, fmtPct(s.share)),
-        s.description ? h("span", { class: "desc" }, s.description) : null)))),
-    h("p", { class: "note" }, "Receptor-model estimate (NMF on CAMS tracer patterns): indicative, not an emissions inventory. ",
-      h("a", { href: methodsHref("#sources") }, "How it works")));
+        s.description ? h("span", { class: "desc" }, s.description) : null)))));
 }
 
 function drawDonut(canvas, shares) {
@@ -694,22 +821,43 @@ function fillDrivers(wrap, c) {
     wrap.replaceChildren(head, emptyState("No driver breakdown is available for this day."));
     return;
   }
-  const logs = drivers.map((d) => Math.log1p(Math.max(+d.effect_pct, -99.9) / 100));
-  const maxLog = Math.max(...logs.map(Math.abs)) || 1;
-  wrap.replaceChildren(head,
-    h("ul", { class: "drivers" }, drivers.map((d, k) => {
-      const e = +d.effect_pct;
-      const w = (Math.abs(logs[k]) / maxLog) * 50;
-      const verb = e >= 0 ? "raises" : "lowers";
-      return h("li", { class: "driver", "aria-label": `${d.group} ${verb} the estimate by ${fmtNum(Math.abs(e), 0)} percent` },
-        h("span", { class: "dname" }, d.group),
-        h("span", { class: "track", "aria-hidden": "true" }, h("span", { class: `bar ${e >= 0 ? "up" : "down"}`, style: { width: `${w.toFixed(1)}%` } })),
-        h("span", { class: "val", "aria-hidden": "true" }, `${fmtSigned(e, 0)}%`));
-    })),
-    h("div", { class: "drivers-axis", "aria-hidden": "true" }, h("div", null, h("span", null, "← lowers PM2.5"), h("span", null, "raises PM2.5 →")), h("span")),
-    h("p", { class: "note" }, "How much each group of inputs moves this day’s estimate above or below the model’s average prediction (TreeSHAP contributions, as % change; bar length on a log scale). ",
-      h("a", { href: methodsHref("#explain") }, "About the drivers")));
+  const nSites = state.metrics?.dataset?.n_sites;
+  const ref = `an average day at our ${finite(nSites) ? `${fmtInt(nSites)} ` : ""}reference monitors`;
+  const base = drivers.find((d) => isCamsGroup(d.group));
+  const rest = drivers.filter((d) => d !== base);
+  const logs = rest.map((d) => Math.log1p(Math.max(+d.effect_pct, -99.9) / 100));
+  const maxLog = Math.max(0, ...logs.map(Math.abs)) || 1;
+  const parts = [head];
+  if (base) {
+    const e = +base.effect_pct;
+    parts.push(h("div", { class: "driver-base", "aria-label": `Baseline: ${base.group} ${e >= 0 ? "raises" : "lowers"} the estimate by ${fmtNum(Math.abs(e), 0)} percent versus ${ref}` },
+      h("div", { class: "db-text" },
+        h("span", { class: "db-kicker" }, "Baseline"),
+        h("span", { class: "db-name" }, base.group),
+        h("span", { class: "db-ref" }, `vs. ${ref}`)),
+      h("span", { class: `db-val ${e >= 0 ? "up" : "down"}`, "aria-hidden": "true" }, `${fmtSigned(e, 0)}%`)));
+  }
+  if (rest.length) {
+    parts.push(
+      h("p", { class: "drivers-title" }, base ? "Then adjusted for" : `Largest effects vs. ${ref}`),
+      h("ul", { class: "drivers" }, rest.map((d, k) => {
+        const e = +d.effect_pct;
+        const w = (Math.abs(logs[k]) / maxLog) * 50;
+        const verb = e >= 0 ? "raises" : "lowers";
+        return h("li", { class: "driver", "aria-label": `${d.group} ${verb} the estimate by ${fmtNum(Math.abs(e), 0)} percent` },
+          h("span", { class: "dname" }, d.group),
+          h("span", { class: "track", "aria-hidden": "true" }, h("span", { class: `bar ${e >= 0 ? "up" : "down"}`, style: { width: `${Math.max(w, 0.8).toFixed(1)}%` } })),
+          h("span", { class: "val", "aria-hidden": "true" }, `${fmtSigned(e, 0)}%`));
+      })),
+      h("div", { class: "drivers-axis", "aria-hidden": "true" }, h("div", null, h("span", null, "← lowers PM2.5"), h("span", null, "raises PM2.5 →")), h("span")));
+  }
+  parts.push(h("p", { class: "note" },
+    `TreeSHAP contributions of the ${drivers.length} largest input groups, as % change vs. ${ref} (the model’s average prediction). Effects multiply: +50% and −20% together give +20%.${rest.length > 1 ? " Bar length on a log scale." : ""} `,
+    h("a", { href: methodsHref("#explain") }, "About the drivers")));
+  wrap.replaceChildren(...parts);
 }
+
+const isCamsGroup = (g) => /^global model chemistry/i.test(String(g || ""));
 
 /* ------------------------------------------------------------------ fires */
 
@@ -831,10 +979,10 @@ function recentCard(c, later) {
   return h("section", { class: "card" },
     h("div", { class: "card-head" }, h("div", null,
       h("h3", null, "Recent accuracy"),
-      h("p", { class: "card-sub" }, `Daily forecasts vs. the live monitor, last ${rows.length} days.`))),
+      h("p", { class: "card-sub" }, `AirTrace and raw CAMS vs. the live monitor, last ${rows.length} days — data the model never trained on.`))),
     h("div", { class: "compare" },
-      statTile(maeA != null ? h("span", null, fmtNum(maeA), h("span", { class: "unit" }, "µg/m³")) : "–", "AirTrace mean error", better ? "good" : ""),
-      statTile(maeC != null ? h("span", null, fmtNum(maeC), h("span", { class: "unit" }, "µg/m³")) : "–", "CAMS mean error"),
+      statTile(maeA != null ? h("span", null, fmtNum(maeA), h("span", { class: "unit" }, "µg/m³")) : "–", "AirTrace mean abs. error", better ? "good" : ""),
+      statTile(maeC != null ? h("span", null, fmtNum(maeC), h("span", { class: "unit" }, "µg/m³")) : "–", "CAMS mean abs. error"),
       statTile(fmtInt(n), "days with observations")),
     seriesKey([{ label: "Observed", color: t.obs, type: "dot" }, { label: "AirTrace", color: t.airtrace }, { label: "CAMS raw", color: t.cams, type: "dashed" }]),
     h("div", { class: "chart-box sm" }, canvas),
@@ -888,6 +1036,14 @@ function accuracyNoteCard(c) {
       "For cities like this, accuracy is measured by ", h("strong", null, "leave-location-out cross-validation"),
       `: on monitored cities the model never saw, AirTrace’s error was ${fmtNum(Math.abs(+hl.mae_reduction_pct), 0)}% ${+hl.mae_reduction_pct >= 0 ? "lower" : "higher"} than the raw CAMS model`,
       finite(hl.aqi_acc_airtrace) ? ` and it put ${fmtPct(hl.aqi_acc_airtrace)} of days in the right AQI category${finite(hl.aqi_acc_cams) ? ` (CAMS: ${fmtPct(hl.aqi_acc_cams)})` : ""}.` : "."));
+  }
+  const lc = liveCheck();
+  if (lc) {
+    const win = parseWindow(lc.window);
+    body.push(h("p", null, "On brand-new data",
+      win ? ` (${win.text})` : "",
+      `, at ${finite(lc.n_cities) ? `${fmtInt(lc.n_cities)} ` : ""}cities whose monitor still works, AirTrace’s mean absolute error was `,
+      h("strong", null, `${fmtNum(lc.mae_airtrace)} µg/m³`), ` vs. ${fmtNum(lc.mae_cams)} µg/m³ for CAMS.`));
   }
   body.push(h("p", { style: { margin: 0 } }, h("a", { href: methodsHref("#validation") }, "How we validate →")));
   return h("section", { class: "card" },
@@ -1047,8 +1203,8 @@ function renderNetwork() {
     h("p", null, `In ${fmtMonth(months[iPeak])}, `, h("strong", null, `${fmtInt(peak)} US embassy monitors`),
       ` reported PM2.5 to AirNow. In ${fmtMonth(months[iLast])}, `, h("strong", null, `${fmtInt(last)} did`), "."),
     h("div", { class: "big-stats" },
-      statTile(fmtInt(peak), `monitors at peak (${fmtMonth(months[iPeak], true)})`),
-      statTile(fmtInt(last), `still reporting (${fmtMonth(months[iLast], true)})`),
+      statTile(fmtInt(peak), `monitors at peak (${fmtMonth(months[iPeak])})`),
+      statTile(fmtInt(last), `still reporting (${fmtMonth(months[iLast])})`),
       statTile(lost != null ? `${fmtSigned(-lost, 0)}%` : "–", "of the network gone")),
     h("p", null, "AirTrace learned from these monitors while they ran",
       Array.isArray(period) ? ` (training data ${fmtDate(period[0])} – ${fmtDate(period[1])})` : "",
@@ -1128,7 +1284,7 @@ function renderBias() {
     h("p", null, `In ${worst.region}, the raw CAMS model reads ${dir} by `, h("strong", null, `${fmtNum(Math.abs(+worst.bias_cams), 1)} µg/m³`),
       " on an average day; after AirTrace’s correction the bias is ", h("strong", null, `${fmtSigned(+worst.bias_airtrace, 1)} µg/m³`), ".",
       finite(worst.mae_cams) && finite(worst.mae_airtrace) ? ` The typical daily error there drops from ${fmtNum(worst.mae_cams)} to ${fmtNum(worst.mae_airtrace)} µg/m³.` : ""),
-    under.length ? h("p", null, `CAMS underestimates PM2.5 in ${listText(under)} — exactly the regions where ground monitors are scarcest and where the embassy network was often the only reference.`) : null,
+    under.length ? h("p", null, `CAMS underestimates PM2.5 most in ${listText(under)}. Outside North America, every AirTrace training monitor is a US embassy monitor — and most of them have since stopped reporting.`) : null,
     h("p", { class: "note" }, "Bias = mean of (prediction − observation) per region, leave-location-out cross-validation. Negative = model reads too clean."));
 
   const canvas = h("canvas", { role: "img", "aria-label": "Bar chart of mean bias by region for CAMS and AirTrace." });

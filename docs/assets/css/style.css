@@ -118,6 +118,8 @@ body {
   overflow-x: hidden;
 }
 img, svg, canvas { max-width: 100%; }
+/* Leaflet sizes its marker canvas / SVG panes itself; the rule above would collapse them to 0 px. */
+.leaflet-container canvas, .leaflet-container svg { max-width: none !important; max-height: none !important; }
 a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
 a:hover { color: var(--accent-strong); }
 h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 0.5em; letter-spacing: -0.015em; }
@@ -235,6 +237,16 @@ small, .small { font-size: 0.85rem; }
 .badge-pass { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
 .badge-fail { background: var(--bad-soft); color: var(--bad); border-color: transparent; }
 .badge-ours { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge-conf-local { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
+.badge-conf-regional { background: var(--indigo-soft); color: var(--indigo); border-color: transparent; }
+.badge-conf-extra { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+.conf-detail { margin-top: 4px; }
+.oor-warn {
+  margin: 10px 0 0; padding: 8px 12px; border-radius: 10px; font-size: 0.85rem; line-height: 1.45;
+  background: var(--warn-soft); color: var(--text); border: 1px solid var(--warn);
+}
+.day .d-warn { font-size: 0.72rem; font-weight: 700; color: var(--warn); }
 
 /* ------------------------------------------------------------------ cards & sections */
 .section { padding: 56px 0; }
@@ -586,3 +598,51 @@ details.table-view table.data th, details.table-view table.data td { padding: 6p
 .site-footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
 .site-footer .disclaimer { background: var(--surface-2); border-radius: 10px; padding: 12px 14px; font-size: 0.84rem; }
 .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; border-top: 1px solid var(--border); margin-top: 28px; padding-top: 18px; font-size: 0.82rem; color: var(--muted); }
+
+/* ------------------------------------------------------------------ live check (meta.live_check) */
+.live-check {
+  margin-top: 14px; padding: 18px 22px; border-left: 4px solid var(--ok);
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px 28px; align-items: center;
+}
+.live-check[hidden] { display: none; }
+@media (max-width: 899px) { .live-check { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 479px) { .live-check { padding: 16px 16px 16px 18px; } }
+.lc-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ok); margin-bottom: 6px; }
+.lc-eyebrow .icon svg { width: 14px; height: 14px; }
+.lc-lead { font-size: clamp(1.02rem, 0.96rem + 0.3vw, 1.16rem); font-weight: 500; color: var(--text); margin: 0 0 6px; line-height: 1.45; }
+.lc-lead strong { font-weight: 750; }
+.lc-change { font-weight: 700; color: var(--text-2); white-space: nowrap; }
+.lc-change.good { color: var(--ok); }
+.lc-sub { font-size: 0.84rem; color: var(--muted); margin: 0; }
+.lc-cities-title, .lc-cities-foot { display: block; font-size: 0.74rem; color: var(--muted); }
+.lc-cities-title { font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.lc-cities-foot { margin-top: 6px; }
+.lc-cities ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.lc-city {
+  display: inline-flex; align-items: baseline; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 0.82rem;
+  background: var(--surface-2); border: 1px solid var(--border); color: var(--text); text-decoration: none; line-height: 1.4;
+}
+a.lc-city:hover { border-color: var(--accent); color: var(--text); }
+.lc-city .lcc-name { font-weight: 600; }
+.lc-city .lcc-v { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.78rem; }
+.lc-city .lcc-v b { color: var(--text-2); font-weight: 700; }
+.lc-city .lcc-v b.good { color: var(--ok); }
+
+/* ------------------------------------------------------------------ city panel refinements */
+.sources-wrap { align-items: start; }
+.caveat { display: flex; gap: 6px; align-items: flex-start; font-size: 0.82rem; color: var(--text-2); margin: -4px 0 14px; }
+.caveat .icon { color: var(--muted); margin-top: 1px; }
+.caveat .icon svg { width: 15px; height: 15px; }
+
+.driver-base {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 14px; align-items: center;
+  background: var(--surface-2); border-radius: 10px; padding: 10px 14px; margin: 4px 0 16px;
+}
+.driver-base .db-text { min-width: 0; display: flex; flex-direction: column; }
+.driver-base .db-kicker { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
+.driver-base .db-name { font-size: 0.9rem; font-weight: 650; color: var(--text); }
+.driver-base .db-ref { font-size: 0.78rem; color: var(--muted); }
+.driver-base .db-val { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.driver-base .db-val.up { color: var(--c-up); }
+.driver-base .db-val.down { color: var(--c-down); }
+.drivers-title { font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 0 0 8px; }

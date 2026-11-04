@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>How AirTrace works — model card</title>
-  <meta name="description" content="Model card for AirTrace: data, features, LightGBM correction of the CAMS global model, leave-location-out validation, SHAP drivers, NMF source attribution and limitations.">
+  <meta name="description" content="Model card for AirTrace: data, features, LightGBM correction of the CAMS global model, leave-location-out validation, SHAP drivers, receptor-model source attribution and limitations.">
   <meta name="theme-color" content="#0f766e">
   <meta property="og:type" content="article">
   <meta property="og:title" content="How AirTrace works — model card">
@@ -75,13 +75,13 @@
           <li class="pipe-step"><span class="n">1</span><h3>Data sources</h3>
             <p>CAMS global composition forecast (PM2.5, PM10, dust, aerosol optical depth, CO, NO₂, SO₂, O₃), ERA5 / forecast weather, AirNow reference monitors and NASA FIRMS fires.</p></li>
           <li class="pipe-step"><span class="n">2</span><h3>Daily features</h3>
-            <p>Hourly data become local-day features: CAMS means, night and peak values, day-over-day change, PM2.5/PM10 and SO₂/CO ratios, mixing height, ventilation, stagnation, humidity, rain, season and location.</p></li>
+            <p>Hourly data become local-day features: CAMS means, night and peak values, day-over-day change, PM2.5/PM10 and SO₂/CO ratios, wind and air stagnation, humidity, rain, temperature, season and location. Mixing height was dropped after an ablation: the weather archive lacks it before July 2024, and removing it cost no accuracy.</p></li>
           <li class="pipe-step"><span class="n">3</span><h3>LightGBM correction</h3>
             <p>Gradient-boosted trees predict log(1 + PM2.5) from those features. Two quantile models (10th and 90th percentile) give an 80% prediction range.</p></li>
           <li class="pipe-step alt"><span class="n">4</span><h3>SHAP drivers</h3>
-            <p>TreeSHAP splits every prediction into feature contributions, summed into human-readable groups such as “Air stagnation” or “Desert dust”.</p></li>
-          <li class="pipe-step alt"><span class="n">5</span><h3>NMF source attribution</h3>
-            <p>Non-negative matrix factorisation of CAMS tracer patterns finds source signatures; a regression on observed PM2.5 turns them into source shares.</p></li>
+            <p>TreeSHAP splits every prediction into feature contributions, summed into human-readable groups such as “Wind &amp; air stagnation” or “Desert dust”.</p></li>
+          <li class="pipe-step alt"><span class="n">5</span><h3>Source attribution</h3>
+            <p>A chemical-mass-balance receptor model splits eight CAMS tracers into six fixed source fingerprints by non-negative least squares; mass yields calibrated on observed PM2.5 turn them into source shares.</p></li>
           <li class="pipe-step"><span class="n">6</span><h3>Website</h3>
             <p>Forecasts, drivers and sources are written as static JSON and served by GitHub Pages — no server, no tracking.</p></li>
         </ol>
@@ -114,17 +114,24 @@
             <div class="fold-demo" aria-hidden="true" id="fold-demo"></div>
             <p class="small muted" style="margin-top:0"><span style="color:var(--c-cams);font-weight:700">■</span> held-out locations &nbsp; <span style="color:var(--c-airtrace);font-weight:700">■</span> training locations (one of the folds)</p>
             <div class="prose">
-              <p>Monitors are grouped by location (1° latitude/longitude cells), and each group is held out in turn. Every score on this page comes from a model that had <strong>never seen that city, or any monitor near it</strong> — exactly the situation of a city without a monitor.</p>
+              <p>Monitors are grouped into spatial clusters (any two monitors closer than 150 km share a cluster, e.g. Los Angeles–Riverside or Dubai–Abu Dhabi), and each cluster is held out in turn. Every headline score on this page comes from a model that had <strong>never seen that city, or any monitor within 150 km of it</strong> — the situation of a city without a monitor.</p>
               <p class="small" id="scheme-text"></p>
             </div>
           </div>
           <div class="card">
-            <h3>Temporal holdout</h3>
+            <h3>New places and future months</h3>
             <div class="prose">
-              <p>A second check trains on the earlier months and tests on the last months of the record, so the model is also judged on a season it has not seen.</p>
+              <p>The strictest check: each fold trains on the earlier months of its training clusters only and is scored on the last three months at the held-out clusters — a new place <em>and</em> a season the model has not seen.</p>
               <p class="small" id="temporal-text"></p>
             </div>
             <div id="temporal-table"></div>
+          </div>
+          <div class="card" style="grid-column: 1 / -1">
+            <h3>How far does the correction travel?</h3>
+            <div class="prose">
+              <p>We also held out whole countries and whole world regions, and measured monitors the model had already learned on later months. AirTrace helps most where it has learned from monitors in the same region — and most of all for the cities whose own embassy monitor it learned from before it went dark. It does <strong>not</strong> beat CAMS in a world region with no training monitor at all, which is why every city page shows a confidence level.</p>
+            </div>
+            <div id="general-table"></div>
           </div>
         </div>
       </div>
@@ -244,7 +251,7 @@
               <li><a href="https://cds.climate.copernicus.eu/" rel="noopener">ERA5 reanalysis</a> (Copernicus Climate Change Service / ECMWF) and Open-Meteo weather forecasts.</li>
               <li><a href="https://www.airnow.gov/" rel="noopener">AirNow</a> — US Environmental Protection Agency and US Department of State. Data are preliminary and unvalidated at source.</li>
               <li><a href="https://firms.modaps.eosdis.nasa.gov/" rel="noopener">NASA FIRMS</a> VIIRS active-fire detections.</li>
-              <li>Basemap © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions" rel="noopener">CARTO</a>. Built with <a href="https://leafletjs.com/" rel="noopener">Leaflet</a>, <a href="https://www.chartjs.org/" rel="noopener">Chart.js</a> and <a href="https://lightgbm.readthedocs.io/" rel="noopener">LightGBM</a>.</li>
+              <li>Basemap © <a href="https://www.esri.com/" rel="noopener">Esri</a>, HERE, Garmin, © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a> contributors. Built with <a href="https://leafletjs.com/" rel="noopener">Leaflet</a>, <a href="https://www.chartjs.org/" rel="noopener">Chart.js</a> and <a href="https://lightgbm.readthedocs.io/" rel="noopener">LightGBM</a>.</li>
             </ul>
           </div>
         </div>
@@ -277,7 +284,7 @@
             <li><a href="https://cds.climate.copernicus.eu/" rel="noopener">ERA5</a> reanalysis (Copernicus C3S / ECMWF)</li>
             <li><a href="https://www.airnow.gov/" rel="noopener">AirNow</a> — US EPA and US Department of State</li>
             <li><a href="https://firms.modaps.eosdis.nasa.gov/" rel="noopener">NASA FIRMS</a> VIIRS active fires</li>
-            <li>Basemap © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions" rel="noopener">CARTO</a></li>
+            <li>Basemap © <a href="https://www.esri.com/" rel="noopener">Esri</a>, HERE, Garmin, © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a> contributors</li>
           </ul>
         </div>
         <div>

@@ -115,7 +115,9 @@ export const aqiBandsPlugin = {
     const t = theme();
     const alpha = opts?.alpha ?? t.bandAlpha;
     ctx.save();
+    const font = `600 10px ${getComputedStyle(document.body).fontFamily}`;
     let lo = 0;
+    let lastLabelY = Infinity; // labels go bottom-up; never let one overlap the one below it
     for (const lv of AQI_LEVELS) {
       const hi = lv.pmHi;
       if (hi > y.min && lo < y.max) {
@@ -123,12 +125,14 @@ export const aqiBandsPlugin = {
         const bottom = y.getPixelForValue(Math.max(lo, y.min));
         ctx.fillStyle = hexToRgba(lv.color, alpha);
         ctx.fillRect(a.left, top, a.right - a.left, bottom - top);
-        if (bottom - top >= 16) {
+        const labelY = top + 4;
+        if (bottom - top >= 18 && lastLabelY - labelY >= 14) {
           ctx.fillStyle = t.muted;
-          ctx.font = `600 10px ${getComputedStyle(document.body).fontFamily}`;
+          ctx.font = font;
           ctx.textAlign = "right";
           ctx.textBaseline = "top";
-          ctx.fillText(lv.short, a.right - 6, top + 4);
+          ctx.fillText(lv.short, a.right - 6, labelY);
+          lastLabelY = labelY;
         }
       }
       lo = hi;
