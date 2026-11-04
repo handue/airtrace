@@ -1,4 +1,4 @@
-"""Website data contract (SPEC.md "Website data contract").
+"""Website data contract (see DATA_CONTRACT.md).
 
 Validates the JSON files the website reads, both the generated ones in docs/data/ and the
 hand-made mocks in docs/mock/. Each test skips cleanly when its file does not exist yet.
@@ -75,7 +75,7 @@ def check_shares(shares, background_share, where: str) -> None:
     for i, s in enumerate(shares):
         has_keys(s, ["key", "label", "share", "color", "description"], f"{where}[{i}]")
         assert s["key"] in FACTORS, f"{where}[{i}]: unknown factor key {s['key']!r}"
-        assert (s["label"], s["color"]) == FACTORS[s["key"]], f"{where}[{i}]: label/color differ from SPEC"
+        assert (s["label"], s["color"]) == FACTORS[s["key"]], f"{where}[{i}]: label/color differ from DATA_CONTRACT.md"
         assert num(s["share"]) and 0 <= s["share"] <= 1, f"{where}[{i}]: share {s['share']!r}"
         vals.append(s["share"])
     assert vals == sorted(vals, reverse=True), f"{where}: shares not sorted descending"
@@ -351,7 +351,7 @@ def test_network_history(d):
 
 # ---------------------------------------------------------------- validator self-test
 def _example_city() -> dict:
-    """Minimal SPEC-conformant city document (keeps the validator honest while no data exists)."""
+    """Minimal city document that follows DATA_CONTRACT.md (keeps the validator honest while no data exists)."""
     day = {"date": "2026-11-03", "pm25": 41.2, "pm25_low": 28.0, "pm25_high": 60.5, "cams_pm25": 30.1,
            "aqi": 115, "category": "Unhealthy for Sensitive Groups", "color": "#ff7e00",
            "drivers": [{"group": "Air stagnation (wind & mixing height)", "effect_pct": 22.0},

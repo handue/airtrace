@@ -7,7 +7,7 @@ the regional background) -> location-grouped CV and validation checks. See ``air
 for why v1's unconstrained NMF was replaced. Writes
 
 * ``models/sources_nmf.json``      everything ``airtrace.sources.load_source_model()`` needs;
-* ``docs/data/sources_global.json`` the website's global source-attribution summary (SPEC.md).
+* ``docs/data/sources_global.json`` the website's global source-attribution summary (see DATA_CONTRACT.md).
 
 Input: ``data/processed/dataset.parquet`` when the ML step has produced it; otherwise the daily
 tracers are rebuilt in memory from the Open-Meteo CAMS cache (read straight from disk, never the
@@ -179,7 +179,7 @@ def load_tracer_table(sites: pd.DataFrame) -> tuple[pd.DataFrame, str]:
 
 # ---- fitting -------------------------------------------------------------------------------
 def location_groups(rows: pd.DataFrame) -> np.ndarray:
-    """Leakage-free CV groups: sites pooled by rounded 1-degree latitude/longitude (SPEC.md)."""
+    """Leakage-free CV groups: sites pooled by rounded 1-degree latitude/longitude."""
     return (rows["lat"].round().astype(int).astype(str) + "_" + rows["lon"].round().astype(int).astype(str)).to_numpy()
 
 

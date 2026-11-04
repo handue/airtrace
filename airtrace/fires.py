@@ -117,7 +117,7 @@ def angle_diff(a, b):
 def fires_near(lat: float, lon: float, wind_from_deg: float | None, fires: pd.DataFrame | None = None,
                radius_km: float = RADIUS_KM, half_angle: float = UPWIND_HALF_ANGLE,
                max_points: int = MAX_POINTS) -> dict:
-    """SPEC ``fires`` block for a city: count within ``radius_km``, upwind count, nearest
+    """``fires`` block (see DATA_CONTRACT.md) for a city: count within ``radius_km``, upwind count, nearest
     distance (km), summed FRP (MW) and up to ``max_points`` nearest [lat, lon, frp]."""
     if fires is None:
         fires = load_fires()

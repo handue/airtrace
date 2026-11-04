@@ -337,8 +337,8 @@ def flag_out_of_range(entry: dict, cams_max: float | None) -> dict:
 
 def build_city(city: City, cams_resp: dict, wx_resp: dict, ctx: LiveContext,
                previous: dict | None = None) -> dict:
-    """The ``city/<id>.json`` document for one city (see SPEC "Website data contract")."""
-    from .model import contributions, predict      # ML-owned; imported lazily
+    """The ``city/<id>.json`` document for one city (see DATA_CONTRACT.md)."""
+    from .model import contributions, predict      # imported lazily
 
     cams, wx = cams_frame(cams_resp), weather_frame(wx_resp)
     offset = int(wx_resp.get("utc_offset_seconds", 0))
@@ -438,7 +438,7 @@ def _optional(name: str, fn):
 
 
 def _load_source_model():
-    from .sources import load_source_model      # SOURCES-owned; optional for the build
+    from .sources import load_source_model      # optional for the build
     return load_source_model()
 
 
@@ -479,7 +479,7 @@ def live_check(docs: list[dict | None]) -> dict | None:
 def run(only: list[str] | None = None, workers: int = WORKERS, replay_dir: Path | None = None,
         now_utc: datetime | None = None) -> int:
     """Build docs/data for all (or ``only``) showcase cities. Returns the process exit code."""
-    from .model import load_models               # required (ML-owned)
+    from .model import load_models               # required
 
     t0 = time.time()
     all_cities = load_cities()

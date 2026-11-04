@@ -71,7 +71,7 @@ FACTOR_KEYS = ["traffic", "industry", "burning", "dust", "secondary", "marine"]
 BACKGROUND_KEY = "background"
 SOURCE_KEYS = FACTOR_KEYS + [BACKGROUND_KEY]
 
-# Display metadata shared with the website (keys, labels and colours are fixed by SPEC.md).
+# Display metadata shared with the website (keys, labels and colours are fixed in DATA_CONTRACT.md).
 SOURCES: dict[str, dict[str, str]] = {
     "traffic": {
         "label": "Traffic & urban combustion", "color": "#3b82f6",

@@ -206,7 +206,7 @@ class AirNowLive:
 
     def monitor_for(self, lat: float, lon: float, embassy_site_id: str | None = None,
                     radius_km: float = MONITOR_RADIUS_KM) -> dict:
-        """Monitor block for a city: the SPEC ``monitor`` keys plus ``site_id`` and
+        """Monitor block for a city: the ``monitor`` keys of DATA_CONTRACT.md plus ``site_id`` and
         ``recent_obs`` ({date: observed}, only for an active monitor).
 
         1. the city's embassy monitor, if it reported PM2.5-24hr in the last ``ACTIVE_DAYS`` days;
