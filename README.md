@@ -13,7 +13,7 @@ Live site: https://handue.github.io/airtrace/
 
 ![AirTrace demo](docs/assets/screenshots/demo.gif)
 
-Full demo video (70 s, 1080p): [docs/assets/demo.mp4](docs/assets/demo.mp4)
+Full demo video with narration (100 s, 1080p): [docs/assets/demo.mp4](docs/assets/demo.mp4)
 
 ## Why I built this
 
@@ -319,6 +319,9 @@ I used Claude Code (Anthropic's AI coding assistant) heavily during the hackatho
 - writing most of the code;
 - running and checking experiments;
 - drafting this README.
+
+The narration in the demo video is an AI voice (Kokoro-82M, an open-source text-to-speech model run
+locally). The background music was generated in Python for this project, so it has no copyright issues.
 
 The work was done under my direction. Every number above comes from the scripts in this repo and can be
 reproduced.
