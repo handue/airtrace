@@ -1,0 +1,100 @@
+{
+ "generated_at": "2026-11-04T06:30:47Z",
+ "model_version": "2026.11.04.0630",
+ "n_cities": 90,
+ "forecast_days": 5,
+ "data_sources": [
+  "Copernicus Atmosphere Monitoring Service (CAMS) global atmospheric composition forecasts, via the Open-Meteo Air Quality API",
+  "Weather forecasts (Open-Meteo Forecast API) and ERA5 reanalysis for training (Open-Meteo Historical Weather API)",
+  "US EPA AirNow reference PM2.5 observations, including US Department of State embassy and consulate monitors",
+  "NASA FIRMS active fire detections (VIIRS, Suomi NPP, last 24 hours)"
+ ],
+ "live_check": {
+  "window": "2026-10-28 to 2026-11-03",
+  "n_cities": 11,
+  "n_city_days": 66,
+  "mae_cams": 15.8,
+  "mae_airtrace": 10.3,
+  "bias_cams": -9.7,
+  "bias_airtrace": -1.7,
+  "cities": [
+   {
+    "id": "ashgabat",
+    "name": "Ashgabat",
+    "n": 7,
+    "mae_cams": 13.8,
+    "mae_airtrace": 6.0
+   },
+   {
+    "id": "baku",
+    "name": "Baku",
+    "n": 7,
+    "mae_cams": 6.0,
+    "mae_airtrace": 3.8
+   },
+   {
+    "id": "chicago",
+    "name": "Chicago",
+    "n": 7,
+    "mae_cams": 3.3,
+    "mae_airtrace": 1.3
+   },
+   {
+    "id": "dushanbe",
+    "name": "Dushanbe",
+    "n": 1,
+    "mae_cams": 17.1,
+    "mae_airtrace": 51.9
+   },
+   {
+    "id": "los-angeles",
+    "name": "Los Angeles",
+    "n": 6,
+    "mae_cams": 10.8,
+    "mae_airtrace": 6.1
+   },
+   {
+    "id": "mumbai",
+    "name": "Mumbai",
+    "n": 4,
+    "mae_cams": 55.2,
+    "mae_airtrace": 35.2
+   },
+   {
+    "id": "new-delhi",
+    "name": "New Delhi",
+    "n": 7,
+    "mae_cams": 55.4,
+    "mae_airtrace": 31.2
+   },
+   {
+    "id": "new-york",
+    "name": "New York",
+    "n": 7,
+    "mae_cams": 6.9,
+    "mae_airtrace": 2.5
+   },
+   {
+    "id": "sarajevo",
+    "name": "Sarajevo",
+    "n": 7,
+    "mae_cams": 12.0,
+    "mae_airtrace": 12.8
+   },
+   {
+    "id": "toronto",
+    "name": "Toronto",
+    "n": 7,
+    "mae_cams": 2.4,
+    "mae_airtrace": 3.1
+   },
+   {
+    "id": "vancouver",
+    "name": "Vancouver",
+    "n": 6,
+    "mae_cams": 6.8,
+    "mae_airtrace": 4.5
+   }
+  ]
+ }
+}

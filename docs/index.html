@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AirTrace — PM2.5 forecasts and pollution sources for every city</title>
+  <meta name="description" content="AI-corrected 5-day PM2.5 forecasts and source attribution for cities on six continents, including cities without a single air-quality monitor.">
+  <meta name="theme-color" content="#0f766e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AirTrace — know what you breathe, and where it comes from">
+  <meta property="og:description" content="Machine-learning corrected PM2.5 forecasts with source attribution and explainable drivers, for cities with and without ground monitors.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+Pc7UAxWMUMNMWzWxF4SQo9CgkJIN1kx6djDQZjh3Y8SZ1d+6I+1zze6Z7kHXO7q3UyZAWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="module" src="assets/js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="mock-banner" class="mock-banner" hidden>
+    <strong>Demo data.</strong> You are viewing hand-made mock data (<code>?mock=1</code>). <a href="index.html">Switch to live forecasts</a>.
+  </div>
+
+  <header class="site-header">
+    <nav class="container nav" aria-label="Main">
+      <a class="brand" href="index.html" data-keep-query aria-label="AirTrace home">
+        <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="9" fill="#0f766e"/>
+          <path d="M6.5 11.5c2.6-1.9 5.2-1.9 7.8 0s5.2 1.9 7.8 0" fill="none" stroke="#99f6e4" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M6.5 17c2.6-1.9 5.2-1.9 7.8 0 1.4 1 2.8 1.5 4.2 1.4" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M6.5 22.5c2.2-1.6 4.4-1.8 6.6-.6" fill="none" stroke="#99f6e4" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="23" cy="20.5" r="4.6" fill="none" stroke="#ffffff" stroke-width="2"/>
+          <circle cx="23" cy="20.5" r="1.7" fill="#ffffff"/>
+        </svg>
+        <span>Air<span class="wordmark-accent">Trace</span></span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#map">Live map</a></li>
+        <li><a href="#impact">Why it matters</a></li>
+        <li><a href="methods.html" data-keep-query>How it works</a></li>
+        <li><a href="https://github.com/" data-repo-link target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+          GitHub</a></li>
+      </ul>
+      <span class="updated" id="updated" hidden><span class="dot" aria-hidden="true"></span><span><span class="label-long">Updated </span><time id="updated-time"></time></span></span>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <span class="eyebrow">Air-quality forecasting &amp; source attribution</span>
+        <h1 id="hero-title">Know what you breathe — <span class="accent">and where it comes from.</span></h1>
+        <p class="lede">AI-corrected <span data-meta="forecast_days">5</span>-day PM2.5 forecasts and source attribution for cities on six continents — including cities without a single air-quality monitor.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#map">Explore the live map
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></a>
+          <a class="btn btn-ghost" href="methods.html" data-keep-query>How the model works</a>
+        </div>
+        <div class="kpis" id="kpis" aria-busy="true">
+          <div class="card kpi"><span class="skeleton sk-title"></span><span class="skeleton sk-line"></span><span class="skeleton sk-line" style="width:70%"></span></div>
+          <div class="card kpi alt"><span class="skeleton sk-title"></span><span class="skeleton sk-line"></span><span class="skeleton sk-line" style="width:70%"></span></div>
+          <div class="card kpi"><span class="skeleton sk-title"></span><span class="skeleton sk-line"></span><span class="skeleton sk-line" style="width:70%"></span></div>
+          <div class="card kpi alt"><span class="skeleton sk-title"></span><span class="skeleton sk-line"></span><span class="skeleton sk-line" style="width:70%"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="map" class="section section-tight" aria-labelledby="map-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Live map</span>
+            <h2 id="map-title">Today’s air, city by city</h2>
+            <p>Circles show today’s forecast on the US EPA Air Quality Index (24-hour PM2.5). Pick a city on the map or in the list for its forecast, pollution sources and the reasons behind them.</p>
+          </div>
+          <div class="legend-row" id="aqi-legend" role="list" aria-label="AQI categories"></div>
+        </div>
+
+        <div class="map-layout">
+          <div class="card map-card">
+            <div id="map-canvas" role="region" aria-label="World map of cities coloured by today's forecast AQI. Use the city list to choose a city with the keyboard."></div>
+            <div class="map-callout" id="map-callout" hidden></div>
+            <div class="map-legend" id="map-legend">
+              <div class="lg-title">AQI today</div>
+              <div class="legend-row" id="map-legend-scale"></div>
+              <div class="fire-key" id="fire-key" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <aside class="card list-card" aria-label="Cities">
+            <div class="list-controls">
+              <label class="search">
+                <span class="sr-only">Search cities</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                <input id="city-search" class="field" type="search" placeholder="Search city or country" autocomplete="off" spellcheck="false">
+              </label>
+              <label>
+                <span class="sr-only">Filter by region</span>
+                <select id="region-filter" class="field"><option value="all">All regions</option></select>
+              </label>
+              <label>
+                <span class="sr-only">Sort cities</span>
+                <select id="city-sort" class="field">
+                  <option value="aqi-desc">AQI: high → low</option>
+                  <option value="aqi-asc">AQI: low → high</option>
+                  <option value="peak-desc">5-day peak AQI</option>
+                  <option value="name">Name A → Z</option>
+                </select>
+              </label>
+            </div>
+            <p class="list-meta" id="list-meta" aria-live="polite"></p>
+            <ul class="city-list" id="city-list" aria-label="City list">
+              <li><span class="skeleton sk-line"></span></li>
+              <li><span class="skeleton sk-line"></span></li>
+              <li><span class="skeleton sk-line"></span></li>
+              <li><span class="skeleton sk-line"></span></li>
+              <li><span class="skeleton sk-line"></span></li>
+            </ul>
+          </aside>
+        </div>
+
+        <p class="sr-only" id="city-announcer" aria-live="polite"></p>
+        <div id="city-panel" class="city-panel" tabindex="-1" aria-label="Selected city">
+          <div class="card"><span class="skeleton sk-title"></span><span class="skeleton sk-line"></span><span class="skeleton sk-line" style="width:60%"></span></div>
+          <div class="card"><span class="skeleton sk-block"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="impact" class="section impact" aria-labelledby="impact-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Why it matters</span>
+            <h2 id="impact-title">When the monitors went dark</h2>
+            <p>For many cities in Africa and Asia, the US Department of State’s embassy monitors were the only public, reference-grade PM2.5 measurements. Most of them have stopped reporting.</p>
+          </div>
+        </div>
+        <div class="impact-grid">
+          <div class="impact-copy" id="impact-copy">
+            <span class="skeleton sk-line"></span><span class="skeleton sk-line"></span><span class="skeleton sk-line" style="width:80%"></span>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>US embassy PM2.5 monitors reporting each month</h3>
+                <p class="card-sub" id="network-sub">Monitors in AirNow data files</p>
+              </div>
+            </div>
+            <div class="series-key" id="network-key"></div>
+            <div class="chart-box"><canvas id="network-chart" role="img" aria-label="Bar chart of US embassy PM2.5 monitors reporting each month"></canvas></div>
+            <div id="network-extra"></div>
+          </div>
+        </div>
+
+        <div class="card callout" id="bias-callout" style="margin-top:22px">
+          <span class="skeleton sk-title"></span><span class="skeleton sk-block"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html" data-keep-query aria-label="AirTrace home">
+            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <rect width="32" height="32" rx="9" fill="#0f766e"/>
+              <path d="M6.5 11.5c2.6-1.9 5.2-1.9 7.8 0s5.2 1.9 7.8 0" fill="none" stroke="#99f6e4" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M6.5 17c2.6-1.9 5.2-1.9 7.8 0 1.4 1 2.8 1.5 4.2 1.4" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M6.5 22.5c2.2-1.6 4.4-1.8 6.6-.6" fill="none" stroke="#99f6e4" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="23" cy="20.5" r="4.6" fill="none" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="23" cy="20.5" r="1.7" fill="#ffffff"/>
+            </svg>
+            <span>Air<span class="wordmark-accent">Trace</span></span>
+          </a>
+          <p style="margin-top:12px">Daily PM2.5 forecasts that correct the Copernicus CAMS global model with machine learning, explain their drivers, and estimate where the pollution comes from.</p>
+          <p class="disclaimer"><strong>Research prototype — not medical advice.</strong> Forecasts can be wrong. Always follow official air-quality advisories from your local authorities.</p>
+        </div>
+        <div>
+          <h4>Data credits</h4>
+          <ul>
+            <li><a href="https://atmosphere.copernicus.eu/" rel="noopener">Copernicus CAMS</a> global forecasts via <a href="https://open-meteo.com/" rel="noopener">Open-Meteo</a></li>
+            <li><a href="https://cds.climate.copernicus.eu/" rel="noopener">ERA5</a> reanalysis (Copernicus C3S / ECMWF)</li>
+            <li><a href="https://www.airnow.gov/" rel="noopener">AirNow</a> — US EPA and US Department of State</li>
+            <li><a href="https://firms.modaps.eosdis.nasa.gov/" rel="noopener">NASA FIRMS</a> VIIRS active fires</li>
+            <li>Basemap © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions" rel="noopener">CARTO</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Project</h4>
+          <ul>
+            <li><a href="methods.html" data-keep-query>How it works — model card</a></li>
+            <li><a href="https://github.com/" data-repo-link target="_blank" rel="noopener">Source code on GitHub</a></li>
+            <li>Model version <span id="model-version" class="num">–</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Built for Neural Storm 2026 · GP-01</span>
+        <span>Air-quality data are preliminary and unvalidated at source.</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

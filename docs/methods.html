@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How AirTrace works — model card</title>
+  <meta name="description" content="Model card for AirTrace: data, features, LightGBM correction of the CAMS global model, leave-location-out validation, SHAP drivers, NMF source attribution and limitations.">
+  <meta name="theme-color" content="#0f766e">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How AirTrace works — model card">
+  <meta property="og:description" content="How AirTrace corrects the CAMS global model with machine learning, how it is validated on cities it never saw, and where it falls short.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+Pc7UAxWMUMNMWzWxF4SQo9CgkJIN1kx6djDQZjh3Y8SZ1d+6I+1zze6Z7kHXO7q3UyZAWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="module" src="assets/js/methods.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="mock-banner" class="mock-banner" hidden>
+    <strong>Demo data.</strong> You are viewing hand-made mock data (<code>?mock=1</code>). <a href="methods.html">Switch to live metrics</a>.
+  </div>
+
+  <header class="site-header">
+    <nav class="container nav" aria-label="Main">
+      <a class="brand" href="index.html" data-keep-query aria-label="AirTrace home">
+        <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="9" fill="#0f766e"/>
+          <path d="M6.5 11.5c2.6-1.9 5.2-1.9 7.8 0s5.2 1.9 7.8 0" fill="none" stroke="#99f6e4" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M6.5 17c2.6-1.9 5.2-1.9 7.8 0 1.4 1 2.8 1.5 4.2 1.4" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M6.5 22.5c2.2-1.6 4.4-1.8 6.6-.6" fill="none" stroke="#99f6e4" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="23" cy="20.5" r="4.6" fill="none" stroke="#ffffff" stroke-width="2"/>
+          <circle cx="23" cy="20.5" r="1.7" fill="#ffffff"/>
+        </svg>
+        <span>Air<span class="wordmark-accent">Trace</span></span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html#map" data-keep-query>Live map</a></li>
+        <li><a href="index.html#impact" data-keep-query>Why it matters</a></li>
+        <li><a href="methods.html" data-keep-query aria-current="page">How it works</a></li>
+        <li><a href="https://github.com/" data-repo-link target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+          GitHub</a></li>
+      </ul>
+      <span class="updated" id="updated" hidden><span class="dot" aria-hidden="true"></span><span><span class="label-long">Updated </span><time id="updated-time"></time></span></span>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="container">
+        <span class="eyebrow">Model card</span>
+        <h1 id="page-title">How AirTrace works</h1>
+        <p class="lede">AirTrace starts from the Copernicus CAMS global atmospheric-composition forecast — available everywhere, but often far off at city scale — and learns how to correct it from reference-grade ground monitors. It is validated only on cities it never saw during training, explains every forecast, and estimates where the pollution comes from.</p>
+        <nav class="toc" aria-label="On this page">
+          <a href="#pipeline">Pipeline</a><a href="#results">Results</a><a href="#validation">Validation</a>
+          <a href="#models">Model comparison</a><a href="#accuracy">Accuracy</a><a href="#where">Per site</a>
+          <a href="#explain">Explainability</a><a href="#uncertainty">Uncertainty</a><a href="#sources">Source attribution</a>
+          <a href="#limits">Limitations</a><a href="#data">Data &amp; credits</a>
+        </nav>
+      </div>
+    </section>
+
+    <section id="pipeline" class="section section-tight" aria-labelledby="pipeline-title">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">Pipeline</span><h2 id="pipeline-title">From a global model to a city forecast</h2></div></div>
+        <ol class="pipeline">
+          <li class="pipe-step"><span class="n">1</span><h3>Data sources</h3>
+            <p>CAMS global composition forecast (PM2.5, PM10, dust, aerosol optical depth, CO, NO₂, SO₂, O₃), ERA5 / forecast weather, AirNow reference monitors and NASA FIRMS fires.</p></li>
+          <li class="pipe-step"><span class="n">2</span><h3>Daily features</h3>
+            <p>Hourly data become local-day features: CAMS means, night and peak values, day-over-day change, PM2.5/PM10 and SO₂/CO ratios, mixing height, ventilation, stagnation, humidity, rain, season and location.</p></li>
+          <li class="pipe-step"><span class="n">3</span><h3>LightGBM correction</h3>
+            <p>Gradient-boosted trees predict log(1 + PM2.5) from those features. Two quantile models (10th and 90th percentile) give an 80% prediction range.</p></li>
+          <li class="pipe-step alt"><span class="n">4</span><h3>SHAP drivers</h3>
+            <p>TreeSHAP splits every prediction into feature contributions, summed into human-readable groups such as “Air stagnation” or “Desert dust”.</p></li>
+          <li class="pipe-step alt"><span class="n">5</span><h3>NMF source attribution</h3>
+            <p>Non-negative matrix factorisation of CAMS tracer patterns finds source signatures; a regression on observed PM2.5 turns them into source shares.</p></li>
+          <li class="pipe-step"><span class="n">6</span><h3>Website</h3>
+            <p>Forecasts, drivers and sources are written as static JSON and served by GitHub Pages — no server, no tracking.</p></li>
+        </ol>
+        <p class="pipe-foot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><path d="M21 3v5h-5"/></svg>
+          <span>A GitHub Actions workflow re-runs steps 1–6 every <span data-const="REFRESH_HOURS">6</span> hours with the latest CAMS and weather forecasts.</span>
+        </p>
+      </div>
+    </section>
+
+    <section id="results" class="section section-tight" aria-labelledby="results-title">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">Headline results</span><h2 id="results-title">Better than the global model, on cities it never saw</h2>
+          <p>All numbers below are computed by the training pipeline (<code>metrics.json</code>) with leave-location-out cross-validation.</p></div></div>
+        <div class="kpis" id="headline" aria-busy="true">
+          <div class="card kpi"><span class="skeleton sk-title"></span><span class="skeleton sk-line"></span></div>
+          <div class="card kpi alt"><span class="skeleton sk-title"></span><span class="skeleton sk-line"></span></div>
+          <div class="card kpi"><span class="skeleton sk-title"></span><span class="skeleton sk-line"></span></div>
+          <div class="card kpi alt"><span class="skeleton sk-title"></span><span class="skeleton sk-line"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="validation" class="section section-tight" aria-labelledby="validation-title">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">Validation design</span><h2 id="validation-title">Tested the way it is used: on places without a monitor</h2></div></div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Leave-location-out cross-validation</h3>
+            <div class="fold-demo" aria-hidden="true" id="fold-demo"></div>
+            <p class="small muted" style="margin-top:0"><span style="color:var(--c-cams);font-weight:700">■</span> held-out locations &nbsp; <span style="color:var(--c-airtrace);font-weight:700">■</span> training locations (one of the folds)</p>
+            <div class="prose">
+              <p>Monitors are grouped by location (1° latitude/longitude cells), and each group is held out in turn. Every score on this page comes from a model that had <strong>never seen that city, or any monitor near it</strong> — exactly the situation of a city without a monitor.</p>
+              <p class="small" id="scheme-text"></p>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Temporal holdout</h3>
+            <div class="prose">
+              <p>A second check trains on the earlier months and tests on the last months of the record, so the model is also judged on a season it has not seen.</p>
+              <p class="small" id="temporal-text"></p>
+            </div>
+            <div id="temporal-table"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="models" class="section section-tight" aria-labelledby="models-title">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">Model comparison</span><h2 id="models-title">AirTrace against the baselines</h2>
+          <p>Daily 24-hour PM2.5, leave-location-out cross-validation. Errors in µg/m³; bias = mean(prediction − observation). Best value per column in bold.</p></div></div>
+        <div class="card" id="models-card"><span class="skeleton sk-block"></span></div>
+      </div>
+    </section>
+
+    <section id="accuracy" class="section section-tight" aria-labelledby="accuracy-title">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">Accuracy</span><h2 id="accuracy-title">Where the correction helps</h2></div></div>
+        <div class="card" id="scatter-card">
+          <div class="card-head"><div><h3>Observed vs. predicted daily PM2.5</h3>
+            <p class="card-sub">Cross-validated predictions at held-out locations (random sample), log–log axes. Points on the diagonal are perfect; the thin lines mark a factor of 2.</p></div></div>
+          <div class="filter-row">
+            <label for="scatter-region">Region</label>
+            <select id="scatter-region" class="field"><option value="all">All regions</option></select>
+          </div>
+          <div class="scatter-pair" id="scatter-pair"><span class="skeleton sk-block"></span><span class="skeleton sk-block"></span></div>
+        </div>
+        <div class="grid grid-2" style="margin-top:18px">
+          <div class="card" id="region-card"><span class="skeleton sk-block"></span></div>
+          <div class="card" id="confusion-card"><span class="skeleton sk-block"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="where" class="section section-tight" aria-labelledby="where-title">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">Per site</span><h2 id="where-title">Error change at every training monitor</h2>
+          <p>Each dot is a reference monitor; colour shows how much AirTrace changed the mean absolute error relative to raw CAMS when that site was held out.</p></div></div>
+        <div class="card" id="site-card">
+          <div id="site-summary" class="card-sub"></div>
+          <div id="site-map" role="region" aria-label="Map of training monitors coloured by change in error"></div>
+          <div class="ramp" id="site-ramp"></div>
+          <div id="site-table"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="explain" class="section section-tight" aria-labelledby="explain-title">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">Explainability</span><h2 id="explain-title">What the model relies on</h2>
+          <p>Global importance (share of total split gain). For each individual forecast the site shows TreeSHAP contributions grouped the same way (“Why this forecast”).</p></div></div>
+        <div class="grid grid-2">
+          <div class="card" id="fi-card"><span class="skeleton sk-block"></span></div>
+          <div class="card" id="gi-card"><span class="skeleton sk-block"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="uncertainty" class="section section-tight" aria-labelledby="uncertainty-title">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">Uncertainty</span><h2 id="uncertainty-title">Honest ranges, not just a number</h2></div></div>
+        <div class="card" id="interval-card"><span class="skeleton sk-block"></span></div>
+      </div>
+    </section>
+
+    <section id="sources" class="section section-tight" aria-labelledby="sources-title">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">Source attribution</span><h2 id="sources-title">Where the pollution comes from</h2>
+          <p>A receptor model on modelled tracers: an indicative split of PM2.5 into source types, not an emissions inventory.</p></div></div>
+        <div class="grid">
+          <div class="card" id="src-method"><span class="skeleton sk-block"></span></div>
+          <div class="card" id="src-profiles"><span class="skeleton sk-block"></span></div>
+          <div class="grid grid-2">
+            <div class="card" id="src-checks"><span class="skeleton sk-block"></span></div>
+            <div class="card" id="src-regression"><span class="skeleton sk-block"></span></div>
+          </div>
+          <div class="card" id="src-regions"><span class="skeleton sk-block"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="limits" class="section section-tight" aria-labelledby="limits-title">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">Limitations &amp; responsible AI</span><h2 id="limits-title">What AirTrace cannot do</h2></div></div>
+        <div class="grid grid-2">
+          <div class="card prose">
+            <h3>Known limitations</h3>
+            <ul>
+              <li><strong>City scale, not street scale.</strong> CAMS runs on a grid tens of kilometres wide. AirTrace forecasts a city-wide 24-hour average; a busy road or a local fire can be far worse.</li>
+              <li><strong>Uneven training data.</strong> The monitors are mostly in North America and in capital cities with a US embassy. Regions with few training sites (see the per-region table) have larger and less certain errors.</li>
+              <li><strong>Frozen in time.</strong> The model learned from one year. Where the embassy monitors went dark, we can no longer check whether it still holds — which is why every forecast carries an 80% range and the monitor status is always shown.</li>
+              <li><strong>Sources are estimates.</strong> The attribution decomposes modelled tracer patterns, so it inherits CAMS emission-inventory errors; some validation checks fail and are shown as failing.</li>
+              <li><strong>Forecast skill fades with lead time.</strong> Days 4–5 depend on weather forecasts that are themselves uncertain; the ranges widen accordingly.</li>
+            </ul>
+          </div>
+          <div class="card prose">
+            <h3>Responsible use</h3>
+            <ul>
+              <li><strong>Not medical advice.</strong> Health messages follow the US EPA AQI guidance. Always follow official advisories from local authorities.</li>
+              <li><strong>Transparent by design.</strong> Every number on this site comes from the pipeline’s JSON output; validation failures are shown, not hidden. The code and model artifacts are public.</li>
+              <li><strong>No personal data.</strong> The site is static: no accounts, cookies or tracking. It only uses open environmental data.</li>
+              <li><strong>Equity.</strong> The people who lost their only reference monitor are the ones who most need a trustworthy estimate. AirTrace says clearly when a number is an estimate without a ground truth nearby.</li>
+              <li><strong>Light footprint.</strong> Gradient-boosted trees train and run on an ordinary CPU — no GPU is needed for training or for the forecast runs.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="data" class="section section-tight" aria-labelledby="data-title">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">Data &amp; credits</span><h2 id="data-title">Training data and sources</h2></div></div>
+        <div class="grid grid-2">
+          <div class="card" id="dataset-card"><span class="skeleton sk-block"></span></div>
+          <div class="card prose">
+            <h3>Credits</h3>
+            <ul>
+              <li><a href="https://atmosphere.copernicus.eu/" rel="noopener">Copernicus Atmosphere Monitoring Service (CAMS)</a> global forecasts, accessed via <a href="https://open-meteo.com/" rel="noopener">Open-Meteo</a> (CC BY 4.0).</li>
+              <li><a href="https://cds.climate.copernicus.eu/" rel="noopener">ERA5 reanalysis</a> (Copernicus Climate Change Service / ECMWF) and Open-Meteo weather forecasts.</li>
+              <li><a href="https://www.airnow.gov/" rel="noopener">AirNow</a> — US Environmental Protection Agency and US Department of State. Data are preliminary and unvalidated at source.</li>
+              <li><a href="https://firms.modaps.eosdis.nasa.gov/" rel="noopener">NASA FIRMS</a> VIIRS active-fire detections.</li>
+              <li>Basemap © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions" rel="noopener">CARTO</a>. Built with <a href="https://leafletjs.com/" rel="noopener">Leaflet</a>, <a href="https://www.chartjs.org/" rel="noopener">Chart.js</a> and <a href="https://lightgbm.readthedocs.io/" rel="noopener">LightGBM</a>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html" data-keep-query aria-label="AirTrace home">
+            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <rect width="32" height="32" rx="9" fill="#0f766e"/>
+              <path d="M6.5 11.5c2.6-1.9 5.2-1.9 7.8 0s5.2 1.9 7.8 0" fill="none" stroke="#99f6e4" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M6.5 17c2.6-1.9 5.2-1.9 7.8 0 1.4 1 2.8 1.5 4.2 1.4" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M6.5 22.5c2.2-1.6 4.4-1.8 6.6-.6" fill="none" stroke="#99f6e4" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="23" cy="20.5" r="4.6" fill="none" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="23" cy="20.5" r="1.7" fill="#ffffff"/>
+            </svg>
+            <span>Air<span class="wordmark-accent">Trace</span></span>
+          </a>
+          <p style="margin-top:12px">Daily PM2.5 forecasts that correct the Copernicus CAMS global model with machine learning, explain their drivers, and estimate where the pollution comes from.</p>
+          <p class="disclaimer"><strong>Research prototype — not medical advice.</strong> Forecasts can be wrong. Always follow official air-quality advisories from your local authorities.</p>
+        </div>
+        <div>
+          <h4>Data credits</h4>
+          <ul>
+            <li><a href="https://atmosphere.copernicus.eu/" rel="noopener">Copernicus CAMS</a> global forecasts via <a href="https://open-meteo.com/" rel="noopener">Open-Meteo</a></li>
+            <li><a href="https://cds.climate.copernicus.eu/" rel="noopener">ERA5</a> reanalysis (Copernicus C3S / ECMWF)</li>
+            <li><a href="https://www.airnow.gov/" rel="noopener">AirNow</a> — US EPA and US Department of State</li>
+            <li><a href="https://firms.modaps.eosdis.nasa.gov/" rel="noopener">NASA FIRMS</a> VIIRS active fires</li>
+            <li>Basemap © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions" rel="noopener">CARTO</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Project</h4>
+          <ul>
+            <li><a href="index.html" data-keep-query>Live forecasts map</a></li>
+            <li><a href="https://github.com/" data-repo-link target="_blank" rel="noopener">Source code on GitHub</a></li>
+            <li>Model version <span id="model-version" class="num">–</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Built for Neural Storm 2026 · GP-01</span>
+        <span>Air-quality data are preliminary and unvalidated at source.</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

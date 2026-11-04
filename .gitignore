@@ -1,0 +1,15 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Large / regenerable data (raw downloads and logs); data/processed/ is committed
+data/raw/
+data/*.log
+
+# Scratch model runs (committed artifacts live directly in models/)
+models/_dev/
+
+# OS
+.DS_Store

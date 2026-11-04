@@ -1,0 +1,9 @@
+# Runtime dependencies (pinned to the versions the pipeline was developed and tested with).
+# All have CPython 3.14 wheels for Linux x86_64 (GitHub Actions ubuntu-latest), macOS and Windows.
+numpy==2.5.4
+pandas==3.1.0
+pyarrow==26.0.1
+requests==2.34.2
+scikit-learn==1.9.1
+scipy==1.18.1
+lightgbm==4.7.0

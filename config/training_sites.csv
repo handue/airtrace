@@ -1,0 +1,98 @@
+site_id,city,country_name,country,region,network,lat,lon,elevation,gmt_offset,n_days,mean_pm25
+600PAR010001,Asuncion,Paraguay,PA,Latin America & Caribbean,US Dept. of State,-25.2935,-57.604,0.0,-4.0,364,19.50989010989011
+450MAD010001,Antananarivo,Madagascar,MA,Sub-Saharan Africa,US Dept. of State,-18.9085,47.5375,0.0,3.0,363,29.31404958677686
+DS1010001,New Delhi,India,IN,South Asia,US Dept. of State,28.6358,77.2244,0.0,5.5,363,94.25840220385676
+GZ1010001,Guangzhou,China,CH,East Asia,US Dept. of State,23.1168,113.3181,0.0,8.0,362,25.28508287292818
+DK1010001,Dhaka,Bangladesh,BG,South Asia,US Dept. of State,23.7964,90.4246,0.0,6.0,361,98.80304709141275
+508MAP010001,Maputo,Mozambique,MZ,Sub-Saharan Africa,US Dept. of State,-25.9038,32.6284,0.0,2.0,360,18.858333333333334
+BJ1010001,Beijing,China,CH,East Asia,US Dept. of State,39.9534,116.4663,0.0,8.0,356,40.73511235955056
+768TOG010001,Lome,Togo,TO,Sub-Saharan Africa,US Dept. of State,6.1852,1.2142,0.0,0.0,355,23.083380281690143
+BIH010001,Sarajevo,Bosnia Herzegovina,BK,Europe,US Dept. of State,43.8567,18.3982,0.0,1.0,355,36.8774647887324
+398KZ1010001,Almaty,Kazakhstan,KZ,Central Asia & Caucasus,US Dept. of State,43.2529,76.9312,0.0,6.0,352,26.38153409090909
+DS1010003,Kolkata,India,IN,South Asia,US Dept. of State,22.5626,88.363,0.0,5.5,350,69.79971428571429
+762DUS010001,Dushanbe,Tajikistan,TI,Central Asia & Caucasus,US Dept. of State,38.5577,68.7759,0.0,5.0,347,54.73746397694525
+DS1010004,Mumbai,India,IN,South Asia,US Dept. of State,19.0728,72.8826,0.0,5.5,347,45.800000000000004
+818EGY010001,Cairo,Egypt,EG,Middle East & North Africa,US Dept. of State,30.0415,31.2329,0.0,2.0,347,46.36109510086455
+586PK1010001,Islamabad,Pakistan,PK,South Asia,US Dept. of State,33.7256,73.116,0.0,5.0,346,53.69393063583814
+JK1010002,Jakarta,Indonesia,ID,Southeast Asia,US Dept. of State,-6.1825,106.8342,10.1,7.0,346,30.66416184971098
+DB1010001,Dubai,UAE,AE,Middle East & North Africa,US Dept. of State,25.2585,55.3092,0.0,4.0,345,38.03623188405797
+UZB010001,Tashkent,Uzbekistan,UZ,Central Asia & Caucasus,US Dept. of State,41.3672,69.2725,0.0,5.0,339,34.094395280235986
+AD1010001,Abu Dhabi,UAE,AE,Middle East & North Africa,US Dept. of State,24.4243,54.4339,0.0,4.0,337,33.91513353115727
+031AZE010001,Baku,Azerbaijan,AJ,Central Asia & Caucasus,US Dept. of State,40.387,49.8429,0.0,4.0,336,24.24136904761905
+104MMR010001,Rangoon,Burma,BM,Southeast Asia,US Dept. of State,16.8256,96.1445,0.0,6.5,336,22.285119047619048
+148CHD010001,N'Djamena,Chad,CD,Sub-Saharan Africa,US Dept. of State,12.1348,15.0557,0.0,1.0,335,90.85432835820896
+418LAO010001,Vientiane,Laos,LA,Southeast Asia,US Dept. of State,17.8961,102.64,0.0,7.0,335,28.52686567164179
+KP1010001,Kampala,Uganda,UG,Sub-Saharan Africa,US Dept. of State,0.3002,32.5916,0.0,3.0,332,67.26927710843374
+UB1010001,Ulaanbaatar,Mongolia,MG,East Asia,US Dept. of State,47.9284,106.9295,0.0,8.0,331,41.40543806646526
+SH1010001,Shanghai,China,CH,East Asia,US Dept. of State,31.2107,121.4482,0.0,8.0,330,27.865454545454547
+KAZ010001,Astana,Kazakhstan,KZ,Central Asia & Caucasus,US Dept. of State,51.1253,71.4672,0.0,6.0,330,17.667575757575758
+KM1010001,Kathmandu,Nepal,NP,South Asia,US Dept. of State,27.7387,85.3362,0.0,5.75,325,49.124923076923075
+368IRQ010001,Baghdad,Iraq,IZ,Middle East & North Africa,US Dept. of State,33.3128,44.3615,0.0,3.0,322,54.18788819875776
+076BR1010001,Sao Paulo,Brazil,BR,Latin America & Caribbean,US Dept. of State,-23.6292,-46.6966,0.0,-3.0,322,13.87608695652174
+417BI1010001,Bishkek,Kyrgyzstan,KG,Central Asia & Caucasus,US Dept. of State,42.8276,74.5838,0.0,6.0,319,14.719435736677116
+ALG010001,Algiers,Algeria,AG,Middle East & North Africa,US Dept. of State,36.7558,3.0391,0.0,1.0,317,17.92334384858044
+AA1010002,Addis Ababa,Ethiopia,ET,Sub-Saharan Africa,US Dept. of State,9.0114,38.8209,0.0,3.0,316,30.86867088607595
+070BH2010001,Banja Luka,Bosnia Herzegovina,BK,Europe,US Dept. of State,44.7725,17.1856,0.0,1.0,316,35.46455696202531
+586PK4010001,Peshawar,Pakistan,PK,South Asia,US Dept. of State,34.0059,71.5378,0.0,5.0,315,75.23841269841269
+795ABT010001,Ashgabat,Turkmenistan,TX,Central Asia & Caucasus,US Dept. of State,37.9415,58.3879,0.0,5.0,311,25.943729903536976
+CMB010001,Colombo,Sri Lanka,CE,South Asia,US Dept. of State,6.9094,79.8753,51.9,5.5,311,18.040192926045016
+320GT1010001,Guatemala City,Guatemala,GT,Latin America & Caribbean,US Dept. of State,14.6186,-90.4839,0.0,-6.0,310,16.420967741935485
+KC1010001,Kuwait City,Kuwait,KU,Middle East & North Africa,US Dept. of State,29.2923,48.0477,0.0,3.0,308,41.78279220779221
+586PK3010003,Lahore,Pakistan,PK,South Asia,US Dept. of State,31.5601,74.3359,0.0,5.0,305,141.8334426229508
+HN1010001,Hanoi,Vietnam,VM,Southeast Asia,US Dept. of State,21.0219,105.8188,16.8,7.0,302,47.89602649006623
+DS1010005,Hyderabad,India,IN,South Asia,US Dept. of State,17.384,78.4564,0.0,5.5,301,42.03089700996677
+566NI1010001,Abuja,Nigeria,NI,Sub-Saharan Africa,US Dept. of State,9.0416,7.4774,0.0,1.0,293,34.508532423208194
+DS1010002,Chennai,India,IN,South Asia,US Dept. of State,13.0878,80.2785,0.0,5.5,291,33.44192439862543
+MNA010001,Manama,Bahrain,BA,Middle East & North Africa,US Dept. of State,26.2047,50.5708,0.0,3.0,283,36.90282685512368
+586PK2010001,Karachi,Pakistan,PK,South Asia,US Dept. of State,24.8415,67.0091,0.0,5.0,256,42.165234375
+PI1010001,Pristina,Kosovo,KV,Europe,US Dept. of State,42.656,21.14,0.0,1.0,248,15.008064516129032
+608PH1010001,Manila,Philippines,RP,Southeast Asia,US Dept. of State,14.5771,120.9778,0.0,8.0,246,19.377642276422762
+634QA1010001,Doha,Qatar,QA,Middle East & North Africa,US Dept. of State,25.3337,51.2295,0.0,3.0,235,35.14042553191489
+SY1010001,Shenyang,China,CH,East Asia,US Dept. of State,41.7835,123.4244,0.0,8.0,231,39.174891774891776
+288GH1010001,Accra,Ghana,GH,Sub-Saharan Africa,US Dept. of State,5.5806,-0.1707,0.0,0.0,229,16.386899563318778
+JDA010001,Jeddah,Saudi Arabia,SA,Middle East & North Africa,US Dept. of State,21.5435,39.173,0.0,3.0,191,21.70261780104712
+180COG010001,Kinshasa,DR Congo,CF,Sub-Saharan Africa,US Dept. of State,-4.3006,15.3137,0.0,1.0,189,81.05449735449736
+LM1010001,Lima,Peru,PE,Latin America & Caribbean,US Dept. of State,-12.0994,-76.9689,0.0,-5.0,179,19.84413407821229
+384CI1010001,Abidjan,Ivory Coast,IV,Sub-Saharan Africa,US Dept. of State,5.36,-4.0083,0.0,0.0,164,30.346951219512192
+646RWA010001,Kigali,Rwanda,RW,Sub-Saharan Africa,US Dept. of State,-1.9362,30.078,0.0,2.0,148,39.6581081081081
+566NI2010001,Lagos,Nigeria,NI,Sub-Saharan Africa,US Dept. of State,6.4405,3.4068,0.0,1.0,127,13.85984251968504
+CUR010001,Willemstad,Curacao,UC,Latin America & Caribbean,US Dept. of State,12.1696,-68.99,0.0,-4.0,119,9.828571428571427
+084BZ1010001,Belmopan,Belize,BH,Latin America & Caribbean,US Dept. of State,17.2561,-88.7739,0.0,-6.0,111,23.824324324324323
+686SEN010001,Dakar,Senegal,SG,Sub-Saharan Africa,US Dept. of State,14.7448,-17.5265,0.0,0.0,110,21.742727272727272
+BG1010001,Bogota,Colombia,CO,Latin America & Caribbean,US Dept. of State,4.6377,-74.0949,0.0,-5.0,105,15.695238095238095
+480612004,Isla Blanca C323/C667,United States,US,North America,AirNow regulatory,26.0733,-97.1667,3.1,-6.0,339,19.37315634218289
+160150002,Garden Valley,United States,US,North America,AirNow regulatory,44.1045,-115.9724,0.0,-7.0,355,16.399718309859153
+CC0090701,Athabasca Valley,Canada,CA,North America,AirNow regulatory,56.7328,-111.39,0.0,-7.0,363,15.007438016528925
+060658005,Riverside,United States,US,North America,AirNow regulatory,33.9964,-117.4925,230.9,-8.0,360,14.84888888888889
+060731014,San Diego,United States,US,North America,AirNow regulatory,32.5794,-116.9295,184.8,-8.0,364,14.683791208791208
+060371103,Los Angeles,United States,US,North America,AirNow regulatory,34.0664,-118.2268,30.5,-8.0,354,14.505649717514125
+840530739992,Maple Falls-Azure Way,United States,US,North America,AirNow regulatory,48.9477,-122.1471,0.0,-8.0,323,14.287925696594428
+840060731025,San Diego,United States,US,North America,AirNow regulatory,32.5528,-117.0473,18.0,-8.0,358,14.274301675977654
+150030010,Honolulu,United States,US,North America,AirNow regulatory,21.3236,-158.0886,18.0,-10.0,359,4.452367688022284
+000030201,Port Hawkesbury,Canada,CA,North America,AirNow regulatory,45.614,-61.3621,0.0,-4.0,327,4.188379204892966
+020200018,Anchorage,United States,US,North America,AirNow regulatory,61.2059,-149.8246,38.7,-9.0,341,5.054545454545455
+550870009,Appleton,United States,US,North America,AirNow regulatory,44.3069,-88.3956,0.0,-6.0,359,5.718105849582173
+120112003,Miami,United States,US,North America,AirNow regulatory,26.2906,-80.0969,0.0,-5.0,363,6.594214876033058
+840080990002,Lamar Municipal Building,United States,US,North America,AirNow regulatory,38.0847,-102.6186,1100.4,-7.0,361,5.645429362880886
+124000056001,Radisson,Canada,CA,North America,AirNow regulatory,53.6922,-77.741,0.0,-5.0,357,3.0358543417366946
+840340011006,Atlantic City,United States,US,North America,AirNow regulatory,39.3633,-74.431,2.1,-5.0,350,5.169714285714286
+011030011,Decatur,United States,US,North America,AirNow regulatory,34.5286,-86.9706,0.0,-6.0,359,7.176601671309192
+381010003,Ryder,United States,US,North America,AirNow regulatory,47.9409,-101.5716,665.5,-6.0,358,7.000558659217877
+840021851111,Blm-Kaktovik,United States,US,North America,AirNow regulatory,70.1319,-143.6239,0.0,-9.0,337,3.0759643916913944
+021100004,Floyd Dryden,United States,US,North America,AirNow regulatory,58.3889,-134.5656,14.9,-9.0,361,5.526038781163435
+000053301,Deschambault,Canada,CA,North America,AirNow regulatory,46.6822,-71.9678,53.4,-5.0,343,5.593294460641399
+481130069,Dallas,United States,US,North America,AirNow regulatory,32.82,-96.86,0.0,-6.0,353,10.578753541076487
+840060452003,Willits Blosser Lane,United States,US,North America,AirNow regulatory,39.3986,-123.3587,427.0,-8.0,343,7.25801749271137
+350130025,Las Cruces Ed,United States,US,North America,AirNow regulatory,32.3103,-106.7512,0.0,-7.0,346,4.388150289017341
+450510008,Myrtle Beach,United States,US,North America,AirNow regulatory,33.8005,-78.9941,0.0,-5.0,359,7.392479108635098
+290470005,Kansas City,United States,US,North America,AirNow regulatory,39.3031,-94.3764,283.7,-6.0,365,4.884931506849315
+CC0011002,Firehall-Labradorcity2,Canada,CA,North America,AirNow regulatory,52.9455,-66.9102,0.0,-4.0,364,4.39945054945055
+CC0090402,Medicine Hat - Crescent Hts,Canada,CA,North America,AirNow regulatory,50.0492,-110.6814,0.0,-7.0,356,6.9401685393258425
+490071003,P2,United States,US,North America,AirNow regulatory,39.5958,-110.77,0.0,-7.0,365,3.67041095890411
+840390490040,Jackson Pike Wwtp,United States,US,North America,AirNow regulatory,39.9125,-83.0116,0.0,-5.0,358,9.36564245810056
+000105101,Houston Firehall,Canada,CA,North America,AirNow regulatory,54.3972,-126.645,594.4,-8.0,350,6.966571428571429
+000065201,Parry Sound,Canada,CA,North America,AirNow regulatory,45.3383,-80.0393,0.0,-5.0,365,4.604931506849315
+220570004,Houma,United States,US,North America,AirNow regulatory,29.7639,-90.7653,1.5,-6.0,347,9.381844380403459
+270834210,Marshall,United States,US,North America,AirNow regulatory,44.4572,-95.835,0.0,-6.0,365,6.474246575342465
+121290001,Tallahassee,United States,US,North America,AirNow regulatory,30.0842,-84.1617,0.0,-5.0,334,8.095808383233534
+840560290001,Cody Slams,United States,US,North America,AirNow regulatory,44.5246,-109.0685,1524.1,-7.0,363,3.5104683195592283

@@ -1,0 +1,91 @@
+id,name,country,region,lat,lon,embassy_site_id
+almaty,Almaty,Kazakhstan,Central Asia & Caucasus,43.2529,76.9312,398KZ1010001
+ashgabat,Ashgabat,Turkmenistan,Central Asia & Caucasus,37.9415,58.3879,795ABT010001
+astana,Astana,Kazakhstan,Central Asia & Caucasus,51.1253,71.4672,KAZ010001
+baku,Baku,Azerbaijan,Central Asia & Caucasus,40.387,49.8429,031AZE010001
+bishkek,Bishkek,Kyrgyzstan,Central Asia & Caucasus,42.8276,74.5838,417BI1010001
+dushanbe,Dushanbe,Tajikistan,Central Asia & Caucasus,38.5577,68.7759,762DUS010001
+tashkent,Tashkent,Uzbekistan,Central Asia & Caucasus,41.3672,69.2725,UZB010001
+beijing,Beijing,China,East Asia,39.9534,116.4663,BJ1010001
+chengdu,Chengdu,China,East Asia,30.5728,104.0668,
+guangzhou,Guangzhou,China,East Asia,23.1168,113.3181,GZ1010001
+seoul,Seoul,South Korea,East Asia,37.5665,126.978,
+shanghai,Shanghai,China,East Asia,31.2107,121.4482,SH1010001
+shenyang,Shenyang,China,East Asia,41.7835,123.4244,SY1010001
+taipei,Taipei,Taiwan,East Asia,25.033,121.5654,
+tokyo,Tokyo,Japan,East Asia,35.6762,139.6503,
+ulaanbaatar,Ulaanbaatar,Mongolia,East Asia,47.9284,106.9295,UB1010001
+xi-an,Xi'an,China,East Asia,34.3416,108.9398,
+banja-luka,Banja Luka,Bosnia Herzegovina,Europe,44.7725,17.1856,070BH2010001
+berlin,Berlin,Germany,Europe,52.52,13.405,
+istanbul,Istanbul,Turkey,Europe,41.0082,28.9784,
+london,London,United Kingdom,Europe,51.5074,-0.1278,
+madrid,Madrid,Spain,Europe,40.4168,-3.7038,
+moscow,Moscow,Russia,Europe,55.7558,37.6173,
+paris,Paris,France,Europe,48.8566,2.3522,
+pristina,Pristina,Kosovo,Europe,42.656,21.14,PI1010001
+rome,Rome,Italy,Europe,41.9028,12.4964,
+sarajevo,Sarajevo,Bosnia Herzegovina,Europe,43.8567,18.3982,BIH010001
+warsaw,Warsaw,Poland,Europe,52.2297,21.0122,
+asuncion,Asuncion,Paraguay,Latin America & Caribbean,-25.2935,-57.604,600PAR010001
+belmopan,Belmopan,Belize,Latin America & Caribbean,17.2561,-88.7739,084BZ1010001
+bogota,Bogota,Colombia,Latin America & Caribbean,4.6377,-74.0949,BG1010001
+buenos-aires,Buenos Aires,Argentina,Latin America & Caribbean,-34.6037,-58.3816,
+guatemala-city,Guatemala City,Guatemala,Latin America & Caribbean,14.6186,-90.4839,320GT1010001
+lima,Lima,Peru,Latin America & Caribbean,-12.0994,-76.9689,LM1010001
+mexico-city,Mexico City,Mexico,Latin America & Caribbean,19.4326,-99.1332,
+santiago,Santiago,Chile,Latin America & Caribbean,-33.4489,-70.6693,
+sao-paulo,Sao Paulo,Brazil,Latin America & Caribbean,-23.6292,-46.6966,076BR1010001
+willemstad,Willemstad,Curacao,Latin America & Caribbean,12.1696,-68.99,CUR010001
+abu-dhabi,Abu Dhabi,UAE,Middle East & North Africa,24.4243,54.4339,AD1010001
+algiers,Algiers,Algeria,Middle East & North Africa,36.7558,3.0391,ALG010001
+baghdad,Baghdad,Iraq,Middle East & North Africa,33.3128,44.3615,368IRQ010001
+cairo,Cairo,Egypt,Middle East & North Africa,30.0415,31.2329,818EGY010001
+doha,Doha,Qatar,Middle East & North Africa,25.3337,51.2295,634QA1010001
+dubai,Dubai,UAE,Middle East & North Africa,25.2585,55.3092,DB1010001
+jeddah,Jeddah,Saudi Arabia,Middle East & North Africa,21.5435,39.173,JDA010001
+kuwait-city,Kuwait City,Kuwait,Middle East & North Africa,29.2923,48.0477,KC1010001
+manama,Manama,Bahrain,Middle East & North Africa,26.2047,50.5708,MNA010001
+riyadh,Riyadh,Saudi Arabia,Middle East & North Africa,24.7136,46.6753,
+tehran,Tehran,Iran,Middle East & North Africa,35.6892,51.389,
+chicago,Chicago,United States,North America,41.8781,-87.6298,
+los-angeles,Los Angeles,United States,North America,34.0522,-118.2437,
+new-york,New York,United States,North America,40.7128,-74.006,
+toronto,Toronto,Canada,North America,43.6532,-79.3832,
+vancouver,Vancouver,Canada,North America,49.2827,-123.1207,
+sydney,Sydney,Australia,Oceania,-33.8688,151.2093,
+chennai,Chennai,India,South Asia,13.0878,80.2785,DS1010002
+colombo,Colombo,Sri Lanka,South Asia,6.9094,79.8753,CMB010001
+dhaka,Dhaka,Bangladesh,South Asia,23.7964,90.4246,DK1010001
+hyderabad,Hyderabad,India,South Asia,17.384,78.4564,DS1010005
+islamabad,Islamabad,Pakistan,South Asia,33.7256,73.116,586PK1010001
+karachi,Karachi,Pakistan,South Asia,24.8415,67.0091,586PK2010001
+kathmandu,Kathmandu,Nepal,South Asia,27.7387,85.3362,KM1010001
+kolkata,Kolkata,India,South Asia,22.5626,88.363,DS1010003
+lahore,Lahore,Pakistan,South Asia,31.5601,74.3359,586PK3010003
+mumbai,Mumbai,India,South Asia,19.0728,72.8826,DS1010004
+new-delhi,New Delhi,India,South Asia,28.6358,77.2244,DS1010001
+peshawar,Peshawar,Pakistan,South Asia,34.0059,71.5378,586PK4010001
+bangkok,Bangkok,Thailand,Southeast Asia,13.7563,100.5018,
+hanoi,Hanoi,Vietnam,Southeast Asia,21.0219,105.8188,HN1010001
+ho-chi-minh-city,Ho Chi Minh City,Vietnam,Southeast Asia,10.8231,106.6297,
+jakarta,Jakarta,Indonesia,Southeast Asia,-6.1825,106.8342,JK1010002
+manila,Manila,Philippines,Southeast Asia,14.5771,120.9778,608PH1010001
+rangoon,Rangoon,Burma,Southeast Asia,16.8256,96.1445,104MMR010001
+singapore,Singapore,Singapore,Southeast Asia,1.3521,103.8198,
+vientiane,Vientiane,Laos,Southeast Asia,17.8961,102.64,418LAO010001
+abidjan,Abidjan,Ivory Coast,Sub-Saharan Africa,5.36,-4.0083,384CI1010001
+abuja,Abuja,Nigeria,Sub-Saharan Africa,9.0416,7.4774,566NI1010001
+accra,Accra,Ghana,Sub-Saharan Africa,5.5806,-0.1707,288GH1010001
+addis-ababa,Addis Ababa,Ethiopia,Sub-Saharan Africa,9.0114,38.8209,AA1010002
+antananarivo,Antananarivo,Madagascar,Sub-Saharan Africa,-18.9085,47.5375,450MAD010001
+dakar,Dakar,Senegal,Sub-Saharan Africa,14.7448,-17.5265,686SEN010001
+johannesburg,Johannesburg,South Africa,Sub-Saharan Africa,-26.2041,28.0473,
+kampala,Kampala,Uganda,Sub-Saharan Africa,0.3002,32.5916,KP1010001
+kigali,Kigali,Rwanda,Sub-Saharan Africa,-1.9362,30.078,646RWA010001
+kinshasa,Kinshasa,DR Congo,Sub-Saharan Africa,-4.3006,15.3137,180COG010001
+lagos,Lagos,Nigeria,Sub-Saharan Africa,6.4405,3.4068,566NI2010001
+lome,Lome,Togo,Sub-Saharan Africa,6.1852,1.2142,768TOG010001
+maputo,Maputo,Mozambique,Sub-Saharan Africa,-25.9038,32.6284,508MAP010001
+n-djamena,N'Djamena,Chad,Sub-Saharan Africa,12.1348,15.0557,148CHD010001
+nairobi,Nairobi,Kenya,Sub-Saharan Africa,-1.2921,36.8219,

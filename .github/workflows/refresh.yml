@@ -1,0 +1,74 @@
+# Refresh the live AirTrace forecasts and deploy the static site (docs/) to GitHub Pages.
+# If the live build fails (e.g. an upstream API is down), the committed snapshot in docs/
+# is still deployed, and the job summary says so.
+name: Refresh forecasts & deploy Pages
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"   # every 6 hours at minute 17 (UTC)
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build live forecast data
+        id: live
+        continue-on-error: true
+        run: python scripts/08_build_site_data.py
+
+      - name: Report build status
+        if: always()
+        run: |
+          if [ "${{ steps.live.outcome }}" = "success" ]; then
+            echo "Live forecasts refreshed: docs/data/ regenerated at $(date -u +%Y-%m-%dT%H:%MZ)." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::Live forecast build failed; deploying the committed snapshot in docs/ instead."
+            echo "**WARNING: live forecast build failed - deploying the committed snapshot in docs/ (data may be stale).**" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

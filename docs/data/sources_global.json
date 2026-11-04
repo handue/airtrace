@@ -1,0 +1,365 @@
+{
+ "generated_at": "2026-11-04T03:56:54Z",
+ "method": "Receptor-model source attribution: non-negative matrix factorisation (the factor model behind EPA PMF; 6 factors, Kullback-Leibler loss) of 8 daily Copernicus CAMS tracers scaled by their 90th percentiles, over 11508 site-days at 84 reference sites (2024-09-27 to 2025-02-28). Factors are named by optimal (Hungarian) matching of their profiles to reference chemical signatures, and observed PM2.5 is apportioned by non-negative least squares on the factor activations plus an intercept (regional background & other).",
+ "period": [
+  "2024-09-27",
+  "2025-02-28"
+ ],
+ "n_sites": 84,
+ "tracers": [
+  "Nitrogen dioxide",
+  "Nitric oxide",
+  "Carbon monoxide",
+  "Sulphur dioxide",
+  "Ozone",
+  "Formaldehyde",
+  "Desert dust",
+  "Sea salt"
+ ],
+ "factors": [
+  {
+   "key": "traffic",
+   "label": "Traffic & urban combustion",
+   "color": "#3b82f6",
+   "description": "Freshly emitted nitric oxide (NO) with some NO2 from vehicle exhaust and other street-level combustion, strongest in calm winter air over big cities.",
+   "profile": [
+    0.218,
+    1.0,
+    0.091,
+    0.156,
+    0.0,
+    0.007,
+    0.0,
+    0.0
+   ],
+   "tracer_share": [
+    0.223,
+    0.999,
+    0.078,
+    0.165,
+    0.0,
+    0.007,
+    0.0,
+    0.0
+   ],
+   "match": 0.81
+  },
+  {
+   "key": "industry",
+   "label": "Industry, coal & power",
+   "color": "#64748b",
+   "description": "Sulphur dioxide rising together with carbon monoxide and nitrogen dioxide, the signature of coal, power plants and industry; in this model it also carries much of a city's other fuel burning.",
+   "profile": [
+    0.826,
+    0.0,
+    0.969,
+    1.0,
+    0.019,
+    0.02,
+    0.0,
+    0.0
+   ],
+   "tracer_share": [
+    0.659,
+    0.0,
+    0.647,
+    0.823,
+    0.009,
+    0.016,
+    0.0,
+    0.0
+   ],
+   "match": 0.923
+  },
+  {
+   "key": "burning",
+   "label": "Fires & biomass burning",
+   "color": "#f97316",
+   "description": "Formaldehyde-rich air from crop, forest and savanna fires and household biomass burning, although formaldehyde also forms from plant and urban emissions in hot or stagnant air.",
+   "profile": [
+    0.033,
+    0.001,
+    0.088,
+    0.0,
+    0.088,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "tracer_share": [
+    0.033,
+    0.001,
+    0.073,
+    0.0,
+    0.049,
+    0.972,
+    0.0,
+    0.0
+   ],
+   "match": 0.764
+  },
+  {
+   "key": "dust",
+   "label": "Desert dust",
+   "color": "#c8a165",
+   "description": "Mineral dust blown from deserts and dry land such as the Sahara, Arabia and the Thar, often carried hundreds of kilometres.",
+   "profile": [
+    0.01,
+    0.0,
+    0.0,
+    0.009,
+    0.026,
+    0.003,
+    1.0,
+    0.0
+   ],
+   "tracer_share": [
+    0.014,
+    0.0,
+    0.0,
+    0.012,
+    0.02,
+    0.003,
+    1.0,
+    0.0
+   ],
+   "match": 1.0
+  },
+  {
+   "key": "secondary",
+   "label": "Photochemical & secondary",
+   "color": "#a855f7",
+   "description": "Ozone-rich, chemically aged air in which sunlight turns gases into secondary particles; this regional haze is the baseline of PM2.5 almost everywhere.",
+   "profile": [
+    0.045,
+    0.0,
+    0.154,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tracer_share": [
+    0.07,
+    0.0,
+    0.2,
+    0.0,
+    0.876,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "match": 0.883
+  },
+  {
+   "key": "marine",
+   "label": "Sea salt (marine)",
+   "color": "#06b6d4",
+   "description": "Sea-salt spray from breaking ocean waves, carried inland by onshore winds at coastal sites.",
+   "profile": [
+    0.001,
+    0.0,
+    0.004,
+    0.0,
+    0.109,
+    0.003,
+    0.0,
+    1.0
+   ],
+   "tracer_share": [
+    0.001,
+    0.0,
+    0.002,
+    0.0,
+    0.046,
+    0.002,
+    0.0,
+    1.0
+   ],
+   "match": 0.994
+  }
+ ],
+ "pm_regression": {
+  "r2": 0.232,
+  "n_rows": 11508,
+  "n_sites": 84,
+  "intercept": 0.0,
+  "coef": {
+   "traffic": 1.631,
+   "industry": 48.782,
+   "burning": 13.514,
+   "dust": 2.304,
+   "secondary": 26.764,
+   "marine": 0.0
+  },
+  "r2_cv_location": 0.13,
+  "r2_cams_raw": 0.438,
+  "mean_observed": 37.5,
+  "mean_contribution": {
+   "traffic": 0.7,
+   "industry": 15.3,
+   "burning": 5.3,
+   "dust": 1.2,
+   "secondary": 16.3,
+   "marine": 0.0,
+   "background": 0.0
+  }
+ },
+ "checks": [
+  {
+   "name": "Traffic factor is higher on working days",
+   "value": 0.976,
+   "expected": "> 1",
+   "passed": false,
+   "detail": "Median over 80 sites of mean weekday / mean weekend traffic activation (local weekends: Fri-Sat in the Gulf states, Iraq, Egypt, Algeria and Bangladesh, Sat in Nepal, Sat-Sun elsewhere); 35/80 sites above 1. The raw CAMS NO2 input has a median ratio of 0.990 on the same days, i.e. the global model itself shows almost no weekly cycle."
+  },
+  {
+   "name": "Sea-salt share is higher at coastal than inland sites",
+   "value": 0.0,
+   "expected": "> inland mean (0.000)",
+   "passed": false,
+   "detail": "Mean marine share at 24 clearly coastal sites 0.000 vs 37 clearly inland sites 0.000. The marine factor activation itself is 0.950 at the coast vs 0.019 inland; its PM2.5 coefficient is 0.00 ug/m3 per unit activation."
+  },
+  {
+   "name": "Desert-dust share is highest in the Middle East, North Africa and Sahel",
+   "value": 0.157,
+   "expected": "> every other region (next: Sub-Saharan Africa 0.041)",
+   "passed": true,
+   "detail": "Mean dust share by region (Sahel = N'Djamena, Dakar): Middle East & North Africa + Sahel 0.157, Sub-Saharan Africa 0.041, Central Asia & Caucasus 0.015, Latin America & Caribbean 0.014, South Asia 0.007, East Asia 0.004, Europe 0.003, North America 0.002, Southeast Asia 0.000. Top sites: Jeddah 0.357, N'Djamena 0.346, Kuwait City 0.317, Abuja 0.230, Doha 0.186."
+  },
+  {
+   "name": "Burning factor peaks in the Oct-Nov crop-residue season (Delhi, Lahore)",
+   "value": 0.788,
+   "expected": "> 1 at every site",
+   "passed": false,
+   "detail": "Mean burning activation Oct-Nov 2024 / Dec 2024-Feb 2025: New Delhi 1.32, Lahore 0.79 (value = the lower ratio)."
+  },
+  {
+   "name": "Factor activations explain observed PM2.5",
+   "value": 0.232,
+   "expected": "> 0.3",
+   "passed": false,
+   "detail": "In-sample R2 of the NNLS regression of observed daily PM2.5 on the 6 activations + intercept over 11508 site-days at 84 monitors; out-of-fold R2 with location-grouped 5-fold CV 0.130; raw CAMS PM2.5 alone reaches R2 0.438 on the same rows."
+  }
+ ],
+ "by_region": [
+  {
+   "region": "Central Asia & Caucasus",
+   "n_sites": 7,
+   "shares": {
+    "traffic": 0.019,
+    "industry": 0.474,
+    "burning": 0.018,
+    "dust": 0.015,
+    "secondary": 0.474,
+    "marine": 0.0,
+    "background": 0.0
+   }
+  },
+  {
+   "region": "East Asia",
+   "n_sites": 5,
+   "shares": {
+    "traffic": 0.073,
+    "industry": 0.74,
+    "burning": 0.02,
+    "dust": 0.003,
+    "secondary": 0.164,
+    "marine": 0.0,
+    "background": 0.0
+   }
+  },
+  {
+   "region": "Europe",
+   "n_sites": 3,
+   "shares": {
+    "traffic": 0.001,
+    "industry": 0.373,
+    "burning": 0.047,
+    "dust": 0.003,
+    "secondary": 0.576,
+    "marine": 0.0,
+    "background": 0.0
+   }
+  },
+  {
+   "region": "Latin America & Caribbean",
+   "n_sites": 6,
+   "shares": {
+    "traffic": 0.009,
+    "industry": 0.239,
+    "burning": 0.259,
+    "dust": 0.014,
+    "secondary": 0.479,
+    "marine": 0.0,
+    "background": 0.0
+   }
+  },
+  {
+   "region": "Middle East & North Africa",
+   "n_sites": 9,
+   "shares": {
+    "traffic": 0.024,
+    "industry": 0.475,
+    "burning": 0.079,
+    "dust": 0.135,
+    "secondary": 0.287,
+    "marine": 0.0,
+    "background": 0.0
+   }
+  },
+  {
+   "region": "North America",
+   "n_sites": 24,
+   "shares": {
+    "traffic": 0.013,
+    "industry": 0.171,
+    "burning": 0.048,
+    "dust": 0.002,
+    "secondary": 0.766,
+    "marine": 0.0,
+    "background": 0.0
+   }
+  },
+  {
+   "region": "South Asia",
+   "n_sites": 12,
+   "shares": {
+    "traffic": 0.008,
+    "industry": 0.478,
+    "burning": 0.094,
+    "dust": 0.007,
+    "secondary": 0.413,
+    "marine": 0.0,
+    "background": 0.0
+   }
+  },
+  {
+   "region": "Southeast Asia",
+   "n_sites": 5,
+   "shares": {
+    "traffic": 0.006,
+    "industry": 0.441,
+    "burning": 0.116,
+    "dust": 0.0,
+    "secondary": 0.437,
+    "marine": 0.0,
+    "background": 0.0
+   }
+  },
+  {
+   "region": "Sub-Saharan Africa",
+   "n_sites": 12,
+   "shares": {
+    "traffic": 0.0,
+    "industry": 0.07,
+    "burning": 0.492,
+    "dust": 0.066,
+    "secondary": 0.372,
+    "marine": 0.0,
+    "background": 0.0
+   }
+  }
+ ]
+}

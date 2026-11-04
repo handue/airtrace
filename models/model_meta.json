@@ -1,0 +1,242 @@
+{
+ "version": "2026.11.04.0630",
+ "trained_at": "2026-11-04T06:30:31Z",
+ "features": [
+  "cams_pm2_5_mean",
+  "cams_pm10_mean",
+  "cams_dust_mean",
+  "cams_aerosol_optical_depth_mean",
+  "cams_carbon_monoxide_mean",
+  "cams_nitrogen_dioxide_mean",
+  "cams_sulphur_dioxide_mean",
+  "cams_ozone_mean",
+  "cams_pm2_5_max",
+  "cams_pm2_5_night",
+  "cams_pm2_5_lag1",
+  "cams_pm2_5_delta",
+  "pm25_pm10_ratio",
+  "dust_frac",
+  "so2_co_ratio",
+  "t2m_mean",
+  "t2m_range",
+  "rh_mean",
+  "precip_sum",
+  "sp_mean",
+  "ws_mean",
+  "ws_min",
+  "u_mean",
+  "v_mean",
+  "swr_mean",
+  "doy_sin",
+  "doy_cos",
+  "dow",
+  "lat",
+  "abs_lat",
+  "lon_sin",
+  "lon_cos",
+  "elevation"
+ ],
+ "target": "log1p_pm25",
+ "n_rows": 30539,
+ "n_sites": 97,
+ "n_countries": 49,
+ "train_period": [
+  "2024-03-01",
+  "2025-02-28"
+ ],
+ "files": {
+  "level": "pm25_lgbm.txt",
+  "ratio": "pm25_ratio.txt",
+  "q10": "pm25_q10.txt",
+  "q90": "pm25_q90.txt"
+ },
+ "point_forecast": "mean of the level and ratio members in log1p space; ratio member = log1p(cams_pm2_5_mean) + booster output; level member alone where CAMS is missing",
+ "ratio_offset_mean": 2.694677,
+ "interval": {
+  "nominal": 0.8,
+  "method": "LightGBM quantile members (0.1, 0.9) + leave-location-out conformal margin (CQR)",
+  "conformal_margin_log": 0.242579,
+  "cv_fold_margins_log": [
+   0.2344,
+   0.2402,
+   0.2604,
+   0.2387,
+   0.2417
+  ],
+  "cv_coverage": 0.8,
+  "raw_quantile_cv_coverage": 0.582
+ },
+ "params": {
+  "num_leaves": 15,
+  "min_data_in_leaf": 100,
+  "learning_rate": 0.05,
+  "num_rounds": 800,
+  "feature_fraction": 0.8,
+  "bagging_fraction": 0.8,
+  "lambda_l2": 1.0,
+  "balance_sites": true,
+  "monotone_cams": true,
+  "location_penalty": 0.5
+ },
+ "monotone_increasing": [
+  "cams_pm2_5_mean"
+ ],
+ "sample_weights": "site-balanced (every monitor has equal total weight)",
+ "elevation_source": "Open-Meteo weather response 'elevation' (90 m DEM, m a.s.l.)",
+ "cv_scheme": "Leave-location-out cross-validation: GroupKFold(5) over 96 one-degree lat/lon cells (97 monitors), so every prediction is for a location the model never saw. Metrics on out-of-fold daily means in µg/m³.",
+ "cv_metrics": {
+  "cams_raw": {
+   "rmse": 27.33,
+   "mae": 13.65,
+   "r2": 0.441,
+   "bias": -5.84,
+   "r": 0.685,
+   "aqi_category_accuracy": 0.59,
+   "unhealthy_precision": 0.716,
+   "unhealthy_recall": 0.514,
+   "unhealthy_f1": 0.599
+  },
+  "linear": {
+   "rmse": 28.17,
+   "mae": 13.85,
+   "r2": 0.406,
+   "bias": -5.96,
+   "r": 0.672,
+   "aqi_category_accuracy": 0.572,
+   "unhealthy_precision": 0.721,
+   "unhealthy_recall": 0.493,
+   "unhealthy_f1": 0.585
+  },
+  "ml_no_cams": {
+   "rmse": 25.82,
+   "mae": 12.69,
+   "r2": 0.501,
+   "bias": -4.37,
+   "r": 0.721,
+   "aqi_category_accuracy": 0.605,
+   "unhealthy_precision": 0.706,
+   "unhealthy_recall": 0.596,
+   "unhealthy_f1": 0.647
+  },
+  "airtrace": {
+   "rmse": 23.16,
+   "mae": 11.29,
+   "r2": 0.599,
+   "bias": -3.44,
+   "r": 0.78,
+   "aqi_category_accuracy": 0.659,
+   "unhealthy_precision": 0.747,
+   "unhealthy_recall": 0.679,
+   "unhealthy_f1": 0.711
+  }
+ },
+ "experiments": [
+  {
+   "key": "level_plain",
+   "description": "Level model, unweighted, unconstrained",
+   "rmse": 23.68,
+   "mae": 11.57,
+   "r2": 0.58,
+   "bias": -2.97,
+   "log_rmse": 0.5746,
+   "site_mae": 12.07,
+   "aqi_category_accuracy": 0.652,
+   "unhealthy_recall": 0.684
+  },
+  {
+   "key": "level_balanced",
+   "description": "+ site-balanced sample weights",
+   "rmse": 23.24,
+   "mae": 11.4,
+   "r2": 0.596,
+   "bias": -3.04,
+   "log_rmse": 0.5723,
+   "site_mae": 11.85,
+   "aqi_category_accuracy": 0.654,
+   "unhealthy_recall": 0.688
+  },
+  {
+   "key": "level_monotone",
+   "description": "+ monotone in CAMS PM2.5",
+   "rmse": 23.42,
+   "mae": 11.45,
+   "r2": 0.589,
+   "bias": -2.91,
+   "log_rmse": 0.5738,
+   "site_mae": 11.92,
+   "aqi_category_accuracy": 0.656,
+   "unhealthy_recall": 0.691
+  },
+  {
+   "key": "level",
+   "description": "+ location split-gain penalty 0.5 (AirTrace level member)",
+   "rmse": 23.36,
+   "mae": 11.35,
+   "r2": 0.591,
+   "bias": -3.35,
+   "log_rmse": 0.5749,
+   "site_mae": 11.74,
+   "aqi_category_accuracy": 0.654,
+   "unhealthy_recall": 0.682
+  },
+  {
+   "key": "level_trees_31",
+   "description": "level member with num_leaves 31 / min_data 50 / 500 rounds",
+   "rmse": 23.0,
+   "mae": 11.22,
+   "r2": 0.604,
+   "bias": -3.58,
+   "log_rmse": 0.5765,
+   "site_mae": 11.6,
+   "aqi_category_accuracy": 0.655,
+   "unhealthy_recall": 0.675
+  },
+  {
+   "key": "level_trees_63",
+   "description": "level member with num_leaves 63 / min_data 30 / 300 rounds",
+   "rmse": 23.2,
+   "mae": 11.33,
+   "r2": 0.597,
+   "bias": -3.52,
+   "log_rmse": 0.5808,
+   "site_mae": 11.73,
+   "aqi_category_accuracy": 0.65,
+   "unhealthy_recall": 0.668
+  },
+  {
+   "key": "ratio",
+   "description": "Ratio member: CAMS log-offset + ML correction factor",
+   "rmse": 23.19,
+   "mae": 11.39,
+   "r2": 0.598,
+   "bias": -3.41,
+   "log_rmse": 0.5753,
+   "site_mae": 11.79,
+   "aqi_category_accuracy": 0.657,
+   "unhealthy_recall": 0.668
+  },
+  {
+   "key": "airtrace",
+   "description": "AirTrace = mean(level, ratio) in log space",
+   "rmse": 23.16,
+   "mae": 11.29,
+   "r2": 0.599,
+   "bias": -3.44,
+   "log_rmse": 0.5713,
+   "site_mae": 11.68,
+   "aqi_category_accuracy": 0.659,
+   "unhealthy_recall": 0.679
+  },
+  {
+   "key": "interval_raw_quantiles",
+   "description": "80% band from raw q10/q90 members (no conformal margin)",
+   "coverage": 0.582
+  },
+  {
+   "key": "interval_conformal",
+   "description": "80% band with leave-location-out conformal margin",
+   "coverage": 0.8,
+   "mean_width": 32.719
+  }
+ ]
+}

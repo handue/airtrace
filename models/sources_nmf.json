@@ -1,0 +1,196 @@
+{
+ "format_version": 1,
+ "version": "sources-nmf-2026-11-04",
+ "trained_at": "2026-11-04T03:56:54Z",
+ "method": {
+  "model": "sklearn NMF",
+  "n_components": 6,
+  "beta_loss": "kullback-leibler",
+  "solver": "mu",
+  "init": "nndsvda",
+  "random_state": 0,
+  "n_iter": 560,
+  "scale": "p90 of each tracer",
+  "activation_transform": "row-wise NNLS onto fixed max-normalised profiles",
+  "pm_regression": "NNLS of observed PM2.5 on activations + intercept"
+ },
+ "train_period": [
+  "2024-09-27",
+  "2025-02-28"
+ ],
+ "n_rows": 11508,
+ "n_sites": 84,
+ "data_source": "data/processed/dataset.parquet",
+ "match_cosine": {
+  "traffic": 0.81,
+  "industry": 0.923,
+  "burning": 0.764,
+  "dust": 1.0,
+  "secondary": 0.883,
+  "marine": 0.994
+ },
+ "pm_regression": {
+  "r2": 0.2324,
+  "r2_cv_location": 0.1301,
+  "n_rows": 11508,
+  "n_sites": 84
+ },
+ "tracers": [
+  {
+   "column": "cams_nitrogen_dioxide_mean",
+   "short": "NO2",
+   "scale": 47.6258333333334
+  },
+  {
+   "column": "cams_nitrogen_monoxide_mean",
+   "short": "NO",
+   "scale": 15.235416666666689
+  },
+  {
+   "column": "cams_carbon_monoxide_mean",
+   "short": "CO",
+   "scale": 1160.3750000000014
+  },
+  {
+   "column": "cams_sulphur_dioxide_mean",
+   "short": "SO2",
+   "scale": 35.22041666666668
+  },
+  {
+   "column": "cams_ozone_mean",
+   "short": "O3",
+   "scale": 93.63750000000005
+  },
+  {
+   "column": "cams_formaldehyde_mean",
+   "short": "HCHO",
+   "scale": 12.847083333333337
+  },
+  {
+   "column": "cams_dust_mean",
+   "short": "dust",
+   "scale": 49.2041666666668
+  },
+  {
+   "column": "cams_sea_salt_aerosol_mean",
+   "short": "sea_salt",
+   "scale": 10.742916666666671
+  }
+ ],
+ "components": [
+  [
+   0.21758416429842362,
+   1.0,
+   0.0905973370967913,
+   0.15611083850264845,
+   4.7805244651100676e-08,
+   0.0071154221760054885,
+   0.0,
+   0.0
+  ],
+  [
+   0.8259854620477147,
+   3.351646852083579e-08,
+   0.9690480966711964,
+   1.0,
+   0.01927524668596588,
+   0.019838923931871047,
+   0.0,
+   0.0
+  ],
+  [
+   0.033177200826793714,
+   0.0007189473209429415,
+   0.08836361088349731,
+   1.011630473702399e-09,
+   0.08769097225950155,
+   1.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.010482043236909641,
+   0.00018260759436235775,
+   0.0,
+   0.008657312701543268,
+   0.026015597021132836,
+   0.0025018088198945983,
+   1.0,
+   0.0
+  ],
+  [
+   0.044896068158499766,
+   4.309171159032177e-13,
+   0.153502622597351,
+   4.042661974566802e-06,
+   1.0,
+   1.7438502545480296e-06,
+   0.0,
+   0.0
+  ],
+  [
+   0.0007682094934445893,
+   2.148159153867857e-07,
+   0.003627484490004912,
+   2.314928442768144e-06,
+   0.10914997245777693,
+   0.0025956602628746765,
+   0.0,
+   1.0
+  ]
+ ],
+ "factor_keys": [
+  "traffic",
+  "industry",
+  "burning",
+  "dust",
+  "secondary",
+  "marine"
+ ],
+ "coef": [
+  1.6309362007638988,
+  48.7820740009366,
+  13.513655885778908,
+  2.304313134164265,
+  26.764089570522373,
+  0.0
+ ],
+ "intercept": 0.0,
+ "sources": {
+  "traffic": {
+   "label": "Traffic & urban combustion",
+   "color": "#3b82f6",
+   "description": "Freshly emitted nitric oxide (NO) with some NO2 from vehicle exhaust and other street-level combustion, strongest in calm winter air over big cities."
+  },
+  "industry": {
+   "label": "Industry, coal & power",
+   "color": "#64748b",
+   "description": "Sulphur dioxide rising together with carbon monoxide and nitrogen dioxide, the signature of coal, power plants and industry; in this model it also carries much of a city's other fuel burning."
+  },
+  "burning": {
+   "label": "Fires & biomass burning",
+   "color": "#f97316",
+   "description": "Formaldehyde-rich air from crop, forest and savanna fires and household biomass burning, although formaldehyde also forms from plant and urban emissions in hot or stagnant air."
+  },
+  "dust": {
+   "label": "Desert dust",
+   "color": "#c8a165",
+   "description": "Mineral dust blown from deserts and dry land such as the Sahara, Arabia and the Thar, often carried hundreds of kilometres."
+  },
+  "secondary": {
+   "label": "Photochemical & secondary",
+   "color": "#a855f7",
+   "description": "Ozone-rich, chemically aged air in which sunlight turns gases into secondary particles; this regional haze is the baseline of PM2.5 almost everywhere."
+  },
+  "marine": {
+   "label": "Sea salt (marine)",
+   "color": "#06b6d4",
+   "description": "Sea-salt spray from breaking ocean waves, carried inland by onshore winds at coastal sites."
+  },
+  "background": {
+   "label": "Regional background & other",
+   "color": "#cbd5e1",
+   "description": "PM2.5 that none of the tracer factors explains: long-range background and local sources the global CAMS model does not capture."
+  }
+ }
+}
