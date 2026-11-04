@@ -1,6 +1,6 @@
 {
- "version": "2026.11.04.0630",
- "trained_at": "2026-11-04T06:30:31Z",
+ "version": "2026.11.04.0650",
+ "trained_at": "2026-11-04T06:50:36Z",
  "features": [
   "cams_pm2_5_mean",
   "cams_pm10_mean",
@@ -52,19 +52,23 @@
  },
  "point_forecast": "mean of the level and ratio members in log1p space; ratio member = log1p(cams_pm2_5_mean) + booster output; level member alone where CAMS is missing",
  "ratio_offset_mean": 2.694677,
+ "cams_pm25_training_range": {
+  "p99": 114.2,
+  "max": 279.7
+ },
  "interval": {
   "nominal": 0.8,
   "method": "LightGBM quantile members (0.1, 0.9) + leave-location-out conformal margin (CQR)",
-  "conformal_margin_log": 0.242579,
+  "conformal_margin_log": 0.26833,
   "cv_fold_margins_log": [
-   0.2344,
-   0.2402,
-   0.2604,
-   0.2387,
-   0.2417
+   0.2569,
+   0.2924,
+   0.2747,
+   0.2404,
+   0.279
   ],
-  "cv_coverage": 0.8,
-  "raw_quantile_cv_coverage": 0.582
+  "cv_coverage": 0.799,
+  "raw_quantile_cv_coverage": 0.557
  },
  "params": {
   "num_leaves": 15,
@@ -83,7 +87,7 @@
  ],
  "sample_weights": "site-balanced (every monitor has equal total weight)",
  "elevation_source": "Open-Meteo weather response 'elevation' (90 m DEM, m a.s.l.)",
- "cv_scheme": "Leave-location-out cross-validation: GroupKFold(5) over 96 one-degree lat/lon cells (97 monitors), so every prediction is for a location the model never saw. Metrics on out-of-fold daily means in µg/m³.",
+ "cv_scheme": "Leave-location-out cross-validation: GroupKFold(5) over 91 spatial clusters of the 97 monitors (monitors closer than 150 km are always held out together), so every prediction is for a location the model never saw. Metrics on out-of-fold daily means in µg/m³.",
  "cv_metrics": {
   "cams_raw": {
    "rmse": 27.33,
@@ -97,146 +101,146 @@
    "unhealthy_f1": 0.599
   },
   "linear": {
-   "rmse": 28.17,
-   "mae": 13.85,
-   "r2": 0.406,
-   "bias": -5.96,
-   "r": 0.672,
-   "aqi_category_accuracy": 0.572,
-   "unhealthy_precision": 0.721,
+   "rmse": 28.35,
+   "mae": 14.07,
+   "r2": 0.399,
+   "bias": -5.61,
+   "r": 0.658,
+   "aqi_category_accuracy": 0.566,
+   "unhealthy_precision": 0.702,
    "unhealthy_recall": 0.493,
-   "unhealthy_f1": 0.585
+   "unhealthy_f1": 0.579
   },
   "ml_no_cams": {
-   "rmse": 25.82,
-   "mae": 12.69,
-   "r2": 0.501,
-   "bias": -4.37,
-   "r": 0.721,
-   "aqi_category_accuracy": 0.605,
-   "unhealthy_precision": 0.706,
-   "unhealthy_recall": 0.596,
-   "unhealthy_f1": 0.647
+   "rmse": 26.58,
+   "mae": 12.98,
+   "r2": 0.471,
+   "bias": -3.84,
+   "r": 0.695,
+   "aqi_category_accuracy": 0.603,
+   "unhealthy_precision": 0.692,
+   "unhealthy_recall": 0.604,
+   "unhealthy_f1": 0.645
   },
   "airtrace": {
-   "rmse": 23.16,
-   "mae": 11.29,
-   "r2": 0.599,
-   "bias": -3.44,
-   "r": 0.78,
-   "aqi_category_accuracy": 0.659,
-   "unhealthy_precision": 0.747,
-   "unhealthy_recall": 0.679,
-   "unhealthy_f1": 0.711
+   "rmse": 23.93,
+   "mae": 11.98,
+   "r2": 0.571,
+   "bias": -2.45,
+   "r": 0.76,
+   "aqi_category_accuracy": 0.643,
+   "unhealthy_precision": 0.72,
+   "unhealthy_recall": 0.663,
+   "unhealthy_f1": 0.69
   }
  },
  "experiments": [
   {
    "key": "level_plain",
    "description": "Level model, unweighted, unconstrained",
-   "rmse": 23.68,
-   "mae": 11.57,
-   "r2": 0.58,
-   "bias": -2.97,
-   "log_rmse": 0.5746,
-   "site_mae": 12.07,
-   "aqi_category_accuracy": 0.652,
-   "unhealthy_recall": 0.684
+   "rmse": 23.93,
+   "mae": 11.83,
+   "r2": 0.571,
+   "bias": -2.41,
+   "log_rmse": 0.5735,
+   "site_mae": 12.14,
+   "aqi_category_accuracy": 0.648,
+   "unhealthy_recall": 0.666
   },
   {
    "key": "level_balanced",
    "description": "+ site-balanced sample weights",
-   "rmse": 23.24,
-   "mae": 11.4,
-   "r2": 0.596,
-   "bias": -3.04,
-   "log_rmse": 0.5723,
-   "site_mae": 11.85,
-   "aqi_category_accuracy": 0.654,
-   "unhealthy_recall": 0.688
+   "rmse": 24.04,
+   "mae": 11.97,
+   "r2": 0.567,
+   "bias": -2.4,
+   "log_rmse": 0.5766,
+   "site_mae": 12.32,
+   "aqi_category_accuracy": 0.646,
+   "unhealthy_recall": 0.668
   },
   {
    "key": "level_monotone",
    "description": "+ monotone in CAMS PM2.5",
-   "rmse": 23.42,
-   "mae": 11.45,
-   "r2": 0.589,
-   "bias": -2.91,
-   "log_rmse": 0.5738,
-   "site_mae": 11.92,
-   "aqi_category_accuracy": 0.656,
-   "unhealthy_recall": 0.691
+   "rmse": 24.04,
+   "mae": 11.91,
+   "r2": 0.567,
+   "bias": -2.49,
+   "log_rmse": 0.5739,
+   "site_mae": 12.23,
+   "aqi_category_accuracy": 0.646,
+   "unhealthy_recall": 0.663
   },
   {
    "key": "level",
    "description": "+ location split-gain penalty 0.5 (AirTrace level member)",
-   "rmse": 23.36,
-   "mae": 11.35,
-   "r2": 0.591,
-   "bias": -3.35,
-   "log_rmse": 0.5749,
-   "site_mae": 11.74,
-   "aqi_category_accuracy": 0.654,
-   "unhealthy_recall": 0.682
+   "rmse": 24.01,
+   "mae": 11.99,
+   "r2": 0.569,
+   "bias": -2.47,
+   "log_rmse": 0.5897,
+   "site_mae": 12.23,
+   "aqi_category_accuracy": 0.638,
+   "unhealthy_recall": 0.663
   },
   {
    "key": "level_trees_31",
    "description": "level member with num_leaves 31 / min_data 50 / 500 rounds",
-   "rmse": 23.0,
-   "mae": 11.22,
-   "r2": 0.604,
-   "bias": -3.58,
-   "log_rmse": 0.5765,
-   "site_mae": 11.6,
-   "aqi_category_accuracy": 0.655,
-   "unhealthy_recall": 0.675
+   "rmse": 24.0,
+   "mae": 11.9,
+   "r2": 0.569,
+   "bias": -2.75,
+   "log_rmse": 0.5876,
+   "site_mae": 12.18,
+   "aqi_category_accuracy": 0.643,
+   "unhealthy_recall": 0.662
   },
   {
    "key": "level_trees_63",
    "description": "level member with num_leaves 63 / min_data 30 / 300 rounds",
-   "rmse": 23.2,
-   "mae": 11.33,
-   "r2": 0.597,
-   "bias": -3.52,
-   "log_rmse": 0.5808,
-   "site_mae": 11.73,
-   "aqi_category_accuracy": 0.65,
-   "unhealthy_recall": 0.668
+   "rmse": 23.78,
+   "mae": 11.78,
+   "r2": 0.577,
+   "bias": -2.82,
+   "log_rmse": 0.5855,
+   "site_mae": 12.05,
+   "aqi_category_accuracy": 0.642,
+   "unhealthy_recall": 0.669
   },
   {
    "key": "ratio",
    "description": "Ratio member: CAMS log-offset + ML correction factor",
-   "rmse": 23.19,
-   "mae": 11.39,
-   "r2": 0.598,
-   "bias": -3.41,
-   "log_rmse": 0.5753,
-   "site_mae": 11.79,
-   "aqi_category_accuracy": 0.657,
-   "unhealthy_recall": 0.668
+   "rmse": 24.24,
+   "mae": 12.18,
+   "r2": 0.56,
+   "bias": -2.31,
+   "log_rmse": 0.5938,
+   "site_mae": 12.46,
+   "aqi_category_accuracy": 0.639,
+   "unhealthy_recall": 0.657
   },
   {
    "key": "airtrace",
    "description": "AirTrace = mean(level, ratio) in log space",
-   "rmse": 23.16,
-   "mae": 11.29,
-   "r2": 0.599,
-   "bias": -3.44,
-   "log_rmse": 0.5713,
-   "site_mae": 11.68,
-   "aqi_category_accuracy": 0.659,
-   "unhealthy_recall": 0.679
+   "rmse": 23.93,
+   "mae": 11.98,
+   "r2": 0.571,
+   "bias": -2.45,
+   "log_rmse": 0.588,
+   "site_mae": 12.24,
+   "aqi_category_accuracy": 0.643,
+   "unhealthy_recall": 0.663
   },
   {
    "key": "interval_raw_quantiles",
    "description": "80% band from raw q10/q90 members (no conformal margin)",
-   "coverage": 0.582
+   "coverage": 0.557
   },
   {
    "key": "interval_conformal",
    "description": "80% band with leave-location-out conformal margin",
-   "coverage": 0.8,
-   "mean_width": 32.719
+   "coverage": 0.799,
+   "mean_width": 35.352
   }
  ]
 }

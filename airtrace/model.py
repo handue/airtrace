@@ -15,9 +15,10 @@ widened by a conformal margin estimated from leave-location-out residuals (confo
 quantile regression, Romano et al. 2019), so the 80 % band is calibrated for locations the model
 has never seen. Every member uses site-balanced sample weights (each monitor counts equally).
 
-Validation (:func:`train_and_evaluate`): leave-location-out GroupKFold(5) over 1-degree lat/lon
-cells against three baselines (raw CAMS, CAMS + linear calibration in log space, the same ML
-without any CAMS input), a forward-in-time holdout and an ablation table.
+Validation (:func:`train_and_evaluate`): leave-location-out GroupKFold(5) over 150-km monitor
+clusters against three baselines (raw CAMS, CAMS + weighted linear calibration in log space, the
+same ML without any CAMS input), a new-locations-and-future-months holdout, leave-country-out and
+leave-region-out generalisation tests and an ablation table.
 
 Public API used by the live pipeline: :func:`load_models`, :func:`predict`, :func:`contributions`.
 """
@@ -186,9 +187,30 @@ def conformal_margin(q10_log: np.ndarray, q90_log: np.ndarray, y_log: np.ndarray
 
 
 # --------------------------------------------------------------------------- cross-validation
-def location_folds(data: pd.DataFrame, n_splits: int = N_FOLDS) -> list[tuple[np.ndarray, np.ndarray]]:
-    """Leave-location-out folds: whole 1-degree cells are held out together."""
-    return list(GroupKFold(n_splits=n_splits).split(data, groups=data[GROUP]))
+CLUSTER_KM = 150.0
+
+
+def location_clusters(data: pd.DataFrame, km: float = CLUSTER_KM) -> pd.Series:
+    """Spatial CV groups: single-linkage clusters of monitors closer than ``km`` (haversine), so
+    monitors in the same city or neighbouring cities (Los Angeles-Riverside, Dubai-Abu Dhabi,
+    Islamabad-Peshawar, ...) are always held out together. Returns one cluster id per row."""
+    from scipy.sparse.csgraph import connected_components
+
+    sites = data.groupby("site_id")[["lat", "lon"]].first()
+    lat, lon = np.radians(sites["lat"].to_numpy()), np.radians(sites["lon"].to_numpy())
+    dlat, dlon = lat[:, None] - lat[None, :], lon[:, None] - lon[None, :]
+    a = np.sin(dlat / 2) ** 2 + np.cos(lat[:, None]) * np.cos(lat[None, :]) * np.sin(dlon / 2) ** 2
+    dist = 12742.0 * np.arcsin(np.sqrt(np.clip(a, 0.0, 1.0)))
+    _, labels = connected_components(dist <= km, directed=False)
+    return data["site_id"].map(dict(zip(sites.index, labels))).astype(int)
+
+
+def location_folds(data: pd.DataFrame, n_splits: int = N_FOLDS,
+                   groups: pd.Series | None = None) -> list[tuple[np.ndarray, np.ndarray]]:
+    """Leave-location-out folds: whole 150-km monitor clusters are held out together
+    (``groups`` overrides the grouping, e.g. country or region)."""
+    groups = location_clusters(data) if groups is None else groups
+    return list(GroupKFold(n_splits=min(n_splits, groups.nunique())).split(data, groups=groups))
 
 
 def oof_member(data: pd.DataFrame, folds, member: str, cfg: TreeConfig = DEFAULT_CONFIG,
@@ -202,12 +224,40 @@ def oof_member(data: pd.DataFrame, folds, member: str, cfg: TreeConfig = DEFAULT
 
 
 def oof_linear(data: pd.DataFrame, folds) -> np.ndarray:
-    """Baseline: in-fold OLS of log1p(obs) on log1p(CAMS PM2.5), out-of-fold log predictions."""
+    """Baseline: in-fold weighted least squares of log1p(obs) on log1p(CAMS PM2.5) with the same
+    site-balanced weights as the AirTrace members; out-of-fold log predictions."""
     x, y = cams_offset(data), np.log1p(data[OBS].to_numpy(dtype=np.float64))
     out = np.full(len(data), np.nan)
     for tr, te in folds:
-        slope, intercept = np.polyfit(x[tr], y[tr], 1)
+        w = site_weights(data["site_id"].iloc[tr])
+        slope, intercept = np.polyfit(x[tr], y[tr], 1, w=np.sqrt(w))
         out[te] = intercept + slope * x[te]
+    return out
+
+
+def oof_airtrace(data: pd.DataFrame, folds, cfg: TreeConfig = DEFAULT_CONFIG) -> np.ndarray:
+    """Out-of-fold log1p predictions of the deployed blend (level + ratio members)."""
+    return blend(oof_member(data, folds, "level", cfg), oof_member(data, folds, "ratio", cfg))
+
+
+def generalization(data: pd.DataFrame, cfg: TreeConfig = DEFAULT_CONFIG) -> list[dict]:
+    """How far the correction travels: hold out whole countries, then whole world regions."""
+    obs, cams = data[OBS].to_numpy(dtype=np.float64), np.clip(data[CAMS_PM].to_numpy(dtype=np.float64), 0, None)
+    out = []
+    for key, name, col, k in [("country", "Leave-country-out (5 folds of whole countries)", "country", N_FOLDS),
+                              ("region", "Leave-region-out (each of the 9 world regions held out)", "region", 99)]:
+        groups = data[col].astype("category").cat.codes
+        folds = location_folds(data, n_splits=k, groups=groups)
+        pred = np.clip(np.expm1(oof_airtrace(data, folds, cfg)), 0.0, None)
+        m_cams, m_at = metrics(obs, cams), metrics(obs, pred)
+        per_site = pd.DataFrame({"site": data["site_id"], "e_cams": np.abs(cams - obs),
+                                 "e_at": np.abs(pred - obs)}).groupby("site").mean()
+        out.append({"key": key, "scheme": name, "n_groups": int(data[col].nunique()),
+                    "mae_cams": round(m_cams["mae"], 2), "mae_airtrace": round(m_at["mae"], 2),
+                    "mae_change_pct": round(100 * (m_at["mae"] / m_cams["mae"] - 1), 1),
+                    "r2_cams": round(m_cams["r2"], 3), "r2_airtrace": round(m_at["r2"], 3),
+                    "sites_improved": int((per_site["e_at"] < per_site["e_cams"]).sum()),
+                    "n_sites": int(len(per_site))})
     return out
 
 
@@ -456,15 +506,30 @@ def train_and_evaluate(data: pd.DataFrame, cfg: TreeConfig = DEFAULT_CONFIG, abl
 
     model_metrics = {k: metrics(obs, preds[k]) for k in MODEL_NAMES}
 
-    # -- temporal holdout: same sites, future months -----------------------------------------
+    # -- temporal holdout -------------------------------------------------------------------
+    # Strict version (reported as "temporal_holdout"): new locations AND future months — each
+    # location fold is trained only on its training clusters' past and scored on the held-out
+    # clusters' future. The same-monitor version is kept for reference (it is easier: the model
+    # has already seen each monitor's bias).
     split = pd.Timestamp(TEMPORAL_SPLIT)
-    past, future = data[data["date"] < split], data[data["date"] >= split]
-    t_level, t_ratio = fit_member(past, "level", cfg), fit_member(past, "ratio", cfg)
-    t_pred = np.clip(np.expm1(blend(member_predict(t_level, "level", future, FEATURES),
+    is_past = (data["date"] < split).to_numpy()
+    future = data[~is_past]
+    t_strict = np.full(len(data), np.nan)
+    for tr, te in folds:
+        tr_p, te_f = tr[is_past[tr]], te[~is_past[te]]
+        lv, rt = fit_member(data.iloc[tr_p], "level", cfg), fit_member(data.iloc[tr_p], "ratio", cfg)
+        t_strict[te_f] = blend(member_predict(lv, "level", data.iloc[te_f], FEATURES),
+                               member_predict(rt, "ratio", data.iloc[te_f], FEATURES))
+    t_level, t_ratio = fit_member(data[is_past], "level", cfg), fit_member(data[is_past], "ratio", cfg)
+    t_same = np.clip(np.expm1(blend(member_predict(t_level, "level", future, FEATURES),
                                     member_predict(t_ratio, "ratio", future, FEATURES))), 0.0, None)
-    temporal = {"cams_raw": rounded(metrics(future[OBS], np.clip(future[CAMS_PM], 0.0, None))),
-                "airtrace": rounded(metrics(future[OBS], t_pred))}
-    log(f"  temporal holdout done ({time.time() - t0:5.1f}s)")
+    cams_future = rounded(metrics(future[OBS], np.clip(future[CAMS_PM], 0.0, None)))
+    temporal = {"cams_raw": cams_future,
+                "airtrace": rounded(metrics(future[OBS], np.clip(np.expm1(t_strict[~is_past]), 0.0, None)))}
+    temporal_same = {"cams_raw": cams_future, "airtrace": rounded(metrics(future[OBS], t_same))}
+    log(f"  temporal holdouts done ({time.time() - t0:5.1f}s)")
+    general = generalization(data, cfg)
+    log(f"  country / region generalisation done ({time.time() - t0:5.1f}s)")
 
     # -- final members on all rows -----------------------------------------------------------
     boosters = {m: fit_member(data, m, cfg) for m in MODEL_FILES}
@@ -482,11 +547,18 @@ def train_and_evaluate(data: pd.DataFrame, cfg: TreeConfig = DEFAULT_CONFIG, abl
     importance = gain_importance([boosters["level"], boosters["ratio"]])
     trained_at = datetime.now(timezone.utc).replace(microsecond=0)
     period = [f"{data['date'].min():%Y-%m-%d}", f"{data['date'].max():%Y-%m-%d}"]
-    scheme = (f"Leave-location-out cross-validation: GroupKFold({len(folds)}) over "
-              f"{data[GROUP].nunique()} one-degree lat/lon cells ({data['site_id'].nunique()} monitors), so every "
-              f"prediction is for a location the model never saw. Metrics on out-of-fold daily means in µg/m³.")
-    temporal_scheme = (f"Forward in time: train on all sites before {TEMPORAL_SPLIT} ({len(past):,} days), "
-                       f"test on {TEMPORAL_SPLIT} to {period[1]} ({len(future):,} days).")
+    n_clusters = int(location_clusters(data).nunique())
+    scheme = (f"Leave-location-out cross-validation: GroupKFold({len(folds)}) over {n_clusters} spatial "
+              f"clusters of the {data['site_id'].nunique()} monitors (monitors closer than {CLUSTER_KM:.0f} km are "
+              f"always held out together), so every prediction is for a location the model never saw. "
+              f"Metrics on out-of-fold daily means in µg/m³.")
+    temporal_scheme = (f"New locations and future months: each location fold is trained on its training "
+                       f"clusters before {TEMPORAL_SPLIT} ({int(is_past.sum()):,} monitor-days in total) and "
+                       f"tested on the held-out clusters from {TEMPORAL_SPLIT} to {period[1]} "
+                       f"({len(future):,} monitor-days).")
+    cams_all = data[CAMS_PM].to_numpy(dtype=np.float64)
+    cams_range = {"p99": round(float(np.nanpercentile(cams_all, 99)), 1),
+                  "max": round(float(np.nanmax(cams_all)), 1)}
 
     metrics_json = {
         "generated_at": trained_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -495,6 +567,8 @@ def train_and_evaluate(data: pd.DataFrame, cfg: TreeConfig = DEFAULT_CONFIG, abl
         "models": [{"key": k, "name": MODEL_NAMES[k], **rounded(model_metrics[k])} for k in MODEL_NAMES],
         "headline": _headline(model_metrics["cams_raw"], model_metrics["airtrace"]),
         "temporal_holdout": temporal,
+        "temporal_same_sites": temporal_same,
+        "generalization": general,
         "by_region": _by_region(cv, data),
         "scatter": _scatter(cv),
         "confusion": {"labels": list(AQI_CATEGORIES), "cams": confusion(obs, preds["cams_raw"]),
@@ -521,6 +595,7 @@ def train_and_evaluate(data: pd.DataFrame, cfg: TreeConfig = DEFAULT_CONFIG, abl
         "point_forecast": "mean of the level and ratio members in log1p space; ratio member = "
                           "log1p(cams_pm2_5_mean) + booster output; level member alone where CAMS is missing",
         "ratio_offset_mean": round(ratio_offset_mean, 6),
+        "cams_pm25_training_range": cams_range,
         "interval": {"nominal": INTERVAL_NOMINAL, "method": "LightGBM quantile members (0.1, 0.9) + "
                      "leave-location-out conformal margin (CQR)", "conformal_margin_log": round(margin, 6),
                      "cv_fold_margins_log": [round(m, 4) for m in fold_margins],

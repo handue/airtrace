@@ -6,67 +6,67 @@
   ],
   "n_days": 164,
   "mae_cams": 15.27,
-  "mae_airtrace": 10.99,
+  "mae_airtrace": 9.63,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 16.1,
     "cams": 13.4,
-    "airtrace": 15.5
+    "airtrace": 17.4
    },
    {
     "month": "2024-04",
     "observed": 14.6,
     "cams": 11.1,
-    "airtrace": 15.2
+    "airtrace": 15.6
    },
    {
     "month": "2024-05",
     "observed": 38.5,
     "cams": 10.0,
-    "airtrace": 14.3
+    "airtrace": 14.8
    },
    {
     "month": "2024-06",
     "observed": 16.6,
     "cams": 9.4,
-    "airtrace": 12.5
+    "airtrace": 13.1
    },
    {
     "month": "2024-09",
     "observed": 8.6,
     "cams": 9.2,
-    "airtrace": 9.5
+    "airtrace": 11.3
    },
    {
     "month": "2024-10",
     "observed": 12.3,
     "cams": 6.9,
-    "airtrace": 9.3
+    "airtrace": 10.7
    },
    {
     "month": "2024-11",
     "observed": 36.1,
     "cams": 14.7,
-    "airtrace": 18.9
+    "airtrace": 21.7
    },
    {
     "month": "2024-12",
     "observed": 50.9,
     "cams": 27.1,
-    "airtrace": 37.3
+    "airtrace": 39.4
    },
    {
     "month": "2025-01",
     "observed": 43.8,
     "cams": 19.0,
-    "airtrace": 25.9
+    "airtrace": 29.2
    },
    {
     "month": "2025-02",
     "observed": 35.7,
     "cams": 16.1,
-    "airtrace": 20.0
+    "airtrace": 23.0
    }
   ],
   "rose": {
@@ -133,37 +133,37 @@
   ],
   "n_days": 337,
   "mae_cams": 8.9,
-  "mae_airtrace": 10.35,
+  "mae_airtrace": 9.89,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 25.5,
     "cams": 29.7,
-    "airtrace": 31.4
+    "airtrace": 30.2
    },
    {
     "month": "2024-04",
     "observed": 37.7,
     "cams": 34.0,
-    "airtrace": 35.8
+    "airtrace": 37.1
    },
    {
     "month": "2024-05",
     "observed": 32.4,
     "cams": 26.8,
-    "airtrace": 36.4
+    "airtrace": 36.0
    },
    {
     "month": "2024-06",
     "observed": 50.8,
     "cams": 39.9,
-    "airtrace": 45.4
+    "airtrace": 45.0
    },
    {
     "month": "2024-07",
     "observed": 47.6,
     "cams": 51.2,
-    "airtrace": 41.3
+    "airtrace": 39.7
    },
    {
     "month": "2024-08",
@@ -175,37 +175,37 @@
     "month": "2024-09",
     "observed": 38.1,
     "cams": 45.0,
-    "airtrace": 41.3
+    "airtrace": 43.5
    },
    {
     "month": "2024-10",
     "observed": 23.9,
     "cams": 25.4,
-    "airtrace": 31.3
+    "airtrace": 30.6
    },
    {
     "month": "2024-11",
     "observed": 29.2,
     "cams": 29.1,
-    "airtrace": 39.3
+    "airtrace": 36.0
    },
    {
     "month": "2024-12",
     "observed": 29.0,
     "cams": 33.1,
-    "airtrace": 48.0
+    "airtrace": 47.1
    },
    {
     "month": "2025-01",
     "observed": 25.3,
     "cams": 26.7,
-    "airtrace": 39.1
+    "airtrace": 37.3
    },
    {
     "month": "2025-02",
     "observed": 23.0,
     "cams": 28.0,
-    "airtrace": 34.1
+    "airtrace": 31.6
    }
   ],
   "rose": {
@@ -272,79 +272,79 @@
   ],
   "n_days": 293,
   "mae_cams": 11.65,
-  "mae_airtrace": 16.56,
+  "mae_airtrace": 17.09,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 20.8,
     "cams": 42.5,
-    "airtrace": 52.2
+    "airtrace": 55.4
    },
    {
     "month": "2024-04",
     "observed": 25.5,
     "cams": 25.1,
-    "airtrace": 28.1
+    "airtrace": 33.0
    },
    {
     "month": "2024-05",
     "observed": 24.8,
     "cams": 24.7,
-    "airtrace": 28.7
+    "airtrace": 32.5
    },
    {
     "month": "2024-06",
     "observed": 21.9,
     "cams": 22.6,
-    "airtrace": 26.6
+    "airtrace": 29.0
    },
    {
     "month": "2024-07",
     "observed": 21.1,
     "cams": 16.4,
-    "airtrace": 18.1
+    "airtrace": 21.1
    },
    {
     "month": "2024-08",
     "observed": 21.2,
     "cams": 16.5,
-    "airtrace": 16.8
+    "airtrace": 19.7
    },
    {
     "month": "2024-09",
     "observed": 22.4,
     "cams": 16.9,
-    "airtrace": 19.0
+    "airtrace": 23.5
    },
    {
     "month": "2024-10",
     "observed": 19.5,
     "cams": 24.4,
-    "airtrace": 31.1
+    "airtrace": 34.0
    },
    {
     "month": "2024-11",
     "observed": 44.2,
     "cams": 45.3,
-    "airtrace": 69.3
+    "airtrace": 60.1
    },
    {
     "month": "2024-12",
     "observed": 48.4,
     "cams": 72.1,
-    "airtrace": 101.4
+    "airtrace": 98.0
    },
    {
     "month": "2025-01",
     "observed": 74.7,
     "cams": 76.9,
-    "airtrace": 96.8
+    "airtrace": 105.0
    },
    {
     "month": "2025-02",
     "observed": 70.8,
     "cams": 79.6,
-    "airtrace": 90.3
+    "airtrace": 91.7
    }
   ],
   "rose": {
@@ -411,73 +411,73 @@
   ],
   "n_days": 229,
   "mae_cams": 6.69,
-  "mae_airtrace": 4.2,
+  "mae_airtrace": 4.5,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 18.7,
     "cams": 12.9,
-    "airtrace": 16.7
+    "airtrace": 17.6
    },
    {
     "month": "2024-04",
     "observed": 13.5,
     "cams": 8.8,
-    "airtrace": 13.1
+    "airtrace": 14.9
    },
    {
     "month": "2024-05",
     "observed": 13.6,
     "cams": 8.2,
-    "airtrace": 13.0
+    "airtrace": 13.9
    },
    {
     "month": "2024-06",
     "observed": 17.1,
     "cams": 9.0,
-    "airtrace": 12.0
+    "airtrace": 12.2
    },
    {
     "month": "2024-07",
     "observed": 19.9,
     "cams": 12.1,
-    "airtrace": 13.9
+    "airtrace": 12.9
    },
    {
     "month": "2024-08",
     "observed": 16.1,
     "cams": 9.6,
-    "airtrace": 12.3
+    "airtrace": 11.1
    },
    {
     "month": "2024-09",
     "observed": 14.0,
     "cams": 7.4,
-    "airtrace": 10.7
+    "airtrace": 9.4
    },
    {
     "month": "2024-10",
     "observed": 12.0,
     "cams": 7.2,
-    "airtrace": 13.8
+    "airtrace": 10.8
    },
    {
     "month": "2024-11",
     "observed": 19.7,
     "cams": 11.5,
-    "airtrace": 23.5
+    "airtrace": 17.0
    },
    {
     "month": "2025-01",
     "observed": 32.9,
     "cams": 12.9,
-    "airtrace": 25.9
+    "airtrace": 23.8
    },
    {
     "month": "2025-02",
     "observed": 28.7,
     "cams": 21.1,
-    "airtrace": 27.8
+    "airtrace": 25.9
    }
   ],
   "rose": {
@@ -544,79 +544,79 @@
   ],
   "n_days": 316,
   "mae_cams": 14.62,
-  "mae_airtrace": 12.19,
+  "mae_airtrace": 12.57,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 26.2,
     "cams": 12.6,
-    "airtrace": 21.6
+    "airtrace": 22.1
    },
    {
     "month": "2024-04",
     "observed": 30.6,
     "cams": 15.5,
-    "airtrace": 24.5
+    "airtrace": 24.8
    },
    {
     "month": "2024-05",
     "observed": 40.3,
     "cams": 16.8,
-    "airtrace": 32.6
+    "airtrace": 30.6
    },
    {
     "month": "2024-06",
     "observed": 49.6,
     "cams": 22.6,
-    "airtrace": 37.7
+    "airtrace": 37.0
    },
    {
     "month": "2024-07",
     "observed": 40.7,
     "cams": 17.2,
-    "airtrace": 23.2
+    "airtrace": 24.6
    },
    {
     "month": "2024-08",
     "observed": 34.0,
     "cams": 11.7,
-    "airtrace": 17.2
+    "airtrace": 18.7
    },
    {
     "month": "2024-09",
     "observed": 41.5,
     "cams": 20.4,
-    "airtrace": 27.9
+    "airtrace": 29.5
    },
    {
     "month": "2024-10",
     "observed": 21.7,
     "cams": 14.9,
-    "airtrace": 26.0
+    "airtrace": 27.3
    },
    {
     "month": "2024-11",
     "observed": 20.3,
     "cams": 15.3,
-    "airtrace": 30.2
+    "airtrace": 32.9
    },
    {
     "month": "2024-12",
     "observed": 24.9,
     "cams": 19.9,
-    "airtrace": 42.6
+    "airtrace": 45.8
    },
    {
     "month": "2025-01",
     "observed": 25.5,
     "cams": 19.4,
-    "airtrace": 42.0
+    "airtrace": 43.0
    },
    {
     "month": "2025-02",
     "observed": 24.3,
     "cams": 14.6,
-    "airtrace": 32.0
+    "airtrace": 32.8
    }
   ],
   "rose": {
@@ -683,79 +683,79 @@
   ],
   "n_days": 317,
   "mae_cams": 6.0,
-  "mae_airtrace": 5.37,
+  "mae_airtrace": 6.85,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 22.1,
     "cams": 14.3,
-    "airtrace": 16.2
+    "airtrace": 11.6
    },
    {
     "month": "2024-04",
     "observed": 14.1,
     "cams": 13.7,
-    "airtrace": 13.6
+    "airtrace": 9.4
    },
    {
     "month": "2024-05",
     "observed": 14.2,
     "cams": 12.0,
-    "airtrace": 11.7
+    "airtrace": 8.3
    },
    {
     "month": "2024-06",
     "observed": 11.4,
     "cams": 12.4,
-    "airtrace": 12.5
+    "airtrace": 9.6
    },
    {
     "month": "2024-07",
     "observed": 13.9,
     "cams": 14.9,
-    "airtrace": 15.8
+    "airtrace": 12.7
    },
    {
     "month": "2024-08",
     "observed": 19.6,
     "cams": 15.1,
-    "airtrace": 15.6
+    "airtrace": 12.9
    },
    {
     "month": "2024-09",
     "observed": 22.4,
     "cams": 14.8,
-    "airtrace": 15.5
+    "airtrace": 12.0
    },
    {
     "month": "2024-10",
     "observed": 21.2,
     "cams": 13.4,
-    "airtrace": 16.9
+    "airtrace": 13.9
    },
    {
     "month": "2024-11",
     "observed": 25.6,
     "cams": 16.4,
-    "airtrace": 24.0
+    "airtrace": 14.5
    },
    {
     "month": "2024-12",
     "observed": 19.8,
     "cams": 10.7,
-    "airtrace": 27.1
+    "airtrace": 11.6
    },
    {
     "month": "2025-01",
     "observed": 17.8,
     "cams": 9.8,
-    "airtrace": 23.0
+    "airtrace": 11.5
    },
    {
     "month": "2025-02",
     "observed": 17.5,
     "cams": 12.9,
-    "airtrace": 22.2
+    "airtrace": 11.8
    }
   ],
   "rose": {
@@ -822,79 +822,79 @@
   ],
   "n_days": 352,
   "mae_cams": 11.48,
-  "mae_airtrace": 9.78,
+  "mae_airtrace": 18.06,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 26.8,
     "cams": 21.4,
-    "airtrace": 23.7
+    "airtrace": 31.4
    },
    {
     "month": "2024-04",
     "observed": 13.6,
     "cams": 18.0,
-    "airtrace": 16.6
+    "airtrace": 21.9
    },
    {
     "month": "2024-05",
     "observed": 10.5,
     "cams": 13.7,
-    "airtrace": 11.1
+    "airtrace": 16.3
    },
    {
     "month": "2024-06",
     "observed": 10.1,
     "cams": 12.5,
-    "airtrace": 9.4
+    "airtrace": 17.6
    },
    {
     "month": "2024-07",
     "observed": 8.7,
     "cams": 14.2,
-    "airtrace": 10.1
+    "airtrace": 18.4
    },
    {
     "month": "2024-08",
     "observed": 10.3,
     "cams": 14.0,
-    "airtrace": 11.9
+    "airtrace": 19.5
    },
    {
     "month": "2024-09",
     "observed": 11.9,
     "cams": 14.2,
-    "airtrace": 14.6
+    "airtrace": 20.2
    },
    {
     "month": "2024-10",
     "observed": 18.3,
     "cams": 15.0,
-    "airtrace": 16.9
+    "airtrace": 23.9
    },
    {
     "month": "2024-11",
     "observed": 29.3,
     "cams": 24.8,
-    "airtrace": 28.8
+    "airtrace": 59.4
    },
    {
     "month": "2024-12",
     "observed": 50.4,
     "cams": 33.9,
-    "airtrace": 38.6
+    "airtrace": 92.2
    },
    {
     "month": "2025-01",
     "observed": 51.1,
     "cams": 37.7,
-    "airtrace": 44.9
+    "airtrace": 93.1
    },
    {
     "month": "2025-02",
     "observed": 74.7,
     "cams": 35.3,
-    "airtrace": 44.7
+    "airtrace": 89.5
    }
   ],
   "rose": {
@@ -961,79 +961,79 @@
   ],
   "n_days": 363,
   "mae_cams": 23.43,
-  "mae_airtrace": 15.61,
+  "mae_airtrace": 20.17,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 19.1,
     "cams": 2.7,
-    "airtrace": 4.6
+    "airtrace": 4.4
    },
    {
     "month": "2024-04",
     "observed": 23.6,
     "cams": 3.3,
-    "airtrace": 5.9
+    "airtrace": 5.3
    },
    {
     "month": "2024-05",
     "observed": 19.8,
     "cams": 2.7,
-    "airtrace": 6.2
+    "airtrace": 5.1
    },
    {
     "month": "2024-06",
     "observed": 25.8,
     "cams": 3.3,
-    "airtrace": 8.7
+    "airtrace": 6.3
    },
    {
     "month": "2024-07",
     "observed": 39.5,
     "cams": 6.9,
-    "airtrace": 17.8
+    "airtrace": 12.5
    },
    {
     "month": "2024-08",
     "observed": 27.6,
     "cams": 4.3,
-    "airtrace": 11.6
+    "airtrace": 8.4
    },
    {
     "month": "2024-09",
     "observed": 34.7,
     "cams": 5.6,
-    "airtrace": 17.3
+    "airtrace": 12.1
    },
    {
     "month": "2024-10",
     "observed": 35.7,
     "cams": 7.4,
-    "airtrace": 19.6
+    "airtrace": 13.0
    },
    {
     "month": "2024-11",
     "observed": 53.6,
     "cams": 12.4,
-    "airtrace": 31.2
+    "airtrace": 17.8
    },
    {
     "month": "2024-12",
     "observed": 35.4,
     "cams": 9.7,
-    "airtrace": 20.0
+    "airtrace": 10.8
    },
    {
     "month": "2025-01",
     "observed": 20.4,
     "cams": 6.7,
-    "airtrace": 12.5
+    "airtrace": 7.2
    },
    {
     "month": "2025-02",
     "observed": 16.0,
     "cams": 5.7,
-    "airtrace": 10.9
+    "airtrace": 6.5
    }
   ],
   "rose": {
@@ -1100,67 +1100,67 @@
   ],
   "n_days": 311,
   "mae_cams": 14.58,
-  "mae_airtrace": 15.28,
+  "mae_airtrace": 15.64,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 29.6,
     "cams": 14.0,
-    "airtrace": 24.6
+    "airtrace": 21.5
    },
    {
     "month": "2024-04",
     "observed": 19.6,
     "cams": 11.8,
-    "airtrace": 19.5
+    "airtrace": 16.7
    },
    {
     "month": "2024-05",
     "observed": 20.4,
     "cams": 15.5,
-    "airtrace": 23.0
+    "airtrace": 18.9
    },
    {
     "month": "2024-06",
     "observed": 19.5,
     "cams": 8.7,
-    "airtrace": 19.5
+    "airtrace": 15.7
    },
    {
     "month": "2024-07",
     "observed": 28.6,
     "cams": 9.2,
-    "airtrace": 22.0
+    "airtrace": 17.2
    },
    {
     "month": "2024-08",
     "observed": 30.6,
     "cams": 9.4,
-    "airtrace": 23.4
+    "airtrace": 18.7
    },
    {
     "month": "2024-09",
     "observed": 33.6,
     "cams": 9.8,
-    "airtrace": 23.5
+    "airtrace": 18.2
    },
    {
     "month": "2024-10",
     "observed": 28.6,
     "cams": 13.2,
-    "airtrace": 28.5
+    "airtrace": 25.1
    },
    {
     "month": "2024-11",
     "observed": 28.9,
     "cams": 14.3,
-    "airtrace": 40.1
+    "airtrace": 37.8
    },
    {
     "month": "2024-12",
     "observed": 28.1,
     "cams": 17.8,
-    "airtrace": 56.5
+    "airtrace": 56.2
    },
    {
     "month": "2025-01",
@@ -1172,7 +1172,7 @@
     "month": "2025-02",
     "observed": 25.8,
     "cams": 19.6,
-    "airtrace": 52.4
+    "airtrace": 51.1
    }
   ],
   "rose": {
@@ -1239,79 +1239,79 @@
   ],
   "n_days": 330,
   "mae_cams": 9.38,
-  "mae_airtrace": 7.83,
+  "mae_airtrace": 7.77,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 26.7,
     "cams": 8.8,
-    "airtrace": 18.1
+    "airtrace": 20.6
    },
    {
     "month": "2024-04",
     "observed": 22.3,
     "cams": 9.5,
-    "airtrace": 11.3
+    "airtrace": 14.2
    },
    {
     "month": "2024-05",
     "observed": 10.0,
     "cams": 7.7,
-    "airtrace": 6.5
+    "airtrace": 8.2
    },
    {
     "month": "2024-06",
     "observed": 12.3,
     "cams": 9.0,
-    "airtrace": 8.8
+    "airtrace": 10.8
    },
    {
     "month": "2024-07",
     "observed": 11.8,
     "cams": 9.4,
-    "airtrace": 8.3
+    "airtrace": 10.4
    },
    {
     "month": "2024-08",
     "observed": 10.9,
     "cams": 8.5,
-    "airtrace": 9.0
+    "airtrace": 10.1
    },
    {
     "month": "2024-09",
     "observed": 26.6,
     "cams": 10.3,
-    "airtrace": 19.1
+    "airtrace": 22.5
    },
    {
     "month": "2024-10",
     "observed": 22.1,
     "cams": 7.9,
-    "airtrace": 16.3
+    "airtrace": 19.7
    },
    {
     "month": "2024-11",
     "observed": 23.4,
     "cams": 11.4,
-    "airtrace": 20.0
+    "airtrace": 26.5
    },
    {
     "month": "2024-12",
     "observed": 17.0,
     "cams": 11.4,
-    "airtrace": 22.6
+    "airtrace": 32.3
    },
    {
     "month": "2025-01",
     "observed": 12.4,
     "cams": 8.7,
-    "airtrace": 21.1
+    "airtrace": 25.2
    },
    {
     "month": "2025-02",
     "observed": 24.9,
     "cams": 7.8,
-    "airtrace": 22.1
+    "airtrace": 27.8
    }
   ],
   "rose": {
@@ -1378,79 +1378,79 @@
   ],
   "n_days": 364,
   "mae_cams": 11.02,
-  "mae_airtrace": 7.66,
+  "mae_airtrace": 8.35,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 14.5,
     "cams": 9.1,
-    "airtrace": 11.9
+    "airtrace": 10.2
    },
    {
     "month": "2024-04",
     "observed": 8.5,
     "cams": 6.7,
-    "airtrace": 9.5
+    "airtrace": 7.3
    },
    {
     "month": "2024-05",
     "observed": 9.2,
     "cams": 5.9,
-    "airtrace": 9.0
+    "airtrace": 6.8
    },
    {
     "month": "2024-06",
     "observed": 20.1,
     "cams": 7.7,
-    "airtrace": 12.7
+    "airtrace": 9.3
    },
    {
     "month": "2024-07",
     "observed": 22.7,
     "cams": 9.8,
-    "airtrace": 15.4
+    "airtrace": 10.9
    },
    {
     "month": "2024-08",
     "observed": 36.6,
     "cams": 17.1,
-    "airtrace": 25.6
+    "airtrace": 20.0
    },
    {
     "month": "2024-09",
     "observed": 44.6,
     "cams": 32.1,
-    "airtrace": 45.9
+    "airtrace": 35.8
    },
    {
     "month": "2024-10",
     "observed": 19.7,
     "cams": 17.1,
-    "airtrace": 23.9
+    "airtrace": 18.0
    },
    {
     "month": "2024-11",
     "observed": 13.1,
     "cams": 8.8,
-    "airtrace": 15.3
+    "airtrace": 11.1
    },
    {
     "month": "2024-12",
     "observed": 11.5,
     "cams": 8.5,
-    "airtrace": 15.5
+    "airtrace": 11.4
    },
    {
     "month": "2025-01",
     "observed": 20.9,
     "cams": 9.8,
-    "airtrace": 17.4
+    "airtrace": 14.0
    },
    {
     "month": "2025-02",
     "observed": 13.2,
     "cams": 7.4,
-    "airtrace": 13.3
+    "airtrace": 10.7
    }
   ],
   "rose": {
@@ -1517,7 +1517,7 @@
   ],
   "n_days": 322,
   "mae_cams": 24.08,
-  "mae_airtrace": 16.98,
+  "mae_airtrace": 16.91,
   "monthly": [
    {
     "month": "2024-03",
@@ -1529,67 +1529,67 @@
     "month": "2024-04",
     "observed": 46.7,
     "cams": 31.6,
-    "airtrace": 45.3
+    "airtrace": 44.8
    },
    {
     "month": "2024-05",
     "observed": 47.3,
     "cams": 42.1,
-    "airtrace": 45.9
+    "airtrace": 45.1
    },
    {
     "month": "2024-06",
     "observed": 46.9,
     "cams": 32.5,
-    "airtrace": 40.8
+    "airtrace": 43.5
    },
    {
     "month": "2024-07",
     "observed": 49.7,
     "cams": 48.5,
-    "airtrace": 42.6
+    "airtrace": 42.3
    },
    {
     "month": "2024-08",
     "observed": 44.9,
     "cams": 52.6,
-    "airtrace": 44.2
+    "airtrace": 40.5
    },
    {
     "month": "2024-09",
     "observed": 44.1,
     "cams": 44.2,
-    "airtrace": 48.2
+    "airtrace": 40.5
    },
    {
     "month": "2024-10",
     "observed": 78.4,
     "cams": 40.3,
-    "airtrace": 52.3
+    "airtrace": 52.8
    },
    {
     "month": "2024-11",
     "observed": 50.2,
     "cams": 42.2,
-    "airtrace": 52.2
+    "airtrace": 53.2
    },
    {
     "month": "2024-12",
     "observed": 86.3,
     "cams": 46.8,
-    "airtrace": 62.1
+    "airtrace": 62.8
    },
    {
     "month": "2025-01",
     "observed": 57.5,
     "cams": 41.2,
-    "airtrace": 56.5
+    "airtrace": 57.6
    },
    {
     "month": "2025-02",
     "observed": 53.9,
     "cams": 53.2,
-    "airtrace": 56.3
+    "airtrace": 68.9
    }
   ],
   "rose": {
@@ -1656,79 +1656,79 @@
   ],
   "n_days": 336,
   "mae_cams": 12.94,
-  "mae_airtrace": 11.43,
+  "mae_airtrace": 10.72,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 22.0,
     "cams": 13.0,
-    "airtrace": 12.5
+    "airtrace": 11.8
    },
    {
     "month": "2024-04",
     "observed": 21.1,
     "cams": 16.0,
-    "airtrace": 14.1
+    "airtrace": 14.7
    },
    {
     "month": "2024-05",
     "observed": 26.9,
     "cams": 14.8,
-    "airtrace": 12.5
+    "airtrace": 13.8
    },
    {
     "month": "2024-06",
     "observed": 25.5,
     "cams": 14.2,
-    "airtrace": 14.2
+    "airtrace": 15.7
    },
    {
     "month": "2024-07",
     "observed": 22.6,
     "cams": 11.8,
-    "airtrace": 13.7
+    "airtrace": 13.6
    },
    {
     "month": "2024-08",
     "observed": 24.0,
     "cams": 15.1,
-    "airtrace": 17.5
+    "airtrace": 19.1
    },
    {
     "month": "2024-09",
     "observed": 59.0,
     "cams": 19.1,
-    "airtrace": 16.9
+    "airtrace": 20.9
    },
    {
     "month": "2024-10",
     "observed": 18.4,
     "cams": 9.7,
-    "airtrace": 11.2
+    "airtrace": 11.8
    },
    {
     "month": "2024-11",
     "observed": 20.8,
     "cams": 8.5,
-    "airtrace": 11.0
+    "airtrace": 12.0
    },
    {
     "month": "2024-12",
     "observed": 27.2,
     "cams": 8.6,
-    "airtrace": 13.8
+    "airtrace": 14.8
    },
    {
     "month": "2025-01",
     "observed": 29.7,
     "cams": 12.5,
-    "airtrace": 16.8
+    "airtrace": 18.2
    },
    {
     "month": "2025-02",
     "observed": 20.5,
     "cams": 10.1,
-    "airtrace": 15.6
+    "airtrace": 15.0
    }
   ],
   "rose": {
@@ -1795,79 +1795,79 @@
   ],
   "n_days": 316,
   "mae_cams": 25.17,
-  "mae_airtrace": 23.3,
+  "mae_airtrace": 21.86,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 32.0,
     "cams": 11.2,
-    "airtrace": 13.5
+    "airtrace": 16.1
    },
    {
     "month": "2024-04",
     "observed": 13.9,
     "cams": 8.5,
-    "airtrace": 7.7
+    "airtrace": 8.7
    },
    {
     "month": "2024-05",
     "observed": 10.2,
     "cams": 12.4,
-    "airtrace": 7.8
+    "airtrace": 9.0
    },
    {
     "month": "2024-06",
     "observed": 12.2,
     "cams": 14.3,
-    "airtrace": 9.7
+    "airtrace": 11.3
    },
    {
     "month": "2024-07",
     "observed": 13.4,
     "cams": 12.0,
-    "airtrace": 9.4
+    "airtrace": 11.4
    },
    {
     "month": "2024-08",
     "observed": 14.0,
     "cams": 13.0,
-    "airtrace": 11.3
+    "airtrace": 13.0
    },
    {
     "month": "2024-09",
     "observed": 13.0,
     "cams": 8.9,
-    "airtrace": 9.5
+    "airtrace": 10.7
    },
    {
     "month": "2024-10",
     "observed": 38.5,
     "cams": 11.7,
-    "airtrace": 15.5
+    "airtrace": 18.6
    },
    {
     "month": "2024-11",
     "observed": 75.2,
     "cams": 12.0,
-    "airtrace": 15.4
+    "airtrace": 17.6
    },
    {
     "month": "2024-12",
     "observed": 79.7,
     "cams": 13.4,
-    "airtrace": 19.6
+    "airtrace": 20.2
    },
    {
     "month": "2025-01",
     "observed": 65.7,
     "cams": 11.3,
-    "airtrace": 15.8
+    "airtrace": 18.2
    },
    {
     "month": "2025-02",
     "observed": 80.6,
     "cams": 16.1,
-    "airtrace": 18.6
+    "airtrace": 22.0
    }
   ],
   "rose": {
@@ -1934,79 +1934,79 @@
   ],
   "n_days": 356,
   "mae_cams": 43.48,
-  "mae_airtrace": 18.12,
+  "mae_airtrace": 20.57,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 53.2,
     "cams": 68.0,
-    "airtrace": 56.6
+    "airtrace": 61.8
    },
    {
     "month": "2024-04",
     "observed": 56.1,
     "cams": 56.3,
-    "airtrace": 43.9
+    "airtrace": 49.4
    },
    {
     "month": "2024-05",
     "observed": 46.0,
     "cams": 49.5,
-    "airtrace": 38.2
+    "airtrace": 44.8
    },
    {
     "month": "2024-06",
     "observed": 40.9,
     "cams": 52.7,
-    "airtrace": 39.5
+    "airtrace": 44.7
    },
    {
     "month": "2024-07",
     "observed": 36.3,
     "cams": 70.3,
-    "airtrace": 38.5
+    "airtrace": 42.8
    },
    {
     "month": "2024-08",
     "observed": 26.2,
     "cams": 78.5,
-    "airtrace": 32.5
+    "airtrace": 37.3
    },
    {
     "month": "2024-09",
     "observed": 27.5,
     "cams": 68.4,
-    "airtrace": 36.2
+    "airtrace": 41.3
    },
    {
     "month": "2024-10",
     "observed": 60.3,
     "cams": 88.0,
-    "airtrace": 58.8
+    "airtrace": 67.2
    },
    {
     "month": "2024-11",
     "observed": 56.9,
     "cams": 115.1,
-    "airtrace": 68.4
+    "airtrace": 76.7
    },
    {
     "month": "2024-12",
     "observed": 24.1,
     "cams": 113.2,
-    "airtrace": 57.7
+    "airtrace": 62.7
    },
    {
     "month": "2025-01",
     "observed": 32.2,
     "cams": 122.6,
-    "airtrace": 64.5
+    "airtrace": 67.6
    },
    {
     "month": "2025-02",
     "observed": 26.8,
     "cams": 91.0,
-    "airtrace": 51.4
+    "airtrace": 55.3
    }
   ],
   "rose": {
@@ -2073,37 +2073,37 @@
   ],
   "n_days": 111,
   "mae_cams": 13.21,
-  "mae_airtrace": 14.52,
+  "mae_airtrace": 12.65,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 16.4,
     "cams": 9.9,
-    "airtrace": 9.1
+    "airtrace": 11.2
    },
    {
     "month": "2024-04",
     "observed": 18.1,
     "cams": 10.6,
-    "airtrace": 9.1
+    "airtrace": 11.2
    },
    {
     "month": "2024-05",
     "observed": 44.5,
     "cams": 15.7,
-    "airtrace": 13.1
+    "airtrace": 16.2
    },
    {
     "month": "2024-06",
     "observed": 13.0,
     "cams": 7.3,
-    "airtrace": 4.7
+    "airtrace": 6.0
    },
    {
     "month": "2025-02",
     "observed": 5.2,
     "cams": 5.6,
-    "airtrace": 4.3
+    "airtrace": 7.1
    }
   ],
   "rose": {
@@ -2170,79 +2170,79 @@
   ],
   "n_days": 319,
   "mae_cams": 10.32,
-  "mae_airtrace": 11.14,
+  "mae_airtrace": 13.08,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 14.8,
     "cams": 13.5,
-    "airtrace": 21.2
+    "airtrace": 22.5
    },
    {
     "month": "2024-04",
     "observed": 5.4,
     "cams": 11.2,
-    "airtrace": 11.4
+    "airtrace": 11.5
    },
    {
     "month": "2024-05",
     "observed": 4.3,
     "cams": 9.1,
-    "airtrace": 8.7
+    "airtrace": 8.5
    },
    {
     "month": "2024-06",
     "observed": 3.9,
     "cams": 8.3,
-    "airtrace": 9.0
+    "airtrace": 9.3
    },
    {
     "month": "2024-07",
     "observed": 3.2,
     "cams": 9.7,
-    "airtrace": 9.4
+    "airtrace": 10.0
    },
    {
     "month": "2024-08",
     "observed": 4.0,
     "cams": 10.2,
-    "airtrace": 12.0
+    "airtrace": 12.9
    },
    {
     "month": "2024-09",
     "observed": 4.6,
     "cams": 9.1,
-    "airtrace": 13.7
+    "airtrace": 14.9
    },
    {
     "month": "2024-10",
     "observed": 8.7,
     "cams": 9.2,
-    "airtrace": 13.4
+    "airtrace": 15.5
    },
    {
     "month": "2024-11",
     "observed": 15.0,
     "cams": 13.0,
-    "airtrace": 25.9
+    "airtrace": 33.4
    },
    {
     "month": "2024-12",
     "observed": 25.2,
     "cams": 21.6,
-    "airtrace": 48.6
+    "airtrace": 65.4
    },
    {
     "month": "2025-01",
     "observed": 49.9,
     "cams": 19.4,
-    "airtrace": 43.8
+    "airtrace": 59.8
    },
    {
     "month": "2025-02",
     "observed": 54.4,
     "cams": 20.0,
-    "airtrace": 40.3
+    "airtrace": 52.3
    }
   ],
   "rose": {
@@ -2309,49 +2309,49 @@
   ],
   "n_days": 105,
   "mae_cams": 4.91,
-  "mae_airtrace": 4.04,
+  "mae_airtrace": 4.72,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 23.4,
     "cams": 27.8,
-    "airtrace": 31.8
+    "airtrace": 22.1
    },
    {
     "month": "2024-09",
     "observed": 13.3,
     "cams": 14.6,
-    "airtrace": 15.9
+    "airtrace": 12.8
    },
    {
     "month": "2024-10",
     "observed": 14.1,
     "cams": 14.1,
-    "airtrace": 14.4
+    "airtrace": 11.1
    },
    {
     "month": "2024-11",
     "observed": 16.1,
     "cams": 15.6,
-    "airtrace": 14.2
+    "airtrace": 11.1
    },
    {
     "month": "2024-12",
     "observed": 24.2,
     "cams": 26.3,
-    "airtrace": 22.6
+    "airtrace": 15.4
    },
    {
     "month": "2025-01",
     "observed": 15.8,
     "cams": 20.5,
-    "airtrace": 18.2
+    "airtrace": 11.9
    },
    {
     "month": "2025-02",
     "observed": 18.3,
     "cams": 25.1,
-    "airtrace": 21.3
+    "airtrace": 15.3
    }
   ],
   "rose": {
@@ -2418,79 +2418,79 @@
   ],
   "n_days": 347,
   "mae_cams": 24.74,
-  "mae_airtrace": 24.26,
+  "mae_airtrace": 23.89,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 42.5,
     "cams": 23.2,
-    "airtrace": 21.9
+    "airtrace": 22.7
    },
    {
     "month": "2024-04",
     "observed": 42.4,
     "cams": 21.7,
-    "airtrace": 21.9
+    "airtrace": 22.2
    },
    {
     "month": "2024-05",
     "observed": 46.6,
     "cams": 20.6,
-    "airtrace": 23.7
+    "airtrace": 24.5
    },
    {
     "month": "2024-06",
     "observed": 42.5,
     "cams": 20.8,
-    "airtrace": 25.3
+    "airtrace": 26.6
    },
    {
     "month": "2024-07",
     "observed": 44.5,
     "cams": 22.4,
-    "airtrace": 25.6
+    "airtrace": 27.5
    },
    {
     "month": "2024-08",
     "observed": 41.4,
     "cams": 19.3,
-    "airtrace": 21.9
+    "airtrace": 22.3
    },
    {
     "month": "2024-09",
     "observed": 37.2,
     "cams": 15.6,
-    "airtrace": 18.4
+    "airtrace": 18.9
    },
    {
     "month": "2024-10",
     "observed": 43.9,
     "cams": 16.3,
-    "airtrace": 18.6
+    "airtrace": 18.7
    },
    {
     "month": "2024-11",
     "observed": 45.2,
     "cams": 25.0,
-    "airtrace": 22.3
+    "airtrace": 22.2
    },
    {
     "month": "2024-12",
     "observed": 66.8,
     "cams": 27.6,
-    "airtrace": 24.3
+    "airtrace": 22.9
    },
    {
     "month": "2025-01",
     "observed": 59.7,
     "cams": 29.6,
-    "airtrace": 25.8
+    "airtrace": 25.3
    },
    {
     "month": "2025-02",
     "observed": 41.0,
     "cams": 20.1,
-    "airtrace": 18.3
+    "airtrace": 18.6
    }
   ],
   "rose": {
@@ -2557,13 +2557,13 @@
   ],
   "n_days": 291,
   "mae_cams": 13.14,
-  "mae_airtrace": 12.08,
+  "mae_airtrace": 12.22,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 29.5,
     "cams": 22.5,
-    "airtrace": 24.2
+    "airtrace": 23.7
    },
    {
     "month": "2024-04",
@@ -2575,55 +2575,55 @@
     "month": "2024-05",
     "observed": 13.4,
     "cams": 12.4,
-    "airtrace": 13.9
+    "airtrace": 14.0
    },
    {
     "month": "2024-07",
     "observed": 22.3,
     "cams": 12.8,
-    "airtrace": 13.9
+    "airtrace": 14.1
    },
    {
     "month": "2024-08",
     "observed": 17.6,
     "cams": 16.6,
-    "airtrace": 14.1
+    "airtrace": 14.4
    },
    {
     "month": "2024-09",
     "observed": 22.9,
     "cams": 17.9,
-    "airtrace": 17.0
+    "airtrace": 17.3
    },
    {
     "month": "2024-10",
     "observed": 30.7,
     "cams": 20.0,
-    "airtrace": 19.3
+    "airtrace": 19.1
    },
    {
     "month": "2024-11",
     "observed": 52.2,
     "cams": 24.9,
-    "airtrace": 24.4
+    "airtrace": 23.1
    },
    {
     "month": "2024-12",
     "observed": 42.6,
     "cams": 20.7,
-    "airtrace": 22.0
+    "airtrace": 21.0
    },
    {
     "month": "2025-01",
     "observed": 61.7,
     "cams": 32.3,
-    "airtrace": 38.5
+    "airtrace": 37.5
    },
    {
     "month": "2025-02",
     "observed": 40.6,
     "cams": 26.8,
-    "airtrace": 31.9
+    "airtrace": 33.9
    }
   ],
   "rose": {
@@ -2690,79 +2690,79 @@
   ],
   "n_days": 311,
   "mae_cams": 6.2,
-  "mae_airtrace": 7.12,
+  "mae_airtrace": 9.01,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 33.7,
     "cams": 32.4,
-    "airtrace": 37.4
+    "airtrace": 40.9
    },
    {
     "month": "2024-04",
     "observed": 15.7,
     "cams": 21.3,
-    "airtrace": 21.9
+    "airtrace": 24.4
    },
    {
     "month": "2024-05",
     "observed": 11.7,
     "cams": 13.4,
-    "airtrace": 14.1
+    "airtrace": 14.6
    },
    {
     "month": "2024-06",
     "observed": 10.0,
     "cams": 14.2,
-    "airtrace": 14.6
+    "airtrace": 14.0
    },
    {
     "month": "2024-07",
     "observed": 8.1,
     "cams": 14.9,
-    "airtrace": 14.8
+    "airtrace": 14.1
    },
    {
     "month": "2024-08",
     "observed": 7.2,
     "cams": 13.3,
-    "airtrace": 13.2
+    "airtrace": 12.0
    },
    {
     "month": "2024-09",
     "observed": 8.3,
     "cams": 14.6,
-    "airtrace": 14.4
+    "airtrace": 13.5
    },
    {
     "month": "2024-10",
     "observed": 8.0,
     "cams": 13.2,
-    "airtrace": 13.3
+    "airtrace": 13.2
    },
    {
     "month": "2024-11",
     "observed": 16.5,
     "cams": 20.6,
-    "airtrace": 24.8
+    "airtrace": 28.3
    },
    {
     "month": "2024-12",
     "observed": 28.1,
     "cams": 26.8,
-    "airtrace": 34.1
+    "airtrace": 38.7
    },
    {
     "month": "2025-01",
     "observed": 28.4,
     "cams": 26.8,
-    "airtrace": 33.1
+    "airtrace": 41.3
    },
    {
     "month": "2025-02",
     "observed": 35.2,
     "cams": 38.4,
-    "airtrace": 47.6
+    "airtrace": 57.5
    }
   ],
   "rose": {
@@ -2829,37 +2829,37 @@
   ],
   "n_days": 110,
   "mae_cams": 17.26,
-  "mae_airtrace": 12.61,
+  "mae_airtrace": 10.56,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 29.7,
     "cams": 37.9,
-    "airtrace": 29.5
+    "airtrace": 20.3
    },
    {
     "month": "2024-04",
     "observed": 35.6,
     "cams": 41.0,
-    "airtrace": 31.2
+    "airtrace": 24.5
    },
    {
     "month": "2024-06",
     "observed": 16.2,
     "cams": 40.1,
-    "airtrace": 25.7
+    "airtrace": 18.8
    },
    {
     "month": "2024-07",
     "observed": 11.0,
     "cams": 28.6,
-    "airtrace": 21.1
+    "airtrace": 14.9
    },
    {
     "month": "2024-08",
     "observed": 6.8,
     "cams": 15.9,
-    "airtrace": 13.2
+    "airtrace": 10.9
    }
   ],
   "rose": {
@@ -2926,31 +2926,31 @@
   ],
   "n_days": 361,
   "mae_cams": 46.69,
-  "mae_airtrace": 36.39,
+  "mae_airtrace": 37.31,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 116.2,
     "cams": 56.8,
-    "airtrace": 67.1
+    "airtrace": 71.8
    },
    {
     "month": "2024-04",
     "observed": 79.9,
     "cams": 46.1,
-    "airtrace": 52.0
+    "airtrace": 54.6
    },
    {
     "month": "2024-05",
     "observed": 65.2,
     "cams": 33.5,
-    "airtrace": 34.5
+    "airtrace": 36.2
    },
    {
     "month": "2024-06",
     "observed": 45.3,
     "cams": 25.6,
-    "airtrace": 25.6
+    "airtrace": 26.3
    },
    {
     "month": "2024-07",
@@ -2962,7 +2962,7 @@
     "month": "2024-08",
     "observed": 34.5,
     "cams": 14.1,
-    "airtrace": 13.2
+    "airtrace": 12.5
    },
    {
     "month": "2024-09",
@@ -2974,31 +2974,31 @@
     "month": "2024-10",
     "observed": 75.5,
     "cams": 50.7,
-    "airtrace": 46.1
+    "airtrace": 46.2
    },
    {
     "month": "2024-11",
     "observed": 113.8,
     "cams": 75.1,
-    "airtrace": 94.9
+    "airtrace": 91.5
    },
    {
     "month": "2024-12",
     "observed": 190.5,
     "cams": 86.3,
-    "airtrace": 124.7
+    "airtrace": 118.2
    },
    {
     "month": "2025-01",
     "observed": 213.3,
     "cams": 108.3,
-    "airtrace": 148.0
+    "airtrace": 139.6
    },
    {
     "month": "2025-02",
     "observed": 168.6,
     "cams": 99.2,
-    "airtrace": 120.7
+    "airtrace": 118.8
    }
   ],
   "rose": {
@@ -3065,61 +3065,61 @@
   ],
   "n_days": 235,
   "mae_cams": 13.66,
-  "mae_airtrace": 10.72,
+  "mae_airtrace": 11.01,
   "monthly": [
    {
     "month": "2024-06",
     "observed": 33.8,
     "cams": 40.7,
-    "airtrace": 57.9
+    "airtrace": 53.4
    },
    {
     "month": "2024-07",
     "observed": 34.4,
     "cams": 54.6,
-    "airtrace": 50.6
+    "airtrace": 46.4
    },
    {
     "month": "2024-08",
     "observed": 44.8,
     "cams": 63.2,
-    "airtrace": 53.3
+    "airtrace": 49.7
    },
    {
     "month": "2024-09",
     "observed": 37.5,
     "cams": 45.9,
-    "airtrace": 45.9
+    "airtrace": 36.3
    },
    {
     "month": "2024-10",
     "observed": 26.5,
     "cams": 29.1,
-    "airtrace": 33.6
+    "airtrace": 27.3
    },
    {
     "month": "2024-11",
     "observed": 30.2,
     "cams": 29.6,
-    "airtrace": 29.5
+    "airtrace": 23.7
    },
    {
     "month": "2024-12",
     "observed": 39.7,
     "cams": 48.6,
-    "airtrace": 35.8
+    "airtrace": 27.2
    },
    {
     "month": "2025-01",
     "observed": 37.7,
     "cams": 45.2,
-    "airtrace": 34.4
+    "airtrace": 25.8
    },
    {
     "month": "2025-02",
     "observed": 30.7,
     "cams": 46.4,
-    "airtrace": 30.6
+    "airtrace": 27.2
    }
   ],
   "rose": {
@@ -3186,25 +3186,25 @@
   ],
   "n_days": 345,
   "mae_cams": 10.1,
-  "mae_airtrace": 11.15,
+  "mae_airtrace": 10.79,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 33.6,
     "cams": 45.8,
-    "airtrace": 36.7
+    "airtrace": 38.2
    },
    {
     "month": "2024-04",
     "observed": 39.6,
     "cams": 43.8,
-    "airtrace": 34.4
+    "airtrace": 37.1
    },
    {
     "month": "2024-05",
     "observed": 38.0,
     "cams": 38.5,
-    "airtrace": 37.2
+    "airtrace": 39.0
    },
    {
     "month": "2024-06",
@@ -3216,49 +3216,49 @@
     "month": "2024-07",
     "observed": 61.1,
     "cams": 61.5,
-    "airtrace": 42.0
+    "airtrace": 41.3
    },
    {
     "month": "2024-08",
     "observed": 42.9,
     "cams": 56.7,
-    "airtrace": 37.4
+    "airtrace": 37.0
    },
    {
     "month": "2024-09",
     "observed": 43.9,
     "cams": 49.0,
-    "airtrace": 36.4
+    "airtrace": 37.5
    },
    {
     "month": "2024-10",
     "observed": 27.6,
     "cams": 29.6,
-    "airtrace": 32.6
+    "airtrace": 30.7
    },
    {
     "month": "2024-11",
     "observed": 34.0,
     "cams": 32.7,
-    "airtrace": 38.9
+    "airtrace": 35.9
    },
    {
     "month": "2024-12",
     "observed": 32.4,
     "cams": 34.4,
-    "airtrace": 50.6
+    "airtrace": 47.6
    },
    {
     "month": "2025-01",
     "observed": 29.5,
     "cams": 28.7,
-    "airtrace": 40.6
+    "airtrace": 39.0
    },
    {
     "month": "2025-02",
     "observed": 27.0,
     "cams": 34.4,
-    "airtrace": 36.6
+    "airtrace": 36.2
    }
   ],
   "rose": {
@@ -3325,13 +3325,13 @@
   ],
   "n_days": 347,
   "mae_cams": 40.48,
-  "mae_airtrace": 37.64,
+  "mae_airtrace": 37.55,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 35.3,
     "cams": 12.6,
-    "airtrace": 11.0
+    "airtrace": 10.7
    },
    {
     "month": "2024-04",
@@ -3343,61 +3343,61 @@
     "month": "2024-05",
     "observed": 27.4,
     "cams": 13.4,
-    "airtrace": 10.4
+    "airtrace": 10.5
    },
    {
     "month": "2024-06",
     "observed": 22.9,
     "cams": 11.3,
-    "airtrace": 13.9
+    "airtrace": 13.2
    },
    {
     "month": "2024-07",
     "observed": 35.1,
     "cams": 10.4,
-    "airtrace": 15.2
+    "airtrace": 13.6
    },
    {
     "month": "2024-08",
     "observed": 58.2,
     "cams": 11.7,
-    "airtrace": 18.3
+    "airtrace": 15.6
    },
    {
     "month": "2024-09",
     "observed": 67.8,
     "cams": 12.1,
-    "airtrace": 15.0
+    "airtrace": 14.8
    },
    {
     "month": "2024-10",
     "observed": 37.6,
     "cams": 15.6,
-    "airtrace": 16.2
+    "airtrace": 16.9
    },
    {
     "month": "2024-11",
     "observed": 42.4,
     "cams": 13.8,
-    "airtrace": 17.2
+    "airtrace": 18.0
    },
    {
     "month": "2024-12",
     "observed": 121.7,
     "cams": 20.9,
-    "airtrace": 28.6
+    "airtrace": 29.8
    },
    {
     "month": "2025-01",
     "observed": 112.0,
     "cams": 19.6,
-    "airtrace": 28.3
+    "airtrace": 29.4
    },
    {
     "month": "2025-02",
     "observed": 71.9,
     "cams": 19.9,
-    "airtrace": 24.2
+    "airtrace": 26.7
    }
   ],
   "rose": {
@@ -3464,79 +3464,79 @@
   ],
   "n_days": 362,
   "mae_cams": 17.81,
-  "mae_airtrace": 8.75,
+  "mae_airtrace": 12.63,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 28.4,
     "cams": 40.2,
-    "airtrace": 34.0
+    "airtrace": 41.9
    },
    {
     "month": "2024-04",
     "observed": 21.7,
     "cams": 30.2,
-    "airtrace": 23.6
+    "airtrace": 25.7
    },
    {
     "month": "2024-05",
     "observed": 22.1,
     "cams": 38.9,
-    "airtrace": 24.9
+    "airtrace": 27.3
    },
    {
     "month": "2024-06",
     "observed": 13.4,
     "cams": 26.4,
-    "airtrace": 18.0
+    "airtrace": 17.9
    },
    {
     "month": "2024-07",
     "observed": 10.8,
     "cams": 25.9,
-    "airtrace": 17.7
+    "airtrace": 18.2
    },
    {
     "month": "2024-08",
     "observed": 20.4,
     "cams": 47.7,
-    "airtrace": 23.3
+    "airtrace": 26.6
    },
    {
     "month": "2024-09",
     "observed": 21.5,
     "cams": 44.6,
-    "airtrace": 23.9
+    "airtrace": 25.4
    },
    {
     "month": "2024-10",
     "observed": 26.9,
     "cams": 36.7,
-    "airtrace": 31.7
+    "airtrace": 33.9
    },
    {
     "month": "2024-11",
     "observed": 23.0,
     "cams": 33.5,
-    "airtrace": 31.7
+    "airtrace": 34.6
    },
    {
     "month": "2024-12",
     "observed": 43.6,
     "cams": 67.2,
-    "airtrace": 61.5
+    "airtrace": 70.3
    },
    {
     "month": "2025-01",
     "observed": 42.2,
     "cams": 65.2,
-    "airtrace": 56.5
+    "airtrace": 70.5
    },
    {
     "month": "2025-02",
     "observed": 31.0,
     "cams": 51.8,
-    "airtrace": 46.0
+    "airtrace": 55.1
    }
   ],
   "rose": {
@@ -3603,79 +3603,79 @@
   ],
   "n_days": 310,
   "mae_cams": 6.43,
-  "mae_airtrace": 4.76,
+  "mae_airtrace": 5.81,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 30.9,
     "cams": 21.7,
-    "airtrace": 22.4
+    "airtrace": 18.1
    },
    {
     "month": "2024-04",
     "observed": 28.6,
     "cams": 20.5,
-    "airtrace": 20.2
+    "airtrace": 16.2
    },
    {
     "month": "2024-05",
     "observed": 38.3,
     "cams": 30.8,
-    "airtrace": 30.1
+    "airtrace": 23.9
    },
    {
     "month": "2024-06",
     "observed": 12.1,
     "cams": 15.3,
-    "airtrace": 12.3
+    "airtrace": 11.2
    },
    {
     "month": "2024-07",
     "observed": 10.2,
     "cams": 12.6,
-    "airtrace": 10.8
+    "airtrace": 9.0
    },
    {
     "month": "2024-08",
     "observed": 8.5,
     "cams": 11.5,
-    "airtrace": 10.7
+    "airtrace": 8.8
    },
    {
     "month": "2024-09",
     "observed": 11.2,
     "cams": 13.0,
-    "airtrace": 11.0
+    "airtrace": 10.4
    },
    {
     "month": "2024-10",
     "observed": 12.5,
     "cams": 12.9,
-    "airtrace": 10.2
+    "airtrace": 9.7
    },
    {
     "month": "2024-11",
     "observed": 9.9,
     "cams": 16.5,
-    "airtrace": 11.4
+    "airtrace": 11.3
    },
    {
     "month": "2024-12",
     "observed": 9.4,
     "cams": 16.3,
-    "airtrace": 12.0
+    "airtrace": 11.5
    },
    {
     "month": "2025-01",
     "observed": 11.0,
     "cams": 18.8,
-    "airtrace": 14.2
+    "airtrace": 13.6
    },
    {
     "month": "2025-02",
     "observed": 11.1,
     "cams": 18.3,
-    "airtrace": 13.7
+    "airtrace": 12.2
    }
   ],
   "rose": {
@@ -3748,43 +3748,43 @@
     "month": "2024-03",
     "observed": 54.0,
     "cams": 43.1,
-    "airtrace": 48.2
+    "airtrace": 51.5
    },
    {
     "month": "2024-04",
     "observed": 46.2,
     "cams": 43.7,
-    "airtrace": 45.3
+    "airtrace": 48.1
    },
    {
     "month": "2024-05",
     "observed": 33.5,
     "cams": 41.0,
-    "airtrace": 31.9
+    "airtrace": 35.9
    },
    {
     "month": "2024-06",
     "observed": 33.2,
     "cams": 32.7,
-    "airtrace": 26.4
+    "airtrace": 30.1
    },
    {
     "month": "2024-07",
     "observed": 24.5,
     "cams": 30.6,
-    "airtrace": 23.4
+    "airtrace": 26.8
    },
    {
     "month": "2024-08",
     "observed": 23.9,
     "cams": 35.4,
-    "airtrace": 22.2
+    "airtrace": 24.2
    },
    {
     "month": "2024-09",
     "observed": 35.8,
     "cams": 39.7,
-    "airtrace": 29.4
+    "airtrace": 29.9
    },
    {
     "month": "2024-10",
@@ -3796,25 +3796,25 @@
     "month": "2024-11",
     "observed": 67.1,
     "cams": 46.0,
-    "airtrace": 50.7
+    "airtrace": 52.8
    },
    {
     "month": "2024-12",
     "observed": 61.6,
     "cams": 42.0,
-    "airtrace": 49.3
+    "airtrace": 51.9
    },
    {
     "month": "2025-01",
     "observed": 80.8,
     "cams": 67.0,
-    "airtrace": 88.7
+    "airtrace": 91.5
    },
    {
     "month": "2025-02",
     "observed": 46.8,
     "cams": 44.0,
-    "airtrace": 44.1
+    "airtrace": 50.0
    }
   ],
   "rose": {
@@ -3881,7 +3881,7 @@
   ],
   "n_days": 301,
   "mae_cams": 16.44,
-  "mae_airtrace": 8.41,
+  "mae_airtrace": 8.51,
   "monthly": [
    {
     "month": "2024-03",
@@ -3893,13 +3893,13 @@
     "month": "2024-04",
     "observed": 45.4,
     "cams": 28.7,
-    "airtrace": 41.7
+    "airtrace": 42.4
    },
    {
     "month": "2024-05",
     "observed": 32.2,
     "cams": 21.9,
-    "airtrace": 29.5
+    "airtrace": 30.0
    },
    {
     "month": "2024-06",
@@ -3911,49 +3911,49 @@
     "month": "2024-07",
     "observed": 11.4,
     "cams": 7.6,
-    "airtrace": 7.4
+    "airtrace": 5.8
    },
    {
     "month": "2024-08",
     "observed": 16.7,
     "cams": 13.5,
-    "airtrace": 11.2
+    "airtrace": 10.1
    },
    {
     "month": "2024-09",
     "observed": 20.0,
     "cams": 16.1,
-    "airtrace": 15.2
+    "airtrace": 13.5
    },
    {
     "month": "2024-10",
     "observed": 38.2,
     "cams": 29.0,
-    "airtrace": 31.5
+    "airtrace": 30.5
    },
    {
     "month": "2024-11",
     "observed": 89.0,
     "cams": 53.9,
-    "airtrace": 63.9
+    "airtrace": 66.8
    },
    {
     "month": "2024-12",
     "observed": 51.2,
     "cams": 28.6,
-    "airtrace": 39.9
+    "airtrace": 37.2
    },
    {
     "month": "2025-01",
     "observed": 79.8,
     "cams": 43.8,
-    "airtrace": 67.5
+    "airtrace": 67.8
    },
    {
     "month": "2025-02",
     "observed": 62.3,
     "cams": 33.9,
-    "airtrace": 55.8
+    "airtrace": 59.6
    }
   ],
   "rose": {
@@ -4020,79 +4020,79 @@
   ],
   "n_days": 346,
   "mae_cams": 24.87,
-  "mae_airtrace": 15.92,
+  "mae_airtrace": 17.49,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 36.0,
     "cams": 26.1,
-    "airtrace": 44.8
+    "airtrace": 48.0
    },
    {
     "month": "2024-04",
     "observed": 26.4,
     "cams": 21.7,
-    "airtrace": 32.8
+    "airtrace": 33.8
    },
    {
     "month": "2024-05",
     "observed": 32.7,
     "cams": 19.5,
-    "airtrace": 36.7
+    "airtrace": 37.6
    },
    {
     "month": "2024-06",
     "observed": 38.1,
     "cams": 29.0,
-    "airtrace": 48.8
+    "airtrace": 56.7
    },
    {
     "month": "2024-07",
     "observed": 26.8,
     "cams": 47.0,
-    "airtrace": 45.6
+    "airtrace": 49.0
    },
    {
     "month": "2024-08",
     "observed": 19.3,
     "cams": 31.0,
-    "airtrace": 31.2
+    "airtrace": 32.1
    },
    {
     "month": "2024-09",
     "observed": 35.6,
     "cams": 35.5,
-    "airtrace": 51.1
+    "airtrace": 52.1
    },
    {
     "month": "2024-10",
     "observed": 54.2,
     "cams": 33.7,
-    "airtrace": 77.3
+    "airtrace": 75.8
    },
    {
     "month": "2024-11",
     "observed": 91.2,
     "cams": 50.6,
-    "airtrace": 109.6
+    "airtrace": 106.3
    },
    {
     "month": "2024-12",
     "observed": 115.6,
     "cams": 53.9,
-    "airtrace": 129.4
+    "airtrace": 130.7
    },
    {
     "month": "2025-01",
     "observed": 96.5,
     "cams": 49.9,
-    "airtrace": 105.4
+    "airtrace": 109.0
    },
    {
     "month": "2025-02",
     "observed": 61.9,
     "cams": 32.9,
-    "airtrace": 61.1
+    "airtrace": 75.1
    }
   ],
   "rose": {
@@ -4159,79 +4159,79 @@
   ],
   "n_days": 346,
   "mae_cams": 21.04,
-  "mae_airtrace": 12.2,
+  "mae_airtrace": 19.34,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 20.2,
     "cams": 37.5,
-    "airtrace": 26.1
+    "airtrace": 35.4
    },
    {
     "month": "2024-04",
     "observed": 28.3,
     "cams": 59.2,
-    "airtrace": 38.6
+    "airtrace": 46.5
    },
    {
     "month": "2024-05",
     "observed": 42.6,
     "cams": 72.5,
-    "airtrace": 52.1
+    "airtrace": 62.5
    },
    {
     "month": "2024-06",
     "observed": 41.6,
     "cams": 58.7,
-    "airtrace": 49.5
+    "airtrace": 59.8
    },
    {
     "month": "2024-07",
     "observed": 39.6,
     "cams": 56.2,
-    "airtrace": 53.6
+    "airtrace": 63.4
    },
    {
     "month": "2024-08",
     "observed": 42.9,
     "cams": 50.8,
-    "airtrace": 51.3
+    "airtrace": 53.1
    },
    {
     "month": "2024-09",
     "observed": 35.7,
     "cams": 51.5,
-    "airtrace": 47.6
+    "airtrace": 50.2
    },
    {
     "month": "2024-10",
     "observed": 38.6,
     "cams": 62.9,
-    "airtrace": 58.6
+    "airtrace": 66.7
    },
    {
     "month": "2024-11",
     "observed": 27.1,
     "cams": 58.1,
-    "airtrace": 44.1
+    "airtrace": 56.9
    },
    {
     "month": "2024-12",
     "observed": 16.2,
     "cams": 32.0,
-    "airtrace": 24.6
+    "airtrace": 31.1
    },
    {
     "month": "2025-01",
     "observed": 15.9,
     "cams": 33.7,
-    "airtrace": 25.6
+    "airtrace": 34.7
    },
    {
     "month": "2025-02",
     "observed": 21.6,
     "cams": 41.6,
-    "airtrace": 27.3
+    "airtrace": 38.1
    }
   ],
   "rose": {
@@ -4298,55 +4298,55 @@
   ],
   "n_days": 191,
   "mae_cams": 33.38,
-  "mae_airtrace": 16.2,
+  "mae_airtrace": 14.02,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 18.5,
     "cams": 49.2,
-    "airtrace": 26.4
+    "airtrace": 24.6
    },
    {
     "month": "2024-04",
     "observed": 26.4,
     "cams": 53.3,
-    "airtrace": 28.1
+    "airtrace": 27.7
    },
    {
     "month": "2024-05",
     "observed": 20.8,
     "cams": 42.4,
-    "airtrace": 24.0
+    "airtrace": 23.0
    },
    {
     "month": "2024-10",
     "observed": 19.4,
     "cams": 22.2,
-    "airtrace": 28.7
+    "airtrace": 25.8
    },
    {
     "month": "2024-11",
     "observed": 19.8,
     "cams": 28.4,
-    "airtrace": 28.8
+    "airtrace": 26.5
    },
    {
     "month": "2024-12",
     "observed": 23.9,
     "cams": 58.1,
-    "airtrace": 42.7
+    "airtrace": 37.9
    },
    {
     "month": "2025-01",
     "observed": 27.1,
     "cams": 79.2,
-    "airtrace": 54.4
+    "airtrace": 48.5
    },
    {
     "month": "2025-02",
     "observed": 14.9,
     "cams": 97.4,
-    "airtrace": 51.9
+    "airtrace": 48.5
    }
   ],
   "rose": {
@@ -4413,79 +4413,79 @@
   ],
   "n_days": 332,
   "mae_cams": 43.69,
-  "mae_airtrace": 38.77,
+  "mae_airtrace": 41.15,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 22.8,
     "cams": 18.7,
-    "airtrace": 26.9
+    "airtrace": 22.0
    },
    {
     "month": "2024-04",
     "observed": 15.1,
     "cams": 18.2,
-    "airtrace": 22.9
+    "airtrace": 19.1
    },
    {
     "month": "2024-05",
     "observed": 20.0,
     "cams": 21.7,
-    "airtrace": 28.7
+    "airtrace": 24.5
    },
    {
     "month": "2024-06",
     "observed": 40.9,
     "cams": 25.0,
-    "airtrace": 37.2
+    "airtrace": 30.8
    },
    {
     "month": "2024-07",
     "observed": 48.7,
     "cams": 32.6,
-    "airtrace": 50.6
+    "airtrace": 43.1
    },
    {
     "month": "2024-08",
     "observed": 43.1,
     "cams": 29.6,
-    "airtrace": 48.1
+    "airtrace": 41.2
    },
    {
     "month": "2024-09",
     "observed": 68.1,
     "cams": 29.7,
-    "airtrace": 38.1
+    "airtrace": 31.2
    },
    {
     "month": "2024-10",
     "observed": 95.7,
     "cams": 27.7,
-    "airtrace": 33.5
+    "airtrace": 27.5
    },
    {
     "month": "2024-11",
     "observed": 86.9,
     "cams": 23.2,
-    "airtrace": 31.3
+    "airtrace": 27.0
    },
    {
     "month": "2024-12",
     "observed": 107.5,
     "cams": 27.6,
-    "airtrace": 36.2
+    "airtrace": 29.9
    },
    {
     "month": "2025-01",
     "observed": 138.5,
     "cams": 32.1,
-    "airtrace": 44.5
+    "airtrace": 38.5
    },
    {
     "month": "2025-02",
     "observed": 119.8,
     "cams": 24.1,
-    "airtrace": 35.0
+    "airtrace": 29.2
    }
   ],
   "rose": {
@@ -4552,73 +4552,73 @@
   ],
   "n_days": 256,
   "mae_cams": 17.69,
-  "mae_airtrace": 13.43,
+  "mae_airtrace": 15.9,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 46.2,
     "cams": 25.3,
-    "airtrace": 31.5
+    "airtrace": 29.1
    },
    {
     "month": "2024-04",
     "observed": 30.7,
     "cams": 20.8,
-    "airtrace": 23.3
+    "airtrace": 21.8
    },
    {
     "month": "2024-05",
     "observed": 23.5,
     "cams": 15.4,
-    "airtrace": 20.1
+    "airtrace": 19.5
    },
    {
     "month": "2024-06",
     "observed": 26.5,
     "cams": 22.8,
-    "airtrace": 21.5
+    "airtrace": 20.4
    },
    {
     "month": "2024-07",
     "observed": 29.6,
     "cams": 30.7,
-    "airtrace": 23.6
+    "airtrace": 22.2
    },
    {
     "month": "2024-08",
     "observed": 21.3,
     "cams": 19.9,
-    "airtrace": 16.8
+    "airtrace": 15.3
    },
    {
     "month": "2024-09",
     "observed": 24.8,
     "cams": 19.3,
-    "airtrace": 16.9
+    "airtrace": 14.8
    },
    {
     "month": "2024-10",
     "observed": 38.7,
     "cams": 23.1,
-    "airtrace": 30.4
+    "airtrace": 28.5
    },
    {
     "month": "2024-11",
     "observed": 49.5,
     "cams": 30.5,
-    "airtrace": 38.8
+    "airtrace": 33.5
    },
    {
     "month": "2025-01",
     "observed": 94.6,
     "cams": 39.1,
-    "airtrace": 56.3
+    "airtrace": 48.4
    },
    {
     "month": "2025-02",
     "observed": 62.5,
     "cams": 29.2,
-    "airtrace": 36.2
+    "airtrace": 32.2
    }
   ],
   "rose": {
@@ -4685,79 +4685,79 @@
   ],
   "n_days": 325,
   "mae_cams": 18.18,
-  "mae_airtrace": 23.48,
+  "mae_airtrace": 37.58,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 65.0,
     "cams": 28.9,
-    "airtrace": 40.3
+    "airtrace": 57.3
    },
    {
     "month": "2024-04",
     "observed": 96.5,
     "cams": 25.0,
-    "airtrace": 45.4
+    "airtrace": 61.9
    },
    {
     "month": "2024-05",
     "observed": 47.1,
     "cams": 31.6,
-    "airtrace": 40.4
+    "airtrace": 67.4
    },
    {
     "month": "2024-06",
     "observed": 31.9,
     "cams": 36.0,
-    "airtrace": 32.8
+    "airtrace": 65.5
    },
    {
     "month": "2024-07",
     "observed": 10.8,
     "cams": 14.0,
-    "airtrace": 12.7
+    "airtrace": 28.4
    },
    {
     "month": "2024-08",
     "observed": 10.5,
     "cams": 16.6,
-    "airtrace": 14.3
+    "airtrace": 35.4
    },
    {
     "month": "2024-09",
     "observed": 14.0,
     "cams": 16.1,
-    "airtrace": 15.8
+    "airtrace": 36.0
    },
    {
     "month": "2024-10",
     "observed": 27.9,
     "cams": 27.2,
-    "airtrace": 35.3
+    "airtrace": 59.3
    },
    {
     "month": "2024-11",
     "observed": 48.6,
     "cams": 60.5,
-    "airtrace": 96.4
+    "airtrace": 120.3
    },
    {
     "month": "2024-12",
     "observed": 74.0,
     "cams": 64.3,
-    "airtrace": 105.2
+    "airtrace": 131.3
    },
    {
     "month": "2025-01",
     "observed": 75.8,
     "cams": 73.7,
-    "airtrace": 122.8
+    "airtrace": 145.8
    },
    {
     "month": "2025-02",
     "observed": 75.4,
     "cams": 67.5,
-    "airtrace": 106.0
+    "airtrace": 121.0
    }
   ],
   "rose": {
@@ -4824,43 +4824,43 @@
   ],
   "n_days": 148,
   "mae_cams": 13.71,
-  "mae_airtrace": 39.91,
+  "mae_airtrace": 30.98,
   "monthly": [
    {
     "month": "2024-09",
     "observed": 43.9,
     "cams": 21.6,
-    "airtrace": 75.9
+    "airtrace": 65.4
    },
    {
     "month": "2024-10",
     "observed": 29.5,
     "cams": 22.0,
-    "airtrace": 75.0
+    "airtrace": 57.3
    },
    {
     "month": "2024-11",
     "observed": 26.2,
     "cams": 20.4,
-    "airtrace": 60.2
+    "airtrace": 49.7
    },
    {
     "month": "2024-12",
     "observed": 37.0,
     "cams": 28.2,
-    "airtrace": 80.1
+    "airtrace": 73.8
    },
    {
     "month": "2025-01",
     "observed": 53.1,
     "cams": 33.7,
-    "airtrace": 99.2
+    "airtrace": 94.0
    },
    {
     "month": "2025-02",
     "observed": 57.4,
     "cams": 39.0,
-    "airtrace": 92.5
+    "airtrace": 87.4
    }
   ],
   "rose": {
@@ -4927,61 +4927,61 @@
   ],
   "n_days": 189,
   "mae_cams": 55.44,
-  "mae_airtrace": 40.05,
+  "mae_airtrace": 39.02,
   "monthly": [
    {
     "month": "2024-05",
     "observed": 51.4,
     "cams": 26.7,
-    "airtrace": 35.6
+    "airtrace": 33.0
    },
    {
     "month": "2024-07",
     "observed": 130.9,
     "cams": 29.1,
-    "airtrace": 59.3
+    "airtrace": 50.7
    },
    {
     "month": "2024-08",
     "observed": 112.7,
     "cams": 27.4,
-    "airtrace": 59.4
+    "airtrace": 51.5
    },
    {
     "month": "2024-09",
     "observed": 89.9,
     "cams": 28.3,
-    "airtrace": 49.0
+    "airtrace": 42.1
    },
    {
     "month": "2024-10",
     "observed": 79.2,
     "cams": 19.3,
-    "airtrace": 27.7
+    "airtrace": 33.3
    },
    {
     "month": "2024-11",
     "observed": 53.3,
     "cams": 20.3,
-    "airtrace": 25.4
+    "airtrace": 41.8
    },
    {
     "month": "2024-12",
     "observed": 54.8,
     "cams": 31.0,
-    "airtrace": 46.5
+    "airtrace": 77.4
    },
    {
     "month": "2025-01",
     "observed": 61.4,
     "cams": 24.0,
-    "airtrace": 36.9
+    "airtrace": 65.8
    },
    {
     "month": "2025-02",
     "observed": 65.7,
     "cams": 28.4,
-    "airtrace": 33.7
+    "airtrace": 56.0
    }
   ],
   "rose": {
@@ -5048,79 +5048,79 @@
   ],
   "n_days": 350,
   "mae_cams": 16.6,
-  "mae_airtrace": 21.72,
+  "mae_airtrace": 22.67,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 69.9,
     "cams": 49.2,
-    "airtrace": 87.5
+    "airtrace": 85.1
    },
    {
     "month": "2024-04",
     "observed": 57.7,
     "cams": 43.2,
-    "airtrace": 72.7
+    "airtrace": 74.0
    },
    {
     "month": "2024-05",
     "observed": 24.9,
     "cams": 18.9,
-    "airtrace": 38.1
+    "airtrace": 37.5
    },
    {
     "month": "2024-06",
     "observed": 27.5,
     "cams": 26.2,
-    "airtrace": 44.7
+    "airtrace": 44.2
    },
    {
     "month": "2024-07",
     "observed": 17.7,
     "cams": 15.6,
-    "airtrace": 28.6
+    "airtrace": 29.9
    },
    {
     "month": "2024-08",
     "observed": 24.3,
     "cams": 21.3,
-    "airtrace": 35.4
+    "airtrace": 38.2
    },
    {
     "month": "2024-09",
     "observed": 21.9,
     "cams": 22.4,
-    "airtrace": 37.1
+    "airtrace": 35.7
    },
    {
     "month": "2024-10",
     "observed": 47.4,
     "cams": 45.0,
-    "airtrace": 72.5
+    "airtrace": 72.2
    },
    {
     "month": "2024-11",
     "observed": 128.0,
     "cams": 108.7,
-    "airtrace": 155.6
+    "airtrace": 158.2
    },
    {
     "month": "2024-12",
     "observed": 152.4,
     "cams": 113.5,
-    "airtrace": 183.0
+    "airtrace": 193.9
    },
    {
     "month": "2025-01",
     "observed": 174.4,
     "cams": 135.5,
-    "airtrace": 213.8
+    "airtrace": 206.2
    },
    {
     "month": "2025-02",
     "observed": 102.7,
     "cams": 79.7,
-    "airtrace": 129.8
+    "airtrace": 137.4
    }
   ],
   "rose": {
@@ -5187,79 +5187,79 @@
   ],
   "n_days": 308,
   "mae_cams": 27.25,
-  "mae_airtrace": 18.13,
+  "mae_airtrace": 19.34,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 23.1,
     "cams": 53.4,
-    "airtrace": 41.9
+    "airtrace": 37.8
    },
    {
     "month": "2024-04",
     "observed": 27.8,
     "cams": 47.4,
-    "airtrace": 39.5
+    "airtrace": 39.4
    },
    {
     "month": "2024-05",
     "observed": 29.3,
     "cams": 51.2,
-    "airtrace": 37.0
+    "airtrace": 39.6
    },
    {
     "month": "2024-06",
     "observed": 37.8,
     "cams": 61.3,
-    "airtrace": 33.5
+    "airtrace": 35.4
    },
    {
     "month": "2024-07",
     "observed": 39.9,
     "cams": 66.1,
-    "airtrace": 29.3
+    "airtrace": 30.4
    },
    {
     "month": "2024-08",
     "observed": 43.7,
     "cams": 76.3,
-    "airtrace": 35.0
+    "airtrace": 34.8
    },
    {
     "month": "2024-09",
     "observed": 33.5,
     "cams": 67.8,
-    "airtrace": 35.1
+    "airtrace": 36.0
    },
    {
     "month": "2024-10",
     "observed": 42.0,
     "cams": 58.3,
-    "airtrace": 40.0
+    "airtrace": 43.9
    },
    {
     "month": "2024-11",
     "observed": 37.2,
     "cams": 58.1,
-    "airtrace": 40.1
+    "airtrace": 40.0
    },
    {
     "month": "2024-12",
     "observed": 45.5,
     "cams": 62.9,
-    "airtrace": 49.0
+    "airtrace": 54.3
    },
    {
     "month": "2025-01",
     "observed": 88.8,
     "cams": 62.0,
-    "airtrace": 33.9
+    "airtrace": 36.3
    },
    {
     "month": "2025-02",
     "observed": 86.8,
     "cams": 58.4,
-    "airtrace": 39.9
+    "airtrace": 38.2
    }
   ],
   "rose": {
@@ -5326,49 +5326,49 @@
   ],
   "n_days": 127,
   "mae_cams": 6.77,
-  "mae_airtrace": 8.7,
+  "mae_airtrace": 9.13,
   "monthly": [
    {
     "month": "2024-07",
     "observed": 12.7,
     "cams": 14.3,
-    "airtrace": 14.5
+    "airtrace": 13.9
    },
    {
     "month": "2024-08",
     "observed": 11.1,
     "cams": 13.9,
-    "airtrace": 13.2
+    "airtrace": 13.0
    },
    {
     "month": "2024-09",
     "observed": 11.2,
     "cams": 13.7,
-    "airtrace": 13.1
+    "airtrace": 13.6
    },
    {
     "month": "2024-10",
     "observed": 13.8,
     "cams": 16.4,
-    "airtrace": 14.8
+    "airtrace": 16.4
    },
    {
     "month": "2024-11",
     "observed": 20.6,
     "cams": 19.0,
-    "airtrace": 17.4
+    "airtrace": 19.1
    },
    {
     "month": "2025-01",
     "observed": 35.9,
     "cams": 48.5,
-    "airtrace": 63.7
+    "airtrace": 68.5
    },
    {
     "month": "2025-02",
     "observed": 1.3,
     "cams": 30.1,
-    "airtrace": 40.6
+    "airtrace": 38.2
    }
   ],
   "rose": {
@@ -5435,79 +5435,79 @@
   ],
   "n_days": 305,
   "mae_cams": 71.05,
-  "mae_airtrace": 48.68,
+  "mae_airtrace": 52.34,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 100.0,
     "cams": 44.0,
-    "airtrace": 64.2
+    "airtrace": 60.8
    },
    {
     "month": "2024-04",
     "observed": 66.2,
     "cams": 31.0,
-    "airtrace": 49.2
+    "airtrace": 45.9
    },
    {
     "month": "2024-05",
     "observed": 93.6,
     "cams": 38.5,
-    "airtrace": 66.0
+    "airtrace": 60.9
    },
    {
     "month": "2024-06",
     "observed": 42.6,
     "cams": 61.8,
-    "airtrace": 51.3
+    "airtrace": 44.4
    },
    {
     "month": "2024-07",
     "observed": 63.4,
     "cams": 57.5,
-    "airtrace": 49.5
+    "airtrace": 44.8
    },
    {
     "month": "2024-08",
     "observed": 44.8,
     "cams": 36.6,
-    "airtrace": 31.7
+    "airtrace": 28.3
    },
    {
     "month": "2024-09",
     "observed": 67.6,
     "cams": 51.7,
-    "airtrace": 49.9
+    "airtrace": 46.8
    },
    {
     "month": "2024-10",
     "observed": 150.3,
     "cams": 66.8,
-    "airtrace": 91.9
+    "airtrace": 88.0
    },
    {
     "month": "2024-11",
     "observed": 328.8,
     "cams": 124.9,
-    "airtrace": 177.2
+    "airtrace": 170.9
    },
    {
     "month": "2024-12",
     "observed": 232.1,
     "cams": 116.4,
-    "airtrace": 171.4
+    "airtrace": 165.3
    },
    {
     "month": "2025-01",
     "observed": 233.8,
     "cams": 129.0,
-    "airtrace": 167.1
+    "airtrace": 161.9
    },
    {
     "month": "2025-02",
     "observed": 160.2,
     "cams": 86.0,
-    "airtrace": 128.3
+    "airtrace": 124.3
    }
   ],
   "rose": {
@@ -5574,31 +5574,31 @@
   ],
   "n_days": 179,
   "mae_cams": 7.33,
-  "mae_airtrace": 8.42,
+  "mae_airtrace": 8.15,
   "monthly": [
    {
     "month": "2024-08",
     "observed": 28.5,
     "cams": 11.9,
-    "airtrace": 9.3
+    "airtrace": 9.9
    },
    {
     "month": "2024-09",
     "observed": 30.2,
     "cams": 13.5,
-    "airtrace": 11.5
+    "airtrace": 11.9
    },
    {
     "month": "2024-10",
     "observed": 22.6,
     "cams": 11.1,
-    "airtrace": 8.6
+    "airtrace": 9.4
    },
    {
     "month": "2024-11",
     "observed": 16.9,
     "cams": 15.2,
-    "airtrace": 11.3
+    "airtrace": 11.8
    },
    {
     "month": "2024-12",
@@ -5610,13 +5610,13 @@
     "month": "2025-01",
     "observed": 15.2,
     "cams": 14.7,
-    "airtrace": 14.9
+    "airtrace": 14.5
    },
    {
     "month": "2025-02",
     "observed": 16.2,
     "cams": 13.8,
-    "airtrace": 13.6
+    "airtrace": 13.3
    }
   ],
   "rose": {
@@ -5683,79 +5683,79 @@
   ],
   "n_days": 355,
   "mae_cams": 10.22,
-  "mae_airtrace": 11.82,
+  "mae_airtrace": 11.63,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 20.9,
     "cams": 14.9,
-    "airtrace": 12.6
+    "airtrace": 14.0
    },
    {
     "month": "2024-04",
     "observed": 16.3,
     "cams": 10.7,
-    "airtrace": 11.7
+    "airtrace": 12.4
    },
    {
     "month": "2024-05",
     "observed": 15.6,
     "cams": 9.5,
-    "airtrace": 11.0
+    "airtrace": 11.8
    },
    {
     "month": "2024-06",
     "observed": 10.1,
     "cams": 9.6,
-    "airtrace": 10.7
+    "airtrace": 12.0
    },
    {
     "month": "2024-07",
     "observed": 7.8,
     "cams": 13.0,
-    "airtrace": 11.5
+    "airtrace": 13.7
    },
    {
     "month": "2024-08",
     "observed": 7.8,
     "cams": 11.5,
-    "airtrace": 10.8
+    "airtrace": 12.3
    },
    {
     "month": "2024-09",
     "observed": 7.8,
     "cams": 9.2,
-    "airtrace": 9.4
+    "airtrace": 10.4
    },
    {
     "month": "2024-10",
     "observed": 7.8,
     "cams": 7.9,
-    "airtrace": 10.8
+    "airtrace": 11.2
    },
    {
     "month": "2024-11",
     "observed": 11.5,
     "cams": 16.8,
-    "airtrace": 19.0
+    "airtrace": 18.6
    },
    {
     "month": "2024-12",
     "observed": 77.2,
     "cams": 44.0,
-    "airtrace": 36.4
+    "airtrace": 39.4
    },
    {
     "month": "2025-01",
     "observed": 57.4,
     "cams": 25.5,
-    "airtrace": 21.8
+    "airtrace": 23.3
    },
    {
     "month": "2025-02",
     "observed": 32.7,
     "cams": 19.6,
-    "airtrace": 13.3
+    "airtrace": 14.3
    }
   ],
   "rose": {
@@ -5822,79 +5822,79 @@
   ],
   "n_days": 354,
   "mae_cams": 8.75,
-  "mae_airtrace": 5.24,
+  "mae_airtrace": 6.71,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 8.0,
     "cams": 18.2,
-    "airtrace": 11.6
+    "airtrace": 14.7
    },
    {
     "month": "2024-04",
     "observed": 11.5,
     "cams": 17.7,
-    "airtrace": 12.1
+    "airtrace": 15.3
    },
    {
     "month": "2024-05",
     "observed": 12.8,
     "cams": 15.4,
-    "airtrace": 11.2
+    "airtrace": 12.6
    },
    {
     "month": "2024-06",
     "observed": 14.9,
     "cams": 15.2,
-    "airtrace": 12.0
+    "airtrace": 14.2
    },
    {
     "month": "2024-07",
     "observed": 16.4,
     "cams": 16.2,
-    "airtrace": 13.1
+    "airtrace": 15.6
    },
    {
     "month": "2024-08",
     "observed": 13.5,
     "cams": 18.4,
-    "airtrace": 13.6
+    "airtrace": 16.4
    },
    {
     "month": "2024-09",
     "observed": 13.7,
     "cams": 16.0,
-    "airtrace": 13.1
+    "airtrace": 15.1
    },
    {
     "month": "2024-10",
     "observed": 16.9,
     "cams": 31.5,
-    "airtrace": 26.1
+    "airtrace": 29.9
    },
    {
     "month": "2024-11",
     "observed": 11.7,
     "cams": 22.0,
-    "airtrace": 18.2
+    "airtrace": 19.2
    },
    {
     "month": "2024-12",
     "observed": 21.3,
     "cams": 30.5,
-    "airtrace": 27.8
+    "airtrace": 30.9
    },
    {
     "month": "2025-01",
     "observed": 20.3,
     "cams": 33.7,
-    "airtrace": 23.5
+    "airtrace": 28.4
    },
    {
     "month": "2025-02",
     "observed": 11.4,
     "cams": 22.2,
-    "airtrace": 15.1
+    "airtrace": 17.1
    }
   ],
   "rose": {
@@ -5961,79 +5961,79 @@
   ],
   "n_days": 283,
   "mae_cams": 13.19,
-  "mae_airtrace": 9.34,
+  "mae_airtrace": 13.63,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 30.7,
     "cams": 41.1,
-    "airtrace": 25.8
+    "airtrace": 19.4
    },
    {
     "month": "2024-04",
     "observed": 35.6,
     "cams": 51.7,
-    "airtrace": 34.1
+    "airtrace": 28.7
    },
    {
     "month": "2024-05",
     "observed": 34.5,
     "cams": 35.1,
-    "airtrace": 31.4
+    "airtrace": 25.5
    },
    {
     "month": "2024-06",
     "observed": 50.9,
     "cams": 47.6,
-    "airtrace": 40.6
+    "airtrace": 34.2
    },
    {
     "month": "2024-07",
     "observed": 39.9,
     "cams": 51.7,
-    "airtrace": 34.6
+    "airtrace": 30.0
    },
    {
     "month": "2024-08",
     "observed": 43.4,
     "cams": 69.2,
-    "airtrace": 43.9
+    "airtrace": 37.6
    },
    {
     "month": "2024-09",
     "observed": 42.8,
     "cams": 47.2,
-    "airtrace": 32.3
+    "airtrace": 24.1
    },
    {
     "month": "2024-10",
     "observed": 35.6,
     "cams": 31.6,
-    "airtrace": 25.4
+    "airtrace": 17.8
    },
    {
     "month": "2024-11",
     "observed": 30.6,
     "cams": 28.6,
-    "airtrace": 28.5
+    "airtrace": 19.0
    },
    {
     "month": "2024-12",
     "observed": 43.3,
     "cams": 38.5,
-    "airtrace": 36.4
+    "airtrace": 23.6
    },
    {
     "month": "2025-01",
     "observed": 33.4,
     "cams": 36.8,
-    "airtrace": 36.2
+    "airtrace": 21.2
    },
    {
     "month": "2025-02",
     "observed": 25.4,
     "cams": 33.2,
-    "airtrace": 30.8
+    "airtrace": 20.6
    }
   ],
   "rose": {
@@ -6100,61 +6100,61 @@
   ],
   "n_days": 246,
   "mae_cams": 8.35,
-  "mae_airtrace": 7.61,
+  "mae_airtrace": 6.51,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 16.8,
     "cams": 13.2,
-    "airtrace": 13.6
+    "airtrace": 18.2
    },
    {
     "month": "2024-04",
     "observed": 13.8,
     "cams": 14.5,
-    "airtrace": 15.9
+    "airtrace": 20.7
    },
    {
     "month": "2024-05",
     "observed": 14.4,
     "cams": 16.1,
-    "airtrace": 14.4
+    "airtrace": 17.9
    },
    {
     "month": "2024-06",
     "observed": 28.5,
     "cams": 21.8,
-    "airtrace": 16.1
+    "airtrace": 19.4
    },
    {
     "month": "2024-10",
     "observed": 13.1,
     "cams": 11.2,
-    "airtrace": 10.7
+    "airtrace": 13.2
    },
    {
     "month": "2024-11",
     "observed": 20.8,
     "cams": 15.2,
-    "airtrace": 13.9
+    "airtrace": 18.2
    },
    {
     "month": "2024-12",
     "observed": 20.1,
     "cams": 9.6,
-    "airtrace": 12.0
+    "airtrace": 17.4
    },
    {
     "month": "2025-01",
     "observed": 21.8,
     "cams": 11.5,
-    "airtrace": 13.8
+    "airtrace": 18.8
    },
    {
     "month": "2025-02",
     "observed": 22.6,
     "cams": 11.9,
-    "airtrace": 13.6
+    "airtrace": 18.1
    }
   ],
   "rose": {
@@ -6221,79 +6221,79 @@
   ],
   "n_days": 360,
   "mae_cams": 11.56,
-  "mae_airtrace": 6.7,
+  "mae_airtrace": 7.29,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 8.4,
     "cams": 8.8,
-    "airtrace": 12.1
+    "airtrace": 9.9
    },
    {
     "month": "2024-04",
     "observed": 12.9,
     "cams": 7.6,
-    "airtrace": 12.3
+    "airtrace": 10.5
    },
    {
     "month": "2024-05",
     "observed": 21.4,
     "cams": 7.2,
-    "airtrace": 14.2
+    "airtrace": 12.2
    },
    {
     "month": "2024-06",
     "observed": 27.0,
     "cams": 7.3,
-    "airtrace": 15.2
+    "airtrace": 12.9
    },
    {
     "month": "2024-07",
     "observed": 42.6,
     "cams": 10.9,
-    "airtrace": 27.1
+    "airtrace": 22.2
    },
    {
     "month": "2024-08",
     "observed": 26.4,
     "cams": 9.3,
-    "airtrace": 20.0
+    "airtrace": 16.7
    },
    {
     "month": "2024-09",
     "observed": 24.1,
     "cams": 9.9,
-    "airtrace": 18.8
+    "airtrace": 16.7
    },
    {
     "month": "2024-10",
     "observed": 14.8,
     "cams": 8.7,
-    "airtrace": 16.0
+    "airtrace": 13.7
    },
    {
     "month": "2024-11",
     "observed": 12.5,
     "cams": 7.4,
-    "airtrace": 13.6
+    "airtrace": 12.7
    },
    {
     "month": "2024-12",
     "observed": 12.7,
     "cams": 7.6,
-    "airtrace": 14.4
+    "airtrace": 12.4
    },
    {
     "month": "2025-01",
     "observed": 12.6,
     "cams": 5.4,
-    "airtrace": 11.9
+    "airtrace": 10.6
    },
    {
     "month": "2025-02",
     "observed": 10.3,
     "cams": 5.6,
-    "airtrace": 10.8
+    "airtrace": 9.8
    }
   ],
   "rose": {
@@ -6360,31 +6360,31 @@
   ],
   "n_days": 347,
   "mae_cams": 13.79,
-  "mae_airtrace": 8.08,
+  "mae_airtrace": 8.54,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 40.4,
     "cams": 32.0,
-    "airtrace": 45.8
+    "airtrace": 48.3
    },
    {
     "month": "2024-04",
     "observed": 29.9,
     "cams": 28.2,
-    "airtrace": 37.2
+    "airtrace": 38.6
    },
    {
     "month": "2024-05",
     "observed": 32.6,
     "cams": 21.9,
-    "airtrace": 25.4
+    "airtrace": 25.7
    },
    {
     "month": "2024-06",
     "observed": 17.8,
     "cams": 19.5,
-    "airtrace": 18.1
+    "airtrace": 18.9
    },
    {
     "month": "2024-07",
@@ -6396,43 +6396,43 @@
     "month": "2024-08",
     "observed": 11.1,
     "cams": 18.0,
-    "airtrace": 15.6
+    "airtrace": 15.1
    },
    {
     "month": "2024-09",
     "observed": 14.4,
     "cams": 17.6,
-    "airtrace": 16.0
+    "airtrace": 15.1
    },
    {
     "month": "2024-10",
     "observed": 42.3,
     "cams": 40.4,
-    "airtrace": 44.7
+    "airtrace": 44.2
    },
    {
     "month": "2024-11",
     "observed": 79.7,
     "cams": 62.3,
-    "airtrace": 86.8
+    "airtrace": 91.9
    },
    {
     "month": "2024-12",
     "observed": 87.1,
     "cams": 62.0,
-    "airtrace": 84.6
+    "airtrace": 84.8
    },
    {
     "month": "2025-01",
     "observed": 93.3,
     "cams": 62.7,
-    "airtrace": 86.5
+    "airtrace": 88.3
    },
    {
     "month": "2025-02",
     "observed": 78.6,
     "cams": 46.4,
-    "airtrace": 65.1
+    "airtrace": 67.4
    }
   ],
   "rose": {
@@ -6499,55 +6499,55 @@
   ],
   "n_days": 335,
   "mae_cams": 56.44,
-  "mae_airtrace": 56.07,
+  "mae_airtrace": 54.25,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 168.6,
     "cams": 52.9,
-    "airtrace": 48.3
+    "airtrace": 51.5
    },
    {
     "month": "2024-04",
     "observed": 172.6,
     "cams": 40.2,
-    "airtrace": 44.3
+    "airtrace": 39.8
    },
    {
     "month": "2024-05",
     "observed": 150.9,
     "cams": 32.8,
-    "airtrace": 47.7
+    "airtrace": 41.1
    },
    {
     "month": "2024-06",
     "observed": 55.4,
     "cams": 32.6,
-    "airtrace": 46.1
+    "airtrace": 40.5
    },
    {
     "month": "2024-07",
     "observed": 20.6,
     "cams": 17.4,
-    "airtrace": 27.4
+    "airtrace": 24.5
    },
    {
     "month": "2024-08",
     "observed": 20.1,
     "cams": 12.5,
-    "airtrace": 20.2
+    "airtrace": 17.7
    },
    {
     "month": "2024-09",
     "observed": 24.7,
     "cams": 10.9,
-    "airtrace": 19.2
+    "airtrace": 16.8
    },
    {
     "month": "2024-10",
     "observed": 40.9,
     "cams": 16.7,
-    "airtrace": 28.2
+    "airtrace": 26.8
    },
    {
     "month": "2024-11",
@@ -6559,19 +6559,19 @@
     "month": "2024-12",
     "observed": 115.1,
     "cams": 58.8,
-    "airtrace": 44.2
+    "airtrace": 53.5
    },
    {
     "month": "2025-01",
     "observed": 124.4,
     "cams": 52.5,
-    "airtrace": 41.8
+    "airtrace": 50.9
    },
    {
     "month": "2025-02",
     "observed": 113.5,
     "cams": 65.5,
-    "airtrace": 45.0
+    "airtrace": 61.3
    }
   ],
   "rose": {
@@ -6638,79 +6638,79 @@
   ],
   "n_days": 363,
   "mae_cams": 36.53,
-  "mae_airtrace": 23.54,
+  "mae_airtrace": 24.83,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 72.3,
     "cams": 49.1,
-    "airtrace": 69.4
+    "airtrace": 79.1
    },
    {
     "month": "2024-04",
     "observed": 60.8,
     "cams": 37.8,
-    "airtrace": 58.7
+    "airtrace": 64.2
    },
    {
     "month": "2024-05",
     "observed": 81.9,
     "cams": 53.1,
-    "airtrace": 65.0
+    "airtrace": 72.0
    },
    {
     "month": "2024-06",
     "observed": 65.2,
     "cams": 54.2,
-    "airtrace": 48.4
+    "airtrace": 54.2
    },
    {
     "month": "2024-07",
     "observed": 34.6,
     "cams": 48.0,
-    "airtrace": 41.5
+    "airtrace": 49.1
    },
    {
     "month": "2024-08",
     "observed": 19.7,
     "cams": 33.6,
-    "airtrace": 29.2
+    "airtrace": 33.9
    },
    {
     "month": "2024-09",
     "observed": 33.1,
     "cams": 46.5,
-    "airtrace": 41.7
+    "airtrace": 48.5
    },
    {
     "month": "2024-10",
     "observed": 93.6,
     "cams": 69.1,
-    "airtrace": 93.2
+    "airtrace": 111.0
    },
    {
     "month": "2024-11",
     "observed": 232.8,
     "cams": 115.5,
-    "airtrace": 171.9
+    "airtrace": 210.8
    },
    {
     "month": "2024-12",
     "observed": 175.0,
     "cams": 101.1,
-    "airtrace": 135.8
+    "airtrace": 162.7
    },
    {
     "month": "2025-01",
     "observed": 171.1,
     "cams": 122.7,
-    "airtrace": 151.8
+    "airtrace": 185.4
    },
    {
     "month": "2025-02",
     "observed": 96.9,
     "cams": 68.8,
-    "airtrace": 94.5
+    "airtrace": 106.1
    }
   ],
   "rose": {
@@ -6777,79 +6777,79 @@
   ],
   "n_days": 315,
   "mae_cams": 44.82,
-  "mae_airtrace": 23.2,
+  "mae_airtrace": 21.92,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 61.0,
     "cams": 23.2,
-    "airtrace": 48.0
+    "airtrace": 56.9
    },
    {
     "month": "2024-04",
     "observed": 42.0,
     "cams": 20.4,
-    "airtrace": 35.6
+    "airtrace": 42.2
    },
    {
     "month": "2024-05",
     "observed": 43.9,
     "cams": 17.7,
-    "airtrace": 38.0
+    "airtrace": 42.4
    },
    {
     "month": "2024-06",
     "observed": 52.4,
     "cams": 19.3,
-    "airtrace": 44.3
+    "airtrace": 54.6
    },
    {
     "month": "2024-07",
     "observed": 47.4,
     "cams": 43.2,
-    "airtrace": 43.6
+    "airtrace": 58.5
    },
    {
     "month": "2024-08",
     "observed": 43.0,
     "cams": 28.0,
-    "airtrace": 27.5
+    "airtrace": 36.7
    },
    {
     "month": "2024-09",
     "observed": 59.6,
     "cams": 29.6,
-    "airtrace": 41.7
+    "airtrace": 53.7
    },
    {
     "month": "2024-10",
     "observed": 96.9,
     "cams": 30.3,
-    "airtrace": 65.8
+    "airtrace": 81.7
    },
    {
     "month": "2024-11",
     "observed": 131.2,
     "cams": 47.6,
-    "airtrace": 109.1
+    "airtrace": 118.4
    },
    {
     "month": "2024-12",
     "observed": 161.2,
     "cams": 47.5,
-    "airtrace": 139.9
+    "airtrace": 151.9
    },
    {
     "month": "2025-01",
     "observed": 105.0,
     "cams": 51.1,
-    "airtrace": 127.1
+    "airtrace": 135.9
    },
    {
     "month": "2025-02",
     "observed": 60.4,
     "cams": 33.6,
-    "airtrace": 75.6
+    "airtrace": 91.1
    }
   ],
   "rose": {
@@ -6916,79 +6916,79 @@
   ],
   "n_days": 248,
   "mae_cams": 9.33,
-  "mae_airtrace": 25.36,
+  "mae_airtrace": 23.58,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 8.5,
     "cams": 13.2,
-    "airtrace": 31.9
+    "airtrace": 29.2
    },
    {
     "month": "2024-04",
     "observed": 4.3,
     "cams": 11.5,
-    "airtrace": 19.9
+    "airtrace": 20.4
    },
    {
     "month": "2024-05",
     "observed": 3.4,
     "cams": 13.9,
-    "airtrace": 17.6
+    "airtrace": 18.0
    },
    {
     "month": "2024-06",
     "observed": 5.3,
     "cams": 11.7,
-    "airtrace": 16.9
+    "airtrace": 16.2
    },
    {
     "month": "2024-07",
     "observed": 6.0,
     "cams": 10.3,
-    "airtrace": 19.5
+    "airtrace": 19.8
    },
    {
     "month": "2024-08",
     "observed": 6.0,
     "cams": 11.9,
-    "airtrace": 22.7
+    "airtrace": 21.8
    },
    {
     "month": "2024-09",
     "observed": 6.7,
     "cams": 11.3,
-    "airtrace": 26.5
+    "airtrace": 24.2
    },
    {
     "month": "2024-10",
     "observed": 11.4,
     "cams": 10.2,
-    "airtrace": 31.9
+    "airtrace": 29.7
    },
    {
     "month": "2024-11",
     "observed": 26.9,
     "cams": 19.0,
-    "airtrace": 76.3
+    "airtrace": 69.1
    },
    {
     "month": "2024-12",
     "observed": 25.7,
     "cams": 23.0,
-    "airtrace": 87.2
+    "airtrace": 83.0
    },
    {
     "month": "2025-01",
     "observed": 51.9,
     "cams": 22.7,
-    "airtrace": 87.9
+    "airtrace": 81.9
    },
    {
     "month": "2025-02",
     "observed": 38.1,
     "cams": 24.5,
-    "airtrace": 70.4
+    "airtrace": 70.2
    }
   ],
   "rose": {
@@ -7055,79 +7055,79 @@
   ],
   "n_days": 336,
   "mae_cams": 8.33,
-  "mae_airtrace": 10.0,
+  "mae_airtrace": 22.48,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 46.5,
     "cams": 27.8,
-    "airtrace": 56.7
+    "airtrace": 67.6
    },
    {
     "month": "2024-04",
     "observed": 37.1,
     "cams": 25.8,
-    "airtrace": 47.0
+    "airtrace": 61.2
    },
    {
     "month": "2024-05",
     "observed": 16.1,
     "cams": 12.9,
-    "airtrace": 18.3
+    "airtrace": 32.3
    },
    {
     "month": "2024-06",
     "observed": 4.1,
     "cams": 7.1,
-    "airtrace": 10.6
+    "airtrace": 19.5
    },
    {
     "month": "2024-07",
     "observed": 4.9,
     "cams": 8.5,
-    "airtrace": 10.5
+    "airtrace": 20.1
    },
    {
     "month": "2024-08",
     "observed": 3.0,
     "cams": 8.4,
-    "airtrace": 9.0
+    "airtrace": 17.5
    },
    {
     "month": "2024-09",
     "observed": 6.3,
     "cams": 10.2,
-    "airtrace": 12.2
+    "airtrace": 23.4
    },
    {
     "month": "2024-10",
     "observed": 11.3,
     "cams": 15.4,
-    "airtrace": 21.5
+    "airtrace": 40.7
    },
    {
     "month": "2024-11",
     "observed": 20.6,
     "cams": 18.7,
-    "airtrace": 31.8
+    "airtrace": 46.9
    },
    {
     "month": "2024-12",
     "observed": 31.7,
     "cams": 25.1,
-    "airtrace": 44.0
+    "airtrace": 58.2
    },
    {
     "month": "2025-01",
     "observed": 42.8,
     "cams": 28.1,
-    "airtrace": 59.7
+    "airtrace": 72.6
    },
    {
     "month": "2025-02",
     "observed": 48.4,
     "cams": 32.7,
-    "airtrace": 66.2
+    "airtrace": 85.0
    }
   ],
   "rose": {
@@ -7194,79 +7194,79 @@
   ],
   "n_days": 322,
   "mae_cams": 9.79,
-  "mae_airtrace": 16.97,
+  "mae_airtrace": 15.33,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 8.4,
     "cams": 18.1,
-    "airtrace": 22.3
+    "airtrace": 21.1
    },
    {
     "month": "2024-04",
     "observed": 13.6,
     "cams": 24.6,
-    "airtrace": 28.0
+    "airtrace": 27.4
    },
    {
     "month": "2024-05",
     "observed": 13.5,
     "cams": 16.0,
-    "airtrace": 24.5
+    "airtrace": 23.6
    },
    {
     "month": "2024-06",
     "observed": 21.0,
     "cams": 22.3,
-    "airtrace": 35.7
+    "airtrace": 36.0
    },
    {
     "month": "2024-07",
     "observed": 19.5,
     "cams": 23.9,
-    "airtrace": 33.2
+    "airtrace": 33.3
    },
    {
     "month": "2024-08",
     "observed": 28.8,
     "cams": 31.4,
-    "airtrace": 44.5
+    "airtrace": 45.2
    },
    {
     "month": "2024-09",
     "observed": 30.2,
     "cams": 33.6,
-    "airtrace": 49.7
+    "airtrace": 50.6
    },
    {
     "month": "2024-10",
     "observed": 12.1,
     "cams": 19.6,
-    "airtrace": 30.3
+    "airtrace": 29.2
    },
    {
     "month": "2024-11",
     "observed": 7.8,
     "cams": 17.2,
-    "airtrace": 24.9
+    "airtrace": 23.2
    },
    {
     "month": "2024-12",
     "observed": 7.0,
     "cams": 15.9,
-    "airtrace": 26.4
+    "airtrace": 23.0
    },
    {
     "month": "2025-01",
     "observed": 6.9,
     "cams": 18.0,
-    "airtrace": 26.4
+    "airtrace": 22.6
    },
    {
     "month": "2025-02",
     "observed": 8.7,
     "cams": 22.3,
-    "airtrace": 32.5
+    "airtrace": 26.6
    }
   ],
   "rose": {
@@ -7333,79 +7333,79 @@
   ],
   "n_days": 355,
   "mae_cams": 25.74,
-  "mae_airtrace": 26.09,
+  "mae_airtrace": 25.31,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 30.4,
     "cams": 11.3,
-    "airtrace": 9.8
+    "airtrace": 11.0
    },
    {
     "month": "2024-04",
     "observed": 26.8,
     "cams": 10.6,
-    "airtrace": 7.5
+    "airtrace": 8.3
    },
    {
     "month": "2024-05",
     "observed": 22.6,
     "cams": 12.7,
-    "airtrace": 5.2
+    "airtrace": 5.8
    },
    {
     "month": "2024-06",
     "observed": 26.3,
     "cams": 13.4,
-    "airtrace": 7.3
+    "airtrace": 8.3
    },
    {
     "month": "2024-07",
     "observed": 28.9,
     "cams": 13.9,
-    "airtrace": 8.1
+    "airtrace": 9.8
    },
    {
     "month": "2024-08",
     "observed": 17.7,
     "cams": 13.2,
-    "airtrace": 8.4
+    "airtrace": 9.5
    },
    {
     "month": "2024-09",
     "observed": 13.9,
     "cams": 9.0,
-    "airtrace": 6.9
+    "airtrace": 7.5
    },
    {
     "month": "2024-10",
     "observed": 21.8,
     "cams": 9.8,
-    "airtrace": 12.6
+    "airtrace": 14.7
    },
    {
     "month": "2024-11",
     "observed": 69.6,
     "cams": 10.5,
-    "airtrace": 14.5
+    "airtrace": 16.1
    },
    {
     "month": "2024-12",
     "observed": 63.9,
     "cams": 9.0,
-    "airtrace": 15.6
+    "airtrace": 13.8
    },
    {
     "month": "2025-01",
     "observed": 69.7,
     "cams": 10.2,
-    "airtrace": 15.5
+    "airtrace": 15.1
    },
    {
     "month": "2025-02",
     "observed": 49.2,
     "cams": 12.8,
-    "airtrace": 18.6
+    "airtrace": 20.3
    }
   ],
   "rose": {
@@ -7472,79 +7472,79 @@
   ],
   "n_days": 330,
   "mae_cams": 22.15,
-  "mae_airtrace": 9.1,
+  "mae_airtrace": 12.36,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 35.3,
     "cams": 45.0,
-    "airtrace": 37.7
+    "airtrace": 43.0
    },
    {
     "month": "2024-04",
     "observed": 26.8,
     "cams": 34.7,
-    "airtrace": 25.4
+    "airtrace": 28.5
    },
    {
     "month": "2024-05",
     "observed": 24.3,
     "cams": 35.6,
-    "airtrace": 23.6
+    "airtrace": 25.9
    },
    {
     "month": "2024-06",
     "observed": 20.2,
     "cams": 40.4,
-    "airtrace": 25.7
+    "airtrace": 27.6
    },
    {
     "month": "2024-07",
     "observed": 20.9,
     "cams": 50.5,
-    "airtrace": 25.5
+    "airtrace": 29.0
    },
    {
     "month": "2024-08",
     "observed": 19.9,
     "cams": 45.9,
-    "airtrace": 24.4
+    "airtrace": 28.3
    },
    {
     "month": "2024-09",
     "observed": 16.9,
     "cams": 28.5,
-    "airtrace": 17.0
+    "airtrace": 19.1
    },
    {
     "month": "2024-10",
     "observed": 22.4,
     "cams": 29.3,
-    "airtrace": 21.2
+    "airtrace": 24.5
    },
    {
     "month": "2024-11",
     "observed": 26.0,
     "cams": 40.9,
-    "airtrace": 29.9
+    "airtrace": 39.1
    },
    {
     "month": "2024-12",
     "observed": 46.9,
     "cams": 87.9,
-    "airtrace": 58.8
+    "airtrace": 70.2
    },
    {
     "month": "2025-01",
     "observed": 45.1,
     "cams": 91.1,
-    "airtrace": 63.7
+    "airtrace": 75.8
    },
    {
     "month": "2025-02",
     "observed": 33.8,
     "cams": 65.6,
-    "airtrace": 39.1
+    "airtrace": 44.7
    }
   ],
   "rose": {
@@ -7611,67 +7611,67 @@
   ],
   "n_days": 231,
   "mae_cams": 16.19,
-  "mae_airtrace": 15.45,
+  "mae_airtrace": 16.52,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 43.4,
     "cams": 28.5,
-    "airtrace": 32.8
+    "airtrace": 28.0
    },
    {
     "month": "2024-04",
     "observed": 50.4,
     "cams": 32.5,
-    "airtrace": 35.0
+    "airtrace": 32.7
    },
    {
     "month": "2024-05",
     "observed": 24.9,
     "cams": 28.9,
-    "airtrace": 34.6
+    "airtrace": 31.4
    },
    {
     "month": "2024-06",
     "observed": 23.8,
     "cams": 30.3,
-    "airtrace": 33.4
+    "airtrace": 30.7
    },
    {
     "month": "2024-07",
     "observed": 63.8,
     "cams": 41.9,
-    "airtrace": 30.1
+    "airtrace": 28.6
    },
    {
     "month": "2024-08",
     "observed": 15.9,
     "cams": 35.1,
-    "airtrace": 23.8
+    "airtrace": 23.9
    },
    {
     "month": "2024-10",
     "observed": 30.8,
     "cams": 27.9,
-    "airtrace": 30.6
+    "airtrace": 26.0
    },
    {
     "month": "2024-12",
     "observed": 31.0,
     "cams": 42.2,
-    "airtrace": 27.0
+    "airtrace": 23.0
    },
    {
     "month": "2025-01",
     "observed": 52.2,
     "cams": 53.4,
-    "airtrace": 35.6
+    "airtrace": 30.7
    },
    {
     "month": "2025-02",
     "observed": 37.4,
     "cams": 51.8,
-    "airtrace": 42.0
+    "airtrace": 36.9
    }
   ],
   "rose": {
@@ -7738,79 +7738,79 @@
   ],
   "n_days": 339,
   "mae_cams": 17.97,
-  "mae_airtrace": 14.7,
+  "mae_airtrace": 14.03,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 27.0,
     "cams": 19.6,
-    "airtrace": 32.6
+    "airtrace": 29.0
    },
    {
     "month": "2024-04",
     "observed": 20.2,
     "cams": 18.8,
-    "airtrace": 26.0
+    "airtrace": 21.3
    },
    {
     "month": "2024-05",
     "observed": 13.6,
     "cams": 16.2,
-    "airtrace": 20.3
+    "airtrace": 17.2
    },
    {
     "month": "2024-06",
     "observed": 13.6,
     "cams": 13.7,
-    "airtrace": 22.2
+    "airtrace": 17.8
    },
    {
     "month": "2024-07",
     "observed": 11.1,
     "cams": 10.8,
-    "airtrace": 20.1
+    "airtrace": 15.2
    },
    {
     "month": "2024-08",
     "observed": 14.6,
     "cams": 11.1,
-    "airtrace": 26.0
+    "airtrace": 21.0
    },
    {
     "month": "2024-09",
     "observed": 48.3,
     "cams": 11.5,
-    "airtrace": 26.4
+    "airtrace": 19.9
    },
    {
     "month": "2024-10",
     "observed": 32.7,
     "cams": 17.6,
-    "airtrace": 33.3
+    "airtrace": 27.2
    },
    {
     "month": "2024-11",
     "observed": 51.3,
     "cams": 19.5,
-    "airtrace": 35.4
+    "airtrace": 30.4
    },
    {
     "month": "2024-12",
     "observed": 71.8,
     "cams": 33.2,
-    "airtrace": 54.2
+    "airtrace": 49.2
    },
    {
     "month": "2025-01",
     "observed": 65.2,
     "cams": 25.1,
-    "airtrace": 47.3
+    "airtrace": 41.6
    },
    {
     "month": "2025-02",
     "observed": 56.0,
     "cams": 25.1,
-    "airtrace": 43.0
+    "airtrace": 39.0
    }
   ],
   "rose": {
@@ -7877,79 +7877,79 @@
   ],
   "n_days": 331,
   "mae_cams": 20.27,
-  "mae_airtrace": 22.67,
+  "mae_airtrace": 21.95,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 34.8,
     "cams": 17.5,
-    "airtrace": 19.6
+    "airtrace": 22.8
    },
    {
     "month": "2024-04",
     "observed": 21.3,
     "cams": 13.1,
-    "airtrace": 12.3
+    "airtrace": 13.9
    },
    {
     "month": "2024-05",
     "observed": 11.3,
     "cams": 9.4,
-    "airtrace": 7.5
+    "airtrace": 8.4
    },
    {
     "month": "2024-06",
     "observed": 11.7,
     "cams": 9.2,
-    "airtrace": 7.0
+    "airtrace": 8.1
    },
    {
     "month": "2024-07",
     "observed": 16.9,
     "cams": 10.4,
-    "airtrace": 7.6
+    "airtrace": 8.7
    },
    {
     "month": "2024-08",
     "observed": 8.7,
     "cams": 10.1,
-    "airtrace": 8.5
+    "airtrace": 9.1
    },
    {
     "month": "2024-09",
     "observed": 11.2,
     "cams": 7.1,
-    "airtrace": 8.3
+    "airtrace": 9.2
    },
    {
     "month": "2024-10",
     "observed": 22.7,
     "cams": 13.7,
-    "airtrace": 14.6
+    "airtrace": 16.0
    },
    {
     "month": "2024-11",
     "observed": 53.7,
     "cams": 25.5,
-    "airtrace": 26.7
+    "airtrace": 25.5
    },
    {
     "month": "2024-12",
     "observed": 120.3,
     "cams": 60.6,
-    "airtrace": 41.4
+    "airtrace": 45.6
    },
    {
     "month": "2025-01",
     "observed": 101.9,
     "cams": 60.4,
-    "airtrace": 45.6
+    "airtrace": 47.0
    },
    {
     "month": "2025-02",
     "observed": 73.6,
     "cams": 39.6,
-    "airtrace": 39.9
+    "airtrace": 39.4
    }
   ],
   "rose": {
@@ -8016,79 +8016,79 @@
   ],
   "n_days": 335,
   "mae_cams": 12.91,
-  "mae_airtrace": 8.04,
+  "mae_airtrace": 7.65,
   "monthly": [
    {
     "month": "2024-03",
     "observed": 45.4,
     "cams": 26.7,
-    "airtrace": 47.1
+    "airtrace": 43.0
    },
    {
     "month": "2024-04",
     "observed": 69.2,
     "cams": 37.9,
-    "airtrace": 61.4
+    "airtrace": 63.7
    },
    {
     "month": "2024-05",
     "observed": 23.4,
     "cams": 19.7,
-    "airtrace": 26.4
+    "airtrace": 26.3
    },
    {
     "month": "2024-06",
     "observed": 10.3,
     "cams": 10.2,
-    "airtrace": 9.9
+    "airtrace": 9.4
    },
    {
     "month": "2024-07",
     "observed": 7.6,
     "cams": 9.0,
-    "airtrace": 8.0
+    "airtrace": 7.6
    },
    {
     "month": "2024-08",
     "observed": 7.0,
     "cams": 11.2,
-    "airtrace": 10.2
+    "airtrace": 10.1
    },
    {
     "month": "2024-09",
     "observed": 8.4,
     "cams": 9.4,
-    "airtrace": 10.0
+    "airtrace": 9.7
    },
    {
     "month": "2024-10",
     "observed": 24.1,
     "cams": 15.8,
-    "airtrace": 24.7
+    "airtrace": 21.4
    },
    {
     "month": "2024-11",
     "observed": 28.9,
     "cams": 17.1,
-    "airtrace": 31.9
+    "airtrace": 26.9
    },
    {
     "month": "2024-12",
     "observed": 33.8,
     "cams": 19.3,
-    "airtrace": 38.6
+    "airtrace": 32.2
    },
    {
     "month": "2025-01",
     "observed": 58.8,
     "cams": 30.4,
-    "airtrace": 59.0
+    "airtrace": 53.2
    },
    {
     "month": "2025-02",
     "observed": 35.7,
     "cams": 20.8,
-    "airtrace": 43.5
+    "airtrace": 38.4
    }
   ],
   "rose": {
@@ -8155,43 +8155,43 @@
   ],
   "n_days": 119,
   "mae_cams": 2.35,
-  "mae_airtrace": 2.6,
+  "mae_airtrace": 2.36,
   "monthly": [
    {
     "month": "2024-07",
     "observed": 13.5,
     "cams": 14.9,
-    "airtrace": 11.9
+    "airtrace": 12.2
    },
    {
     "month": "2024-08",
     "observed": 11.1,
     "cams": 11.0,
-    "airtrace": 10.5
+    "airtrace": 10.6
    },
    {
     "month": "2024-09",
     "observed": 8.9,
     "cams": 11.9,
-    "airtrace": 11.9
+    "airtrace": 11.3
    },
    {
     "month": "2024-10",
     "observed": 9.4,
     "cams": 9.1,
-    "airtrace": 8.9
+    "airtrace": 8.6
    },
    {
     "month": "2024-11",
     "observed": 7.6,
     "cams": 7.2,
-    "airtrace": 9.8
+    "airtrace": 8.7
    },
    {
     "month": "2024-12",
     "observed": 8.4,
     "cams": 6.3,
-    "airtrace": 8.0
+    "airtrace": 7.4
    }
   ],
   "rose": {

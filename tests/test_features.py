@@ -3,13 +3,18 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from airtrace.features import (FEATURE_GROUPS, FEATURE_LABELS, FEATURES, LATE_CAMS_VARS, MIN_HOURS,
-                               TRACER_COLUMNS, cams_frame, daily_features, weather_frame)
+from airtrace.features import (BLH_COLUMNS, FEATURE_GROUPS, FEATURE_LABELS, FEATURES, LATE_CAMS_VARS,
+                               MIN_HOURS, TRACER_COLUMNS, cams_frame, daily_features, weather_frame)
 from airtrace.config import CAMS_VARS, WEATHER_VARS
 
 from conftest import make_hourly
 
-EXPECTED_COLS = list(dict.fromkeys(FEATURES + TRACER_COLUMNS + ["n_hours"]))
+EXPECTED_COLS = list(dict.fromkeys(FEATURES + TRACER_COLUMNS + BLH_COLUMNS + ["n_hours"]))
+
+
+def test_mixing_height_is_not_a_model_input():
+    # the archive has no boundary-layer height before July 2024 (see features.BLH_COLUMNS)
+    assert not set(BLH_COLUMNS) & set(FEATURES)
 
 
 def test_shape_and_columns(hourly):
